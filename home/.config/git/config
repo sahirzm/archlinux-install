@@ -1,0 +1,31 @@
+[alias]
+	dag = "log --graph --abbrev-commit --decorate --format=format:'%C(blue)%h%C(reset) - %C(cyan)%aD%C(reset) %C(green)(%ar)%C(reset)%C(yellow)%d%C(reset)%n'' %C(white)%s%C(reset) %C(white)- %an%C(reset)' --all"
+	graph = "log --all --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ci) %C(bold blue)<%an>%Creset'"
+[color]
+	ui = "auto"
+[core]
+	excludesFile = "$HOME/.config/git/exclude"
+	fileMode = false
+	pager = "diff-so-fancy | less '--tabs=4' '-RFX'"
+[diff]
+	tool = "nvimdiff"
+[diff-so-fancy]
+	changeHunkIndicators = true
+	markEmptyLines = false
+	stripLeadingSymbols = true
+	useUnicodeRuler = true
+[difftool]
+	prompt = true
+[difftool "nvimdiff"]
+	cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
+[interactive]
+	diffFilter = "diff-so-fancy --patch"
+[pull]
+	rebase = true
+[push]
+	default = "simple"
+[user]
+	email = "sahirzm@gmail.com"
+	name = "Sahir Maredia"
+[init]
+	defaultBranch = main
