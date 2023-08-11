@@ -43,6 +43,7 @@ source '/usr/share/zsh-antidote/antidote.zsh'
 # history
 export HISTFILESIZE=10000
 export HISTSIZE=10000
+export SAVEHIST=10000
 export HISTFILE=~/.zsh_history
 
 setopt HIST_FIND_NO_DUPS
