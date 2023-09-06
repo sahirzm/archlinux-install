@@ -16,3 +16,4 @@ workspace/
 \#init.el\#
 .last-package-update-day
 tree-sitter/
+projectile.cache

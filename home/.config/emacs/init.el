@@ -38,6 +38,11 @@
 ;; Display line numbers in all buffers
 (global-display-line-numbers-mode 1)
 
+;; indent configuration
+;; use spaces for indent
+(setq-default indent-tabs-mode nil)
+(setq tab-width 2)
+
 ;; indent guides
 (use-package highlight-indent-guides
   :init
@@ -46,10 +51,27 @@
   (prog-mode . highlight-indent-guides-mode))
 
 ;; fix shell path
-;;(use-package exec-path-from-shell
-;;  :config
-;;  (when (or (memq window-system '(mac ns x)) (daemonp))
-;;    (exec-path-from-shell-initialize)))
+(use-package exec-path-from-shell
+  :config
+  (when (or (memq window-system '(mac ns x)) (daemonp))
+    (exec-path-from-shell-initialize)))
+
+;; file backups
+(defvar --backup-directory (concat user-emacs-directory "backups"))
+(if (not (file-exists-p --backup-directory))
+        (make-directory --backup-directory t))
+(setq backup-directory-alist `(("." . ,--backup-directory)))
+(setq make-backup-files t               ; backup of a file the first time it is saved.
+      backup-by-copying t               ; don't clobber symlinks
+      version-control t                 ; version numbers for backup files
+      delete-old-versions t             ; delete excess backup files silently
+      delete-by-moving-to-trash t
+      kept-old-versions 6               ; oldest versions to keep when a new numbered backup is made (default: 2)
+      kept-new-versions 9               ; newest versions to keep when a new numbered backup is made (default: 2)
+      auto-save-default t               ; auto-save every buffer that visits a file
+      auto-save-timeout 20              ; number of seconds idle time before auto-save (default: 30)
+      auto-save-interval 200            ; number of keystrokes between auto-saves (default: 300)
+      )
 
 ;; search tools
 (use-package ag)
@@ -413,28 +435,41 @@
   :after lsp)
 
 ;; Java LSP
-(setq lombok-path
-      (concat
-       "-javaagent:"
-       (expand-file-name
-	(concat
-	 (file-name-directory (or load-file-name (buffer-file-name)))
-	 "libs/lombok/lombok-1.18.28.jar"))))
-
-(setq lsp-java-vmargs
-      (cons
-       lombok-path
-       '("-XX:+UseParallelGC"
-	 "-XX:GCTimeRatio=4"
-	 "-XX:AdaptiveSizePolicyWeight=90"
-	 "-Dsun.zip.disableMemoryMapping=true"
-	 "-Xmx4G"
-	 "-Xms100m")))
 
 (use-package lsp-java
+  :after lsp-mode
   :config
   (add-hook 'java-mode-hook 'lsp)
-  (setq lsp-java-format-on-type-enabled nil))
+  :init
+  (setq lsp-java-java-path "/home/sahir/.sdkman/candidates/java/current/bin/java"
+        lsp-java-format-on-type-enabled t
+	lsp-java-format-settings-url "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml"
+	lsp-java-format-settings-profile "GoogleStyle"
+        lsp-java-format-comments-enabled t
+        lsp-java-format-enabled t
+	lsp-java-save-actions-organize-imports t
+        lsp-java-trace-server t
+        lsp-java-import-gradle-enabled t
+        lsp-java-import-maven-enabled t
+        lsp-java-code-generation-use-blocks t
+        lsp-java-code-generation-generate-comments nil)
+  (setq lombok-path
+        (concat
+         "-javaagent:"
+         (expand-file-name
+	   "~/.config/emacs/libs/lombok/lombok-1.18.28.jar")))
+  (setq lsp-java-vmargs
+        (cons
+         lombok-path
+         '("-XX:+UseParallelGC"
+	   "-XX:GCTimeRatio=4"
+	   "-XX:AdaptiveSizePolicyWeight=90"
+	   "-Dsun.zip.disableMemoryMapping=true"
+	   "-Xmx4G"
+	   "-Xms100m")))
+  (setq lsp-java-configuration-runtimes '[(:name "JavaSE-17"
+                                                 :path "/home/sahir/.sdkman/candidates/java/17.0.8-amzn/"
+                                                 :default t)]))
 
 (use-package dap-mode
   :after lsp-mode
@@ -465,8 +500,8 @@
 	lsp-javascript-format-enable nil))
 
 (use-package rjsx-mode
-  :hook
-  (rjsx-mode . lsp-deferred))
+  :mode ("\\.jsx?\\'" . rjsx-mode)
+  :hook (rjsx-mode . lsp-deferred))
 
 ;; nix LSP
 (use-package lsp-mode)
@@ -506,12 +541,6 @@
 ;; yaml-mode
 (use-package yaml-mode
   :mode "\\.ya?ml\\'")
-
-;; auto switch to tree-sitter modes
-(use-package treesit-auto
-  :config
-  (global-treesit-auto-mode 1)
-  (setq treesit-auto-install t))
 
 (provide 'init)
 ;;; init.el ends here
