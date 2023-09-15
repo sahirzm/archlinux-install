@@ -107,10 +107,3 @@ colors:
   # When these are not set, they're filled with sensible defaults.
   #indexed_colors:
   #  - { index: 16, color: '0x000000' }
-
-shell:
-  program: /bin/zsh	
-  args:
-    - -l
-    - -c
-    - "tmux attach || tmux"
