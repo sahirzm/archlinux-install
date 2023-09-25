@@ -1,48 +1,49 @@
-window:
-  dimensions:
-    columns: 240
-    lines: 80
-  padding:
-    x: 5
-    y: 0
-  fullscreen: true
-draw_bold_text_with_bright_colors: true
-scrolling:
-  history: 100000
-
-# Font configuration (changes require restart)
 font:
-  # The normal (roman) font face to use.
+  # iNSTA
   normal:
-    family: FiraCode Nerd Font
-    style: Regular
-
-  # The bold font face
-  bold:
-    family: FiraCode Nerd Font
-    style: Bold
-
-  # The italic font face
+   family: FiraCode Nerd Font
+   style:  Semibold
+  
   italic:
-    family: FiraCode Nerd Font
-    style: Italic
+   family: FiraCode Nerd Font
+   style:  Italic
+  
+  bold_italic:
+   family: FiraCode Nerd Font
+   style:  Bold Italic
+  
+  size: 9
 
-  # Point size of the font
-  size: 9 
+# Uncomment for tomorrow night base16 theme
+# colors:
+#   # Default colors
+#   primary:
+#     background: '0x1d1f21'
+#     foreground: '0xc5c8c6'
 
-  # Offset is the extra space around each character. offset.y can be thought of
-  # as modifying the linespacing, and offset.x as modifying the letter spacing.
-  offset:
-    x: 0
-    y: 0
+#   # Normal colors
+#   normal:
+#     black:   '0x1d1f21'
+#     red:     '0xcc6666'
+#     green:   '0xb5bd68'
+#     yellow:  '0xf0c674'
+#     blue:    '0x81a2be'
+#     magenta: '0xb294bb'
+#     cyan:    '0x8abeb7'
+#     white:   '0xc5c8c6'
 
-  # Glyph offset determines the locations of the glyphs within their cells with
-  # the default being at the bottom. Increase the x offset to move the glyph to
-  # the right, increase the y offset to move the glyph upward.
-  glyph_offset:
-    x: 0
-    y: 0
+#   # Bright colors
+#   bright:
+#     black:   '0x969896'
+#     red:     '0xcc6666'
+#     green:   '0xb5bd68'
+#     yellow:  '0xf0c674'
+#     blue:    '0x81a2be'
+#     magenta: '0xb294bb'
+#     cyan:    '0x8abeb7'
+#     white:   '0xffffff'
 
+# Uncomment for one dark theme
 colors:
   # Default colors
   primary:

@@ -1,0 +1,3 @@
+[submodule "home/.local/share/themes/AtomOneDarkTheme"]
+	path = home/.local/share/themes/AtomOneDarkTheme
+	url = https://github.com/UnnatShaneshwar/AtomOneDarkTheme
