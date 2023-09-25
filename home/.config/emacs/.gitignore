@@ -17,3 +17,5 @@ workspace/
 .last-package-update-day
 tree-sitter/
 projectile.cache
+lock-files/
+backups/
