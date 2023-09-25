@@ -57,10 +57,10 @@
     (exec-path-from-shell-initialize)))
 
 ;; file backups
-(defvar --backup-directory (concat user-emacs-directory "backups"))
-(if (not (file-exists-p --backup-directory))
-        (make-directory --backup-directory t))
-(setq backup-directory-alist `(("." . ,--backup-directory)))
+(defvar backup-directory (concat user-emacs-directory "backups"))
+(if (not (file-exists-p backup-directory))
+        (make-directory backup-directory t))
+(setq backup-directory-alist `((".*" . ,backup-directory)))
 (setq make-backup-files t               ; backup of a file the first time it is saved.
       backup-by-copying t               ; don't clobber symlinks
       version-control t                 ; version numbers for backup files
@@ -72,6 +72,12 @@
       auto-save-timeout 20              ; number of seconds idle time before auto-save (default: 30)
       auto-save-interval 200            ; number of keystrokes between auto-saves (default: 300)
       )
+;; lock files location
+(defvar lock-file-directory (concat user-emacs-directory "lock-files"))
+(if (not (file-exists-p lock-file-directory))
+    (make-directory lock-file-directory t))
+(setq lock-file-name-transforms
+      `(("\\(?:[^/]*/\\)*\\(.*\\)" ,(concat lock-file-directory "\\1") t)))
 
 ;; search tools
 (use-package ag)
@@ -173,10 +179,6 @@
 
 ;; start maximized
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
-
-;; disable backups
-(setq make-backup-files nil)
-(setq auto-save-default nil)
 
 ;; highlight current line in buffer
 (global-hl-line-mode 1)
