@@ -37,11 +37,25 @@
 
 ;; Display line numbers in all buffers
 (global-display-line-numbers-mode 1)
+(electric-pair-mode t)
+(column-number-mode)
+(line-number-mode)
+(minibuffer-electric-default-mode 1)
+
+;; prettify symbols
+(global-prettify-symbols-mode t)
+(setq-default
+ prettify-symbols-alist `(("lambda" . "λ")))
 
 ;; indent configuration
 ;; use spaces for indent
 (setq-default indent-tabs-mode nil)
 (setq tab-width 2)
+(defvaralias 'web-mode-markup-indent-offset 'tab-width)
+(defvaralias 'web-mode-css-indent-offset 'tab-width)
+(defvaralias 'web-mode-code-indent-offset 'tab-width)
+(defvaralias 'c-basic-offset 'tab-width)
+(defvaralias 'css-indent-offset 'tab-width)
 
 ;; indent guides
 (use-package highlight-indent-guides
@@ -390,10 +404,17 @@
         completion-category-defaults nil
         completion-category-overrides nil))
 
-;; Dependencies for LSP
+;; Treesitter
+(use-package treesit-auto
+  :config
+  (setq treesite-auto-install 'prompt)
+  (global-treesit-auto-mode))
+
 (use-package flycheck
   :init (global-flycheck-mode))
 (use-package yasnippet :config (yas-global-mode))
+
+;; Dependencies for LSP
 (use-package lsp-mode
   :custom
   (lsp-completion-provider :none) ;; we use Corfu!
@@ -422,8 +443,7 @@
   (setq read-process-output-max (* 1024 1024 3)
 	gc-cons-threshold 100000000
 	lsp-idle-delay 0.500
-	lsp-file-watch-threshold 3000
-	lsp-enable-on-type-formatting nil)
+	lsp-file-watch-threshold 3000)
   :bind (:map lsp-mode-map
 	      ("C-c d" . lsp-describe-thing-at-point)
 	      ("C-c a" . lsp-execute-code-action)))
@@ -455,7 +475,7 @@
         lsp-java-import-maven-enabled t
         lsp-java-code-generation-use-blocks t
         lsp-java-code-generation-generate-comments nil)
-  (setq lombok-path
+  (defvar lombok-path
         (concat
          "-javaagent:"
          (expand-file-name
@@ -485,29 +505,44 @@
 (use-package kotlin-mode
   :hook (kotlin-mode . lsp-deferred)
   :config
-  (setq lsp-kotlin-debug-adapter-enabled t))
+  (setq-default lsp-kotlin-debug-adapter-enabled t))
 
 (use-package flycheck-kotlin
   :hook
   (kotlin-mode . flycheck-mode))
 
-;; Typescript LSP
+;; Typescript Eglot
 (use-package typescript-ts-mode
   :mode (("\\.ts\\'" . typescript-ts-mode)
 	 ("\\.tsx\\'" . tsx-ts-mode))
-  :hook ((typescript-ts-mode . lsp-deferred)
-	 (tsx-ts-mode . lsp-deferred))
+  :hook ((typescript-ts-mode . eglot-ensure)
+	 (tsx-ts-mode . eglot-ensure))
   :config
-  (setq typescript-indent-level 2
-	lsp-javascript-format-enable nil))
+  (setq-default typescript-indent-level 'tab-width)
+  (setq typescript-ts-mode-indent-offset 'tab-width)
+  (setq js-jsx-indent-level 'tab-width)
+  (setq js-indent-level 'tab-width)
+  (setq-default js2-basic-offset 'tab-width))
 
 (use-package rjsx-mode
   :mode ("\\.jsx?\\'" . rjsx-mode)
-  :hook (rjsx-mode . lsp-deferred))
+  :hook (rjsx-mode . eglot-ensure))
+
+;; yaml-mode
+(use-package yaml-mode
+  :mode
+  ("\\.ya?ml\\'" . yaml-ts-mode)
+  :hook
+  (yaml-ts-mode . eglot-ensure))
+
+;; json-mode
+(use-package json-mode
+  :mode
+  ("\\.json\\'" . json-ts-mode)
+  :hook
+  (json-ts-mode . eglot-ensure))
 
 ;; nix LSP
-(use-package lsp-mode)
-
 (use-package lsp-nix
   :ensure lsp-mode
   :after (lsp-mode)
@@ -539,10 +574,6 @@
   :bind (("C-x g" . magit-status))
   :config
   (setq magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1))
-
-;; yaml-mode
-(use-package yaml-mode
-  :mode "\\.ya?ml\\'")
 
 (provide 'init)
 ;;; init.el ends here

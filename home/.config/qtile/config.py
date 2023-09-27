@@ -80,7 +80,7 @@ keys = [
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     # Rofi
-    Key([mod], "r", lazy.spawn(f"rofi -show run -theme {rofi_theme}")),
+    Key([mod], "r", lazy.spawn(f"rofi -modi drun,run -show drun -theme {rofi_theme}")),
     Key([mod], "x", lazy.spawn(f"rofi -show power-menu -modi power-menu:rofi-power-menu -theme {rofi_theme}")),
     # Audio key keybindings
     Key([], "XF86AudioLowerVolume", lazy.spawn("pamixer --decrease 5")),
@@ -93,14 +93,14 @@ def init_group_names():
     Returns a list of group names.
     """
     return [
-        ('\ue007', {'layout': 'max'}),        # Firefox
-        ('\uf09b', {'layout': 'max'}),        # GitHub
-        ('\uf121', {'layout': 'max'}),        # Code
+        ('\ue007', {'layout': 'monadtall'}),        # Firefox
+        ('\uf09b', {'layout': 'monadtall'}),        # GitHub
+        ('\uf121', {'layout': 'monadtall'}),        # Code
         ('\uf120', {'layout': 'monadtall'}),  # Terminal
-        ('\uf16c', {'layout': 'max'}),        # StackOverflow
-        ('\uf167', {'layout': 'max'}),        # YouTube
-        ('\uf086', {'layout': 'max'}),        # Chat
-        ('\uf001', {'layout': 'max'})         # Music
+        ('\uf16c', {'layout': 'monadtall'}),        # StackOverflow
+        ('\uf167', {'layout': 'monadtall'}),        # YouTube
+        ('\uf086', {'layout': 'monadtall'}),        # Chat
+        ('\uf001', {'layout': 'monadtall'})         # Music
     ]
 
 def init_groups():
@@ -192,7 +192,7 @@ accent_color = theme["cyan"]
 layout_defaults = {
     "border_width": 2,
     "border_focus": accent_color,
-"border_normal": theme["black"],
+    "border_normal": theme["black"],
 }
 
 layouts = [
