@@ -102,6 +102,10 @@
   :config
   (avy-setup-default))
 
+;; expand-region
+(use-package expand-region
+  :bind
+  ("C-@" . er/expand-region))
 ;;treemacs
 (use-package treemacs
   :defer t)
