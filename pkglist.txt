@@ -54,9 +54,11 @@ linux-lts-headers
 lxappearance
 lxsession-gtk3
 maim
+meson
 mpd
 neovim
 networkmanager
+ninja
 nitrogen
 noto-fonts
 ntfs-3g
@@ -75,6 +77,7 @@ pamixer
 papirus-icon-theme
 paru
 pavucontrol
+pgformatter
 picom
 pipewire
 pipewire-alsa
@@ -87,6 +90,8 @@ polkit
 polybar
 python-pip
 python-psutil
+python-tqdm
+python-typing_extensions
 qtile
 ranger
 ripgrep
@@ -165,7 +170,7 @@ unzip
 vlc
 volumeicon
 vscode-langservers-extracted
-vscodium
+vulkan-headers
 wget
 wireplumber
 xclip
