@@ -21,6 +21,7 @@ diff-so-fancy
 docker
 docker-compose
 docker-rootless-extras
+dockfmt-git
 dunst
 efibootmgr
 emacs
@@ -47,6 +48,7 @@ i3status
 inkscape
 jdtls
 keyd
+kotlin-language-server
 libreoffice-fresh
 linux-firmware
 linux-lts
@@ -54,11 +56,10 @@ linux-lts-headers
 lxappearance
 lxsession-gtk3
 maim
-meson
 mpd
 neovim
 networkmanager
-ninja
+nginx-config-formatter
 nitrogen
 noto-fonts
 ntfs-3g
@@ -90,8 +91,6 @@ polkit
 polybar
 python-pip
 python-psutil
-python-tqdm
-python-typing_extensions
 qtile
 ranger
 ripgrep
@@ -167,10 +166,10 @@ udiskie
 udisks2
 unrar
 unzip
+visual-studio-code-bin
 vlc
 volumeicon
 vscode-langservers-extracted
-vulkan-headers
 wget
 wireplumber
 xclip

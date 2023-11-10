@@ -101,6 +101,10 @@
 
 ;; navigate faster with avy
 (use-package avy
+  :bind
+  (("C-'" . avy-goto-char-timer)
+   ("M-g l" . avy-goto-line)
+   ("M-g w" . avy-goto-word-1))
   :config
   (avy-setup-default))
 
@@ -260,6 +264,18 @@
 	      ("C-c p" . projectile-command-map))
   :config
   (setq projectile-project-search-path '("~/workspace/")))
+
+;; projectile flycheck
+(use-package flycheck-projectile
+  :after (projectile flycheck))
+
+;; flycheck-eglot
+(use-package flycheck-eglot
+  :ensure t
+  :after (flycheck eglot)
+  :custom (flycheck-eglot-exclusive nil)
+  :config
+  (global-flycheck-eglot-mode 1))
 
 (use-package which-key
   :init
@@ -450,96 +466,29 @@
   :init (global-flycheck-mode))
 (use-package yasnippet :config (yas-global-mode))
 
-;; Dependencies for LSP
-(use-package lsp-mode
-  :custom
-  (lsp-completion-provider :none) ;; we use Corfu!
-  :commands
-  (lsp lsp-deferred)
-  :init
-  (setenv "LSP_USE_PLISTS" "1")
-  (defun my/orderless-dispatch-flex-first (_pattern index _total)
-    (and (eq index 0) 'orderless-flex))
+(add-hook 'java-mode-hook 'eglot-ensure)
+(add-hook 'java-ts-mode-hook 'eglot-ensure)
+(defvar lombok-path
+  (concat
+   "-javaagent:"
+   (expand-file-name
+	  "~/.config/emacs/libs/lombok/lombok-1.18.28.jar")))
+(setq eglot-java-eclipse-jdt-args
+      (cons
+       lombok-path
+       '("-XX:+UseParallelGC"
+	       "-XX:GCTimeRatio=4"
+	       "-XX:AdaptiveSizePolicyWeight=90"
+	       "-Dsun.zip.disableMemoryMapping=true"
+	       "-Xmx4G"
+	       "-Xms100m")))
+(setq lsp-java-configuration-runtimes '[(:name "JavaSE-17"
+                                               :path "/home/sahir/.sdkman/candidates/java/17.0.8-amzn/"
+                                               :default t)])
 
-  (defun my/lsp-mode-setup-completion ()
-    (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
-	  '(orderless)))
-
-  ;; Optionally configure the first word as flex filtered.
-  (add-hook 'orderless-style-dispatchers #' my/orderless-dispatch-flex-first nil 'local)
-
-  ;; Optionally configure the cape-capf-buster.
-  (setq-local completion-at-point-functions (list (cape-capf-buster #'lsp-completion-at-point)))
-  (setq lsp-keymap-prefix "C-c l")
-
-  :hook
-  (lsp-completion-mode . my/lsp-mode-setup-completion)
-  :config
-  (lsp-enable-which-key-integration t)
-  (setq read-process-output-max (* 1024 1024 3)
-	gc-cons-threshold 100000000
-	lsp-idle-delay 0.500
-	lsp-file-watch-threshold 3000)
-  :bind (:map lsp-mode-map
-	      ("C-c d" . lsp-describe-thing-at-point)
-	      ("C-c a" . lsp-execute-code-action)))
-
-(use-package hydra)
-
-(use-package lsp-ui
-  :hook (lsp-mode . lsp-ui-mode))
-
-(use-package lsp-treemacs
-  :after lsp)
-
-;; Java LSP
-
-(use-package lsp-java
-  :after lsp-mode
-  :config
-  (add-hook 'java-mode-hook 'lsp)
-  :init
-  (setq lsp-java-java-path "/home/sahir/.sdkman/candidates/java/current/bin/java"
-        lsp-java-format-on-type-enabled t
-	lsp-java-format-settings-url "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml"
-	lsp-java-format-settings-profile "GoogleStyle"
-        lsp-java-format-comments-enabled t
-        lsp-java-format-enabled t
-	lsp-java-save-actions-organize-imports t
-        lsp-java-trace-server t
-        lsp-java-import-gradle-enabled t
-        lsp-java-import-maven-enabled t
-        lsp-java-code-generation-use-blocks t
-        lsp-java-code-generation-generate-comments nil)
-  (defvar lombok-path
-        (concat
-         "-javaagent:"
-         (expand-file-name
-	   "~/.config/emacs/libs/lombok/lombok-1.18.28.jar")))
-  (setq lsp-java-vmargs
-        (cons
-         lombok-path
-         '("-XX:+UseParallelGC"
-	   "-XX:GCTimeRatio=4"
-	   "-XX:AdaptiveSizePolicyWeight=90"
-	   "-Dsun.zip.disableMemoryMapping=true"
-	   "-Xmx4G"
-	   "-Xms100m")))
-  (setq lsp-java-configuration-runtimes '[(:name "JavaSE-17"
-                                                 :path "/home/sahir/.sdkman/candidates/java/17.0.8-amzn/"
-                                                 :default t)]))
-
-(use-package dap-mode
-  :after lsp-mode
-  :config
-  (dap-auto-configure-mode))
-
-(use-package dap-java
-  :ensure nil)
-
-;; Kotlin LSP
+;; Kotlin
 (use-package kotlin-mode
-  :hook (kotlin-mode . lsp-deferred)
+  :hook (kotlin-mode . eglot-ensure)
   :config
   (setq-default lsp-kotlin-debug-adapter-enabled t))
 
@@ -578,16 +527,9 @@
   :hook
   (json-ts-mode . eglot-ensure))
 
-;; nix LSP
-(use-package lsp-nix
-  :ensure lsp-mode
-  :after (lsp-mode)
-  :demand t
-  :custom
-  (lsp-nix-nil-formatter ["nixpkgs-fmt"]))
-
-(use-package nix-mode
-  :hook (nix-mode . lsp-deferred))
+;; docker
+(use-package dockerfile-mode
+  :hook (dockerfile-mode . eglot-ensure))
 
 ;; format code
 (use-package format-all
