@@ -98,6 +98,7 @@ rofi
 rofi-power-menu
 sddm
 skypeforlinux-stable-bin
+slack-desktop
 stow
 sudo
 system-config-printer
