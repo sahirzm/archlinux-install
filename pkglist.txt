@@ -14,6 +14,7 @@ blueberry
 blueman
 bluez-utils
 btop
+cmake
 cups
 cups-pdf
 dbeaver
@@ -27,6 +28,7 @@ efibootmgr
 emacs
 eza
 feh
+filezilla
 firefox
 fzf
 ghostscript

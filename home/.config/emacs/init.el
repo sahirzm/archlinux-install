@@ -459,7 +459,7 @@
 ;; Treesitter
 (use-package treesit-auto
   :config
-  (setq treesite-auto-install 'prompt)
+  (setq treesit-auto-install 'prompt)
   (global-treesit-auto-mode))
 
 (use-package flycheck
@@ -552,6 +552,11 @@
   :bind (("C-x g" . magit-status))
   :config
   (setq magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1))
+
+;; lib vterm
+(use-package vterm)
+(use-package multi-vterm
+  :after (vterm))
 
 (provide 'init)
 ;;; init.el ends here
