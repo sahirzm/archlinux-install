@@ -14,6 +14,7 @@ blueberry
 blueman
 bluez-utils
 btop
+catppuccin-gtk-theme-mocha
 cmake
 cups
 cups-pdf

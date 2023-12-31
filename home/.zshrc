@@ -17,8 +17,8 @@ alias rm='rm -i'
 # alias ls="lsd -l"
 alias exa="exa -l --icons"
 alias ls="exa"
-export EDITOR="emacsclient -nw"
-export VISUAL="emacsclient -c"
+export EDITOR="nvim"
+export VISUAL="nvim"
 
 # autocomplete
 autoload -Uz compinit
