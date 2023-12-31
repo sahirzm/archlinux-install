@@ -226,6 +226,8 @@
 ;; Dired
 ;; Revert Dired and other buffers
 (setq global-auto-revert-non-file-buffers t)
+(setf dired-kill-when-opening-new-dired-buffer t)
+
 ;; Show icons based on file types
 (use-package nerd-icons-dired
   :hook

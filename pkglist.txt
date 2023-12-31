@@ -23,7 +23,6 @@ docker
 docker-compose
 docker-rootless-extras
 dockfmt-git
-dunst
 efibootmgr
 emacs
 eza
@@ -49,6 +48,7 @@ i3lock
 i3status
 inkscape
 jdtls
+kde-applications-meta
 keyd
 kotlin-language-server
 libreoffice-fresh
@@ -76,6 +76,7 @@ otf-hasklig-nerd
 otf-hermit-nerd
 otf-opendyslexic-nerd
 otf-overpass-nerd
+pack-cli-bin
 pamixer
 papirus-icon-theme
 paru
@@ -88,6 +89,7 @@ pipewire-audio
 pipewire-jack
 pipewire-pulse
 pipewire-zeroconf
+plasma-meta
 playerctl
 polkit
 polybar
