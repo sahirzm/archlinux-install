@@ -20,3 +20,9 @@ style = "Italic"
 [font.normal]
 family = "JetBrainsMono Nerd Font"
 style = "Medium"
+
+[selection]
+save_to_clipboard = true
+
+[scrolling]
+history = 100000
