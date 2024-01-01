@@ -21,12 +21,10 @@ local plugins = {
     "williamboman/mason.nvim",
     opts = overrides.mason
   },
-
   {
     "nvim-treesitter/nvim-treesitter",
     opts = overrides.treesitter
   },
-
   {
     "nvim-tree/nvim-tree.lua",
     opts = overrides.nvimtree,
@@ -38,7 +36,6 @@ local plugins = {
       require("better_escape").setup()
     end,
   },
-
   {
     "christoomey/vim-tmux-navigator",
     cmd = {
@@ -55,6 +52,20 @@ local plugins = {
       { "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
       { "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
     },
+  },
+  {
+    "NeogitOrg/neogit",
+    lazy = false,
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "sindrets/diffview.nvim",
+      "nvim-telescope/telescope.nvim",
+    },
+    config = function()
+      require("neogit").setup({
+        graph_style = "unicode",
+      })
+    end
   }
 }
 
