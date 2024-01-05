@@ -51,7 +51,9 @@ inkscape
 jdtls
 kde-applications-meta
 keyd
+kitty
 kotlin-language-server
+lazygit
 libreoffice-fresh
 linux-firmware
 linux-lts

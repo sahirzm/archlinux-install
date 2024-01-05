@@ -1,13 +1,13 @@
 import = [
-  "/home/sahir/.config/alacritty/catppuccin-mocha.toml"
-#  "/home/sahir/.config/alacritty/catppuccin-macchiato.toml"
+  # "/home/sahir/.config/alacritty/catppuccin-mocha.toml"
+  "/home/sahir/.config/alacritty/catppuccin-macchiato.toml"
 ]
 
 [env]
 TERM = "xterm-256color"
 
 [font]
-size = 11 
+size = 10 
 
 [font.bold_italic]
 family = "JetBrainsMono Nerd Font"
