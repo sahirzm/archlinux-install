@@ -24,6 +24,7 @@ docker
 docker-compose
 docker-rootless-extras
 dockfmt-git
+dunst
 efibootmgr
 emacs
 eza
@@ -49,7 +50,6 @@ i3lock
 i3status
 inkscape
 jdtls
-kde-applications-meta
 keyd
 kitty
 kotlin-language-server
@@ -92,13 +92,13 @@ pipewire-audio
 pipewire-jack
 pipewire-pulse
 pipewire-zeroconf
-plasma-meta
 playerctl
 polkit
 polybar
 python-pip
 python-psutil
-qtile
+qt5-graphicaleffects
+qt5-quickcontrols2
 ranger
 ripgrep
 rofi
