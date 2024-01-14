@@ -14,6 +14,9 @@ blueberry
 blueman
 bluez-utils
 btop
+catppuccin-gtk-theme-frappe
+catppuccin-gtk-theme-latte
+catppuccin-gtk-theme-macchiato
 catppuccin-gtk-theme-mocha
 cmake
 cups
@@ -65,7 +68,6 @@ mpd
 neovim
 networkmanager
 nginx-config-formatter
-nitrogen
 noto-fonts
 ntfs-3g
 nvidia-470xx-dkms
