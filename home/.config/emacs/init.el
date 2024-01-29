@@ -33,9 +33,9 @@
   (auto-package-update-maybe))
 
 ;; set firacode font
-(set-face-attribute 'default nil :font "FiraCode Nerd Font")
+(set-face-attribute 'default nil :font "JetBrainsMono Nerd Font")
 (add-to-list 'default-frame-alist
-             '(font . "FiraCode Nerd Font-10"))
+             '(font . "JetBrainsMono Nerd Font-12"))
 
 ;; Display line numbers in all buffers
 (global-display-line-numbers-mode 1)
@@ -75,7 +75,7 @@
 ;; file backups
 (defvar backup-directory (concat user-emacs-directory "backups"))
 (if (not (file-exists-p backup-directory))
-        (make-directory backup-directory t))
+    (make-directory backup-directory t))
 (setq backup-directory-alist `((".*" . ,backup-directory)))
 (setq make-backup-files t               ; backup of a file the first time it is saved.
       backup-by-copying t               ; don't clobber symlinks
@@ -459,6 +459,32 @@
         completion-category-overrides nil))
 
 ;; Treesitter
+(setq treesit-auto-langs '(python
+                           rust
+                           go
+                           awk
+                           bash
+                           c
+                           cmake
+                           commonlisp
+                           cpp
+                           css
+                           dart
+                           dockerfile
+                           html
+                           javascript
+                           json
+                           kotlin
+                           lua
+                           make
+                           markdown
+                           ruby
+                           toml
+                           yaml
+                           java
+                           tsx
+                           typescript))
+
 (use-package treesit-auto
   :config
   (setq treesit-auto-install 'prompt)
@@ -474,16 +500,16 @@
   (concat
    "-javaagent:"
    (expand-file-name
-	  "~/.config/emacs/libs/lombok/lombok-1.18.28.jar")))
+    "~/.config/emacs/libs/lombok/lombok-1.18.28.jar")))
 (setq eglot-java-eclipse-jdt-args
       (cons
        lombok-path
        '("-XX:+UseParallelGC"
-	       "-XX:GCTimeRatio=4"
-	       "-XX:AdaptiveSizePolicyWeight=90"
-	       "-Dsun.zip.disableMemoryMapping=true"
-	       "-Xmx4G"
-	       "-Xms100m")))
+	 "-XX:GCTimeRatio=4"
+	 "-XX:AdaptiveSizePolicyWeight=90"
+	 "-Dsun.zip.disableMemoryMapping=true"
+	 "-Xmx4G"
+	 "-Xms100m")))
 (setq lsp-java-configuration-runtimes '[(:name "JavaSE-17"
                                                :path "/home/sahir/.sdkman/candidates/java/17.0.8-amzn/"
                                                :default t)])

@@ -34,6 +34,8 @@ eza
 feh
 filezilla
 firefox
+foxitreader
+fuse-overlayfs
 fzf
 ghostscript
 gimp
@@ -94,7 +96,6 @@ pipewire-jack
 pipewire-pulse
 pipewire-zeroconf
 playerctl
-polkit
 polybar
 python-pip
 python-psutil
@@ -184,6 +185,7 @@ wireplumber
 xclip
 xdg-user-dirs
 xdotool
+xfce4-power-manager
 xorg-bdftopcf
 xorg-docs
 xorg-font-util
