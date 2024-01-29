@@ -29,7 +29,7 @@
 (use-package auto-package-update
   :config
   (setq auto-package-update-delete-old-versions t
-	auto-package-update-hide-results t)
+        auto-package-update-hide-results t)
   (auto-package-update-maybe))
 
 ;; set firacode font
@@ -137,7 +137,7 @@
   ;; Enable custom neotree theme (all-the-icons must be installed!)
   (doom-themes-neotree-config)
   ;; or for treemacs users
-  (setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
+  (setq-default doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
   (doom-themes-treemacs-config)
   ;; Corrects (and improves) org-mode's native fontification.
   (doom-themes-org-config))
@@ -209,11 +209,11 @@
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type 'relative)
+(setq-default display-line-numbers-type 'relative)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/org/")
+(setq-default org-directory "~/org/")
 
 ;; fill-column
 (setq-default fill-column 120)
@@ -225,7 +225,7 @@
 
 ;; Dired
 ;; Revert Dired and other buffers
-(setq global-auto-revert-non-file-buffers t)
+(setq-default global-auto-revert-non-file-buffers t)
 (setf dired-kill-when-opening-new-dired-buffer t)
 
 ;; Show icons based on file types
@@ -459,7 +459,7 @@
         completion-category-overrides nil))
 
 ;; Treesitter
-(setq treesit-auto-langs '(python
+(setq-default treesit-auto-langs '(python
                            rust
                            go
                            awk
@@ -501,7 +501,7 @@
    "-javaagent:"
    (expand-file-name
     "~/.config/emacs/libs/lombok/lombok-1.18.28.jar")))
-(setq eglot-java-eclipse-jdt-args
+(setq-default eglot-java-eclipse-jdt-args
       (cons
        lombok-path
        '("-XX:+UseParallelGC"
@@ -510,7 +510,7 @@
 	 "-Dsun.zip.disableMemoryMapping=true"
 	 "-Xmx4G"
 	 "-Xms100m")))
-(setq lsp-java-configuration-runtimes '[(:name "JavaSE-17"
+(setq-default lsp-java-configuration-runtimes '[(:name "JavaSE-17"
                                                :path "/home/sahir/.sdkman/candidates/java/17.0.8-amzn/"
                                                :default t)])
 
@@ -547,8 +547,8 @@
          (jtsx-jsx-mode . eglot-ensure))
   :custom
   ;; Optional customizations
-  (js-indent-level 2)
-  (typescript-ts-mode-indent-offset 2)
+  (js-indent-level 'tab-width)
+  (typescript-ts-mode-indent-offset 'tab-width)
   ;; (jtsx-switch-indent-offset 0)
   ;; (jtsx-indent-statement-block-regarding-standalone-parent nil)
   ;; (jtsx-jsx-element-move-allow-step-out t)
