@@ -275,7 +275,7 @@
 (use-package flycheck-eglot
   :ensure t
   :after (flycheck eglot)
-  :custom (flycheck-eglot-exclusive nil)
+  :custom (flycheck-eglot-exclusive t)
   :config
   (global-flycheck-eglot-mode 1))
 
