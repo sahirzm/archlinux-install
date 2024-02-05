@@ -35,7 +35,7 @@
 ;; set firacode font
 (set-face-attribute 'default nil :font "JetBrainsMono Nerd Font")
 (add-to-list 'default-frame-alist
-             '(font . "JetBrainsMono Nerd Font-12"))
+             '(font . "JetBrainsMono Nerd Font-10"))
 
 ;; Display line numbers in all buffers
 (global-display-line-numbers-mode 1)
@@ -601,8 +601,14 @@
 
 ;; format code
 (use-package format-all
+  :commands
+  format-all-mode
   :hook
   (prog-mode . format-all-mode))    ;; format on save
+
+(use-package apheleia
+  :config
+  (apheleia-global-mode 1))
 
 (use-package editorconfig
   :config
