@@ -1,6 +1,7 @@
 import = [
   # "/home/sahir/.config/alacritty/catppuccin-mocha.toml"
-  "/home/sahir/.config/alacritty/catppuccin-macchiato.toml"
+  # "/home/sahir/.config/alacritty/catppuccin-macchiato.toml"
+  "/home/sahir/.config/alacritty/nord.toml"
 ]
 
 [env]
