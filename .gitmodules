@@ -1,3 +1,6 @@
 [submodule "home/.local/share/themes/AtomOneDarkTheme"]
 	path = home/.local/share/themes/AtomOneDarkTheme
 	url = https://github.com/UnnatShaneshwar/AtomOneDarkTheme
+[submodule "home/.config/ranger/plugins/ranger_devicons"]
+	path = home/.config/ranger/plugins/ranger_devicons
+	url = https://github.com/alexanderjeurissen/ranger_devicons

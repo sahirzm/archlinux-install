@@ -33,9 +33,9 @@
   (auto-package-update-maybe))
 
 ;; set firacode font
-(set-face-attribute 'default nil :font "JetBrainsMono Nerd Font")
+(set-face-attribute 'default nil :font "JetBrainsMono Nerd Font-9")
 (add-to-list 'default-frame-alist
-             '(font . "JetBrainsMono Nerd Font-10"))
+             '(font . "JetBrainsMono Nerd Font-9"))
 
 ;; Display line numbers in all buffers
 (global-display-line-numbers-mode 1)
@@ -60,11 +60,9 @@
 (defvaralias 'css-indent-offset 'tab-width)
 
 ;; indent guides
-(use-package highlight-indent-guides
-  :init
-  (setq highlight-indent-guides-method 'character)
+(use-package highlight-indentation
   :hook
-  (prog-mode . highlight-indent-guides-mode))
+  (prog-mode . highlight-indentation-mode))
 
 ;; fix shell path
 (use-package exec-path-from-shell
@@ -151,11 +149,11 @@
 (use-package vertico
   :bind
   (:map vertico-map
-	("C-j" . vertico-next)
-	("C-k" . vertico-previous)
-	("C-f" . vertico-exit)
-	:map minibuffer-local-map
-	("M-h" . backward-kill-word))
+	      ("C-j" . vertico-next)
+	      ("C-k" . vertico-previous)
+	      ("C-f" . vertico-exit)
+	      :map minibuffer-local-map
+	      ("M-h" . backward-kill-word))
   :custom
   (vertico-cycle t)
   :init
@@ -216,7 +214,7 @@
 (setq-default org-directory "~/org/")
 
 ;; fill-column
-(setq-default fill-column 120)
+(setq-default fill-column 140)
 (setq-default display-fill-column-indicator t)
 (setq-default display-fill-column-indicator-character 9474)
 
@@ -263,7 +261,7 @@
   :init
   (projectile-mode +1)
   :bind (:map projectile-mode-map
-	      ("C-c p" . projectile-command-map))
+	            ("C-c p" . projectile-command-map))
   :config
   (setq projectile-project-search-path '("~/workspace/")))
 
@@ -292,7 +290,7 @@
          ("C-c k" . consult-kmacro)
          ("C-c m" . consult-man)
          ("C-c i" . consult-info)
-	 ("C-c r" . consult-recent-file)
+	       ("C-c r" . consult-recent-file)
          ([remap Info-search] . consult-info)
          ;; C-x bindings in `ctl-x-map'
          ("C-x M-:" . consult-complex-command)     ;; orig. repeat-complex-command
@@ -405,8 +403,8 @@
 (use-package consult-flycheck
   :after consult
   :bind (
-	 ("M-g f" . consult-flycheck)               ;; Alternative: consult-flycheck
-	 ))
+	       ("M-g f" . consult-flycheck)               ;; Alternative: consult-flycheck
+	       ))
 
 ;; Enable rich annotations using the Marginalia package
 (use-package marginalia
@@ -460,30 +458,30 @@
 
 ;; Treesitter
 (setq-default treesit-auto-langs '(python
-                           rust
-                           go
-                           awk
-                           bash
-                           c
-                           cmake
-                           commonlisp
-                           cpp
-                           css
-                           dart
-                           dockerfile
-                           html
-                           javascript
-                           json
-                           kotlin
-                           lua
-                           make
-                           markdown
-                           ruby
-                           toml
-                           yaml
-                           java
-                           tsx
-                           typescript))
+                                   rust
+                                   go
+                                   awk
+                                   bash
+                                   c
+                                   cmake
+                                   commonlisp
+                                   cpp
+                                   css
+                                   dart
+                                   dockerfile
+                                   html
+                                   javascript
+                                   json
+                                   kotlin
+                                   lua
+                                   make
+                                   markdown
+                                   ruby
+                                   toml
+                                   yaml
+                                   java
+                                   tsx
+                                   typescript))
 
 (use-package treesit-auto
   :config
@@ -502,17 +500,17 @@
    (expand-file-name
     "~/.config/emacs/libs/lombok/lombok-1.18.28.jar")))
 (setq-default eglot-java-eclipse-jdt-args
-      (cons
-       lombok-path
-       '("-XX:+UseParallelGC"
-	 "-XX:GCTimeRatio=4"
-	 "-XX:AdaptiveSizePolicyWeight=90"
-	 "-Dsun.zip.disableMemoryMapping=true"
-	 "-Xmx4G"
-	 "-Xms100m")))
+              (cons
+               lombok-path
+               '("-XX:+UseParallelGC"
+	               "-XX:GCTimeRatio=4"
+	               "-XX:AdaptiveSizePolicyWeight=90"
+	               "-Dsun.zip.disableMemoryMapping=true"
+	               "-Xmx4G"
+	               "-Xms100m")))
 (setq-default lsp-java-configuration-runtimes '[(:name "JavaSE-17"
-                                               :path "/home/sahir/.sdkman/candidates/java/17.0.9-amzn/"
-                                               :default t)])
+                                                       :path "/home/sahir/.sdkman/candidates/java/17.0.10-amzn/"
+                                                       :default t)])
 
 ;; Kotlin
 (use-package kotlin-mode
@@ -528,7 +526,7 @@
 (use-package typescript-ts-mode
   :mode (("\\.ts\\'" . typescript-ts-mode))
   :hook ((typescript-ts-mode . eglot-ensure)
-	 (tsx-ts-mode . eglot-ensure))
+	       (tsx-ts-mode . eglot-ensure))
   :config
   (setq-default typescript-indent-level 'tab-width)
   (setq typescript-ts-mode-indent-offset 'tab-width)
@@ -571,12 +569,12 @@
     (define-key mode-map (kbd "C-c j w") 'jtsx-wrap-in-jsx-element)
     (define-key mode-map (kbd "C-c j u") 'jtsx-unwrap-jsx)
     (define-key mode-map (kbd "C-c j d") 'jtsx-delete-jsx-node))
-    
+  
   (defun jtsx-bind-keys-to-jtsx-jsx-mode-map ()
-      (jtsx-bind-keys-to-mode-map jtsx-jsx-mode-map))
+    (jtsx-bind-keys-to-mode-map jtsx-jsx-mode-map))
 
   (defun jtsx-bind-keys-to-jtsx-tsx-mode-map ()
-      (jtsx-bind-keys-to-mode-map jtsx-tsx-mode-map))
+    (jtsx-bind-keys-to-mode-map jtsx-tsx-mode-map))
 
   (add-hook 'jtsx-jsx-mode-hook 'jtsx-bind-keys-to-jtsx-jsx-mode-map)
   (add-hook 'jtsx-tsx-mode-hook 'jtsx-bind-keys-to-jtsx-tsx-mode-map))

@@ -211,9 +211,12 @@ bindsym $mod+r mode "resize"
 gaps inner 2px
 default_border pixel
 exec_always --no-startup-id $HOME/.config/polybar/launcher.sh
-exec --no-startup-id feh --bg-scale --randomize $HOME/.config/wpaperd/wallpapers/*
+exec_always --no-startup-id feh --bg-scale --randomize $HOME/.config/wpaperd/wallpapers/*
 exec --no-startup-id picom
-exec_always --no-startup-id xfce4-power-manager
+exec --no-startup-id xfce4-power-manager
+
+exec --no-startup-id i3-msg 'workspace 9; exec /usr/sbin/slack'
+#; exec /usr/sbin/teams-for-linux; exec /usr/sbin/skypeforlinux'
 
 # screenshots
 # https://dev.to/dianjuar/i3wm-screenshot-shortcuts-3n7b
