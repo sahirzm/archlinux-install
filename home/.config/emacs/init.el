@@ -33,9 +33,9 @@
   (auto-package-update-maybe))
 
 ;; set firacode font
-(set-face-attribute 'default nil :font "JetBrainsMono Nerd Font-9")
+(set-face-attribute 'default nil :font "JetBrainsMono Nerd Font-10")
 (add-to-list 'default-frame-alist
-             '(font . "JetBrainsMono Nerd Font-9"))
+             '(font . "JetBrainsMono Nerd Font-10"))
 
 ;; Display line numbers in all buffers
 (global-display-line-numbers-mode 1)
