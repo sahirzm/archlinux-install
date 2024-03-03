@@ -22,6 +22,10 @@
 
 (require 'use-package-ensure)
 
+(unless (package-installed-p 'vc-use-package)
+  (package-vc-install "https://github.com/slotThe/vc-use-package"))
+(require 'vc-use-package)
+
 (eval-and-compile
   (setq use-package-always-ensure t
         use-package-expand-minimally t))
@@ -33,9 +37,9 @@
   (auto-package-update-maybe))
 
 ;; set firacode font
-(set-face-attribute 'default nil :font "JetBrainsMono Nerd Font-10")
+(set-face-attribute 'default nil :font "JetBrainsMono Nerd Font-9")
 (add-to-list 'default-frame-alist
-             '(font . "JetBrainsMono Nerd Font-10"))
+             '(font . "JetBrainsMono Nerd Font-9"))
 
 ;; Display line numbers in all buffers
 (global-display-line-numbers-mode 1)
@@ -268,6 +272,27 @@
 ;; projectile flycheck
 (use-package flycheck-projectile
   :after (projectile flycheck))
+
+;; eglot
+(use-package eglot
+  :custom
+  (fset #'jsonrpc--log-event #'ignore)
+  (eglot-events-buffer-size 0)
+  (eglot-sync-connect nil)
+  (eglot-connect-timeout nil)
+  (eglot-autoshutdown t)
+  (eglot-send-changes-idle-time 3)
+  (flymake-no-changes-timeout 5)
+  (eldoc-echo-area-use-multiline-p nil)
+  (setq eglot-ignored-server-capabilities '( :documentHighlightProvider)))
+
+;; use native eglot booster
+(use-package eglot-booster
+  :ensure t
+  :vc (:fetcher github :repo jdtsmith/eglot-booster)
+  :after eglot
+  :config
+  (eglot-booster-mode))
 
 ;; flycheck-eglot
 (use-package flycheck-eglot
@@ -632,3 +657,16 @@
 
 (provide 'init)
 ;;; init.el ends here
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-vc-selected-packages
+   '((vc-use-package :vc-backend Git :url "https://github.com/slotThe/vc-use-package"))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
