@@ -30,6 +30,7 @@ dockfmt-git
 dunst
 efibootmgr
 emacs
+emacs-lsp-booster-git
 eza
 feh
 filezilla

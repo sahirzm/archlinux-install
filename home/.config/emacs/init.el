@@ -37,9 +37,10 @@
   (auto-package-update-maybe))
 
 ;; set firacode font
-(set-face-attribute 'default nil :font "JetBrainsMono Nerd Font-9")
+(set-face-attribute 'default nil :font "FiraCode Nerd Font-10")
 (add-to-list 'default-frame-alist
-             '(font . "JetBrainsMono Nerd Font-9"))
+             '(font . "FiraCode Nerd Font-10"))
+(setq line-spacing 0.1)
 
 ;; Display line numbers in all buffers
 (global-display-line-numbers-mode 1)
@@ -131,8 +132,9 @@
   :config
   ;; Global settings (defaults)
   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-        doom-themes-enable-italic t) ; if nil, italics is universally disabled
-  (load-theme 'doom-nord t)
+        doom-themes-enable-italic t
+        doom-themes-padded-modeline 5) ; if nil, italics is universally disabled
+  (load-theme 'doom-one t)
 
   ;; Enable flashing mode-line on errors
   (doom-themes-visual-bell-config)

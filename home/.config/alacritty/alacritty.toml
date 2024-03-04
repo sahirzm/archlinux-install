@@ -8,18 +8,18 @@ import = [
 TERM = "xterm-256color"
 
 [font]
-size = 9
+size = 10
 
 [font.bold_italic]
-family = "JetBrainsMono Nerd Font"
+family = "FiraCode Nerd Font"
 style = "Bold Italic"
 
 [font.italic]
-family = "JetBrainsMono Nerd Font"
+family = "FiraCode Nerd Font"
 style = "Italic"
 
 [font.normal]
-family = "JetBrainsMono Nerd Font"
+family = "FiraCode Nerd Font"
 style = "Medium"
 
 [selection]
