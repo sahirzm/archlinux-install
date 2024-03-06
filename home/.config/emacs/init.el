@@ -37,9 +37,9 @@
   (auto-package-update-maybe))
 
 ;; set firacode font
-(set-face-attribute 'default nil :font "FiraCode Nerd Font-10")
+(set-face-attribute 'default nil :font "FiraCode Nerd Font-11")
 (add-to-list 'default-frame-alist
-             '(font . "FiraCode Nerd Font-10"))
+             '(font . "FiraCode Nerd Font-11"))
 (setq line-spacing 0.1)
 
 ;; Display line numbers in all buffers
@@ -132,8 +132,7 @@
   :config
   ;; Global settings (defaults)
   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-        doom-themes-enable-italic t
-        doom-themes-padded-modeline 5) ; if nil, italics is universally disabled
+        doom-themes-enable-italic t) ; if nil, italics is universally disabled
   (load-theme 'doom-one t)
 
   ;; Enable flashing mode-line on errors
@@ -149,17 +148,22 @@
 ;; modeline
 (use-package doom-modeline
   :after (doom-themes)
-  :init (doom-modeline-mode 1))
+  :init
+  (doom-modeline-mode 1)
+  :config
+  (setq doom-modeline-height 30
+        doom-modeline-project-detection 'auto
+        doom-modeline-persp-name t))
 
 ;; vertico
 (use-package vertico
   :bind
   (:map vertico-map
-	      ("C-j" . vertico-next)
-	      ("C-k" . vertico-previous)
-	      ("C-f" . vertico-exit)
-	      :map minibuffer-local-map
-	      ("M-h" . backward-kill-word))
+	("C-j" . vertico-next)
+	("C-k" . vertico-previous)
+	("C-f" . vertico-exit)
+	:map minibuffer-local-map
+	("M-h" . backward-kill-word))
   :custom
   (vertico-cycle t)
   :init
@@ -262,12 +266,19 @@
     (dired-rainbow-define-chmod executable-unix "#38c172" "-.*x.*")
     ))
 
+;; perspective for workspaces
+(use-package perspective
+  :custom
+  (persp-mode-prefix-key (kbd "C-c M-p"))  ; pick your own prefix key here
+  :init
+  (persp-mode))
+
 ;; Projectile
 (use-package projectile
   :init
   (projectile-mode +1)
   :bind (:map projectile-mode-map
-	            ("C-c p" . projectile-command-map))
+	      ("C-c p" . projectile-command-map))
   :config
   (setq projectile-project-search-path '("~/workspace/")))
 
@@ -310,6 +321,7 @@
 
 ;; completions
 (use-package consult
+  :after perspective
   ;; Replace bindings. Lazily loaded due by `use-package'.
   :bind (;; C-c bindings in `mode-specific-map'
          ("C-c M-x" . consult-mode-command)
@@ -317,7 +329,7 @@
          ("C-c k" . consult-kmacro)
          ("C-c m" . consult-man)
          ("C-c i" . consult-info)
-	       ("C-c r" . consult-recent-file)
+	 ("C-c r" . consult-recent-file)
          ([remap Info-search] . consult-info)
          ;; C-x bindings in `ctl-x-map'
          ("C-x M-:" . consult-complex-command)     ;; orig. repeat-complex-command
@@ -401,6 +413,7 @@
    consult-bookmark consult-recent-file consult-xref
    consult--source-bookmark consult--source-file-register
    consult--source-recent-file consult--source-project-recent-file
+   consult--source-buffer :hidden t :default nil
    ;; :preview-key "M-."
    :preview-key '(:debounce 0.4 any))
 
@@ -411,6 +424,9 @@
   ;; Optionally make narrowing help available in the minibuffer.
   ;; You may want to use `embark-prefix-help-command' or which-key instead.
   ;; (define-key consult-narrow-map (vconcat consult-narrow-key "?") #'consult-narrow-help)
+
+  ;; use consult to display buffers based on perspective.el
+  (add-to-list 'consult-buffer-sources 'persp-consult-source)
 
   ;; By default `consult-project-function' uses `project-root' from project.el.
   ;; Optionally configure a different project root function.
@@ -430,8 +446,8 @@
 (use-package consult-flycheck
   :after consult
   :bind (
-	       ("M-g f" . consult-flycheck)               ;; Alternative: consult-flycheck
-	       ))
+	 ("M-g f" . consult-flycheck)               ;; Alternative: consult-flycheck
+	 ))
 
 ;; Enable rich annotations using the Marginalia package
 (use-package marginalia
@@ -530,11 +546,11 @@
               (cons
                lombok-path
                '("-XX:+UseParallelGC"
-	               "-XX:GCTimeRatio=4"
-	               "-XX:AdaptiveSizePolicyWeight=90"
-	               "-Dsun.zip.disableMemoryMapping=true"
-	               "-Xmx4G"
-	               "-Xms100m")))
+	         "-XX:GCTimeRatio=4"
+	         "-XX:AdaptiveSizePolicyWeight=90"
+	         "-Dsun.zip.disableMemoryMapping=true"
+	         "-Xmx4G"
+	         "-Xms100m")))
 (setq-default lsp-java-configuration-runtimes '[(:name "JavaSE-17"
                                                        :path "/home/sahir/.sdkman/candidates/java/17.0.10-amzn/"
                                                        :default t)])
@@ -553,7 +569,7 @@
 (use-package typescript-ts-mode
   :mode (("\\.ts\\'" . typescript-ts-mode))
   :hook ((typescript-ts-mode . eglot-ensure)
-	       (tsx-ts-mode . eglot-ensure))
+	 (tsx-ts-mode . eglot-ensure))
   :config
   (setq-default typescript-indent-level 'tab-width)
   (setq typescript-ts-mode-indent-offset 'tab-width)
