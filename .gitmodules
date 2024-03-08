@@ -4,3 +4,6 @@
 [submodule "home/.config/ranger/plugins/ranger_devicons"]
 	path = home/.config/ranger/plugins/ranger_devicons
 	url = https://github.com/alexanderjeurissen/ranger_devicons
+[submodule "home/.config/alacritty/themes"]
+	path = home/.config/alacritty/themes
+	url = https://github.com/alacritty/alacritty-theme.git
