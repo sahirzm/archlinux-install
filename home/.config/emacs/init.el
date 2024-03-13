@@ -65,9 +65,13 @@
 (defvaralias 'css-indent-offset 'tab-width)
 
 ;; indent guides
-(use-package highlight-indentation
+(use-package highlight-indent-guides
+  :config
+  (setq highlight-indent-guides-method 'character
+        highlight-indent-guides-auto-character-face-perc 50
+        highlight-indent-guides-responsive 'top)
   :hook
-  (prog-mode . highlight-indentation-mode))
+  (prog-mode . highlight-indent-guides-mode))
 
 ;; fix shell path
 (use-package exec-path-from-shell
