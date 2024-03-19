@@ -580,6 +580,22 @@
 (setq-default lsp-java-configuration-runtimes '[(:name "JavaSE-17"
                                                        :path "/home/sahir/.sdkman/candidates/java/17.0.10-amzn/"
                                                        :default t)])
+(use-package eglot-java
+  :config
+  (setq eglot-java-user-init-opts-fn 'custom-eglot-java-init-opts)
+  (defun custom-eglot-java-init-opts (server eglot-java-eclipse-jdt)
+    ;;   "Custom options that will be merged with default settings."
+    '( ;;:bundles ["/home/me/.emacs.d/lsp-bundles/com.microsoft.java.debug.plugin-0.50.0.jar"]
+      :settings
+      (:java
+       (:format
+        (:settings
+         (:url "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml")
+         :enabled t))))))
+
+(use-package editorconfig
+  :config
+  (editorconfig-mode 1))
 
 ;; Kotlin
 (use-package kotlin-mode
