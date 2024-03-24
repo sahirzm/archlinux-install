@@ -64,7 +64,6 @@ export PATH=$ANDROID_HOME/platform-tools:$PATH
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-export FZF_DEFAULT_COMMAND='ag --type f'
 export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
