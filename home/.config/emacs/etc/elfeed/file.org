@@ -15,8 +15,22 @@
 *** [[https://blog.frankel.ch/feed.xml][Java Geek]]
 *** [[https://jenkov.com/rss.xml][Jenkov]]
 *** [[https://blog.jetbrains.com/feed/][Jetbrains]]
+*** [[https://feeds.dzone.com/java][Dzone]]
+*** [[http://www.javaperformancetuning.com/newsletters.rss][Java Performance Tuning]]
+** Software Architecture :software architecture:
+*** [[https://feeds.dzone.com/cloud-architecture][Dzone Cloud Architecture]]
+*** [[https://feeds.dzone.com/containers][Dzone Containers]]
+*** [[https://feeds.dzone.com/microservices][Dzone Microservices]]
+*** [[https://reflectoring.io/index.xml][Reflectoring.io]]
+** Data/Database :data: :database:
+*** [[https://feeds.dzone.com/data][Dzone Data]]
+*** [[https://feeds.dzone.com/databases][Dzone Database]]
+*** [[https://db-engines.com/en/rss/blog.xml][DB engines]]
+*** [[https://planet.postgresql.org/rss20_short.xml][Planet Postgresql]]
+*** [[https://www.percona.com/blog/feed/][Percona]]
 ** Javascript :javascript: :js:
 *** [[http://jquery.com/blog/feed/][JQuery]]
+*** [[https://feeds.dzone.com/javascript][Dzone]]
 ** Android :android:
 *** [[http://feeds.feedburner.com/blogspot/hsDu][Android Developers Blog]]
 ** Linux :linux:
@@ -26,3 +40,11 @@
 ** Tech :tech:
 *** [[http://googleblog.blogspot.com/atom.xml][Google Blog]]
 *** [[http://code.google.com/feeds/updates.xml][Google Developers]]
+** OE
+*** [[https://feeds.dzone.com/monitoring-and-observability][Dzone Monitoring and Observability]]
+** Software Testing
+*** [[https://feeds.dzone.com/testing-tools-and-frameworks][Dzone]]
+*** [[https://feeds.feedburner.com/blogspot/RLXA][Google testing blog]]
+*** [[https://developsense.com/feed][Develop Sense]]
+** Other software aspects
+*** [[https://feeds.dzone.com/frameworks][Dzone frameworks]]
