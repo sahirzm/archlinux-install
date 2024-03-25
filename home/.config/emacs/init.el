@@ -715,6 +715,20 @@
 (use-package multi-vterm
   :after (vterm))
 
+;; elfeed
+(use-package elfeed
+  :bind
+  (("C-x w" . elfeed)))
+(use-package elfeed-org
+  :after (elfeed)
+  :config
+  (setq rmh-elfeed-org-files (list "~/.config/emacs/etc/elfeed/file.org"))
+  (elfeed-org))
+(use-package elfeed-goodies
+  :after (elfeed)
+  :config
+  (elfeed-goodies/setup))
+
 (provide 'init)
 ;;; init.el ends here
 (custom-set-variables

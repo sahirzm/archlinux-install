@@ -1,0 +1,19 @@
+* root :elfeed:
+** Java :java:
+*** [[http://feeds.feedburner.com/Baeldung][Baeldung]]
+*** [[http://martinfowler.com/bliki/bliki.atom][Martin Fowler]]
+*** [[http://www.takipiblog.com/feed/][Overops]]
+*** [[http://www.adam-bien.com/roller/abien/feed/entries/atom][Adam Bien]]
+*** [[http://spring.io/blog.atom][Spring]]
+** Javascript :javascript: :js:
+*** [[http://jquery.com/blog/feed/][JQuery]]
+** Android :android:
+*** [[http://feeds.feedburner.com/blogspot/hsDu][Android Developers Blog]]
+** Linux :linux:
+*** [[http://feeds.feedburner.com/d0od][OMG Ubuntu]]
+** Internet of things :iot:
+*** [[http://feeds.dzone.com/iot][Dzone IOT]]
+*** [[http://www.raspberrypi.org/feed][Raspberry PI]]
+** Tech :tech:
+*** [[http://googleblog.blogspot.com/atom.xml][Google Blog]]
+*** [[http://code.google.com/feeds/updates.xml][Google Developers]]
