@@ -717,6 +717,11 @@
 
 ;; elfeed
 (use-package elfeed
+  :config
+  (setq elfeed-search-filter "@2-week-ago "
+        elfeed-show-entry-switch #'pop-to-buffer
+        elfeed-show-entry-delete #'+rss/delete-pane
+        shr-max-image-proportion 0.8)
   :bind
   (("C-x w" . elfeed)))
 (use-package elfeed-org

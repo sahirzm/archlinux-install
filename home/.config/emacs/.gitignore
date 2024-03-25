@@ -19,3 +19,4 @@ tree-sitter/
 projectile.cache
 lock-files/
 backups/
+url/
