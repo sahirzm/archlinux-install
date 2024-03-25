@@ -2,15 +2,24 @@
 ** Java :java:
 *** [[http://feeds.feedburner.com/Baeldung][Baeldung]]
 *** [[http://martinfowler.com/bliki/bliki.atom][Martin Fowler]]
-*** [[http://www.takipiblog.com/feed/][Overops]]
 *** [[http://www.adam-bien.com/roller/abien/feed/entries/atom][Adam Bien]]
 *** [[http://spring.io/blog.atom][Spring]]
+*** [[https://www.javaspecialists.eu/archive/tjsn.rss][Java Specialist]]
+*** [[https://feeds.feedburner.com/Javarevisited][Java Revisited]]
+*** [[https://feeds.feedburner.com/StephenColebournesBlog][Stephen Colebournes Blog]]
+*** [[https://blog.jooq.org/feed/][JOOQ Blog]]
+*** [[https://feeds.feedblitz.com/PetriKainulainen][Petri Kainulainen Blog]]
+*** [[https://vladmihalcea.com/feed/][Vlad Mihalcea Blog]]
+*** [[https://nipafx.dev/feed.xml][NipaFx]]
+*** [[https://thorben-janssen.com/feed/][Thorben Janssen Blog]]
+*** [[https://blog.frankel.ch/feed.xml][Java Geek]]
+*** [[https://jenkov.com/rss.xml][Jenkov]]
+*** [[https://blog.jetbrains.com/feed/][Jetbrains]]
 ** Javascript :javascript: :js:
 *** [[http://jquery.com/blog/feed/][JQuery]]
 ** Android :android:
 *** [[http://feeds.feedburner.com/blogspot/hsDu][Android Developers Blog]]
 ** Linux :linux:
-*** [[http://feeds.feedburner.com/d0od][OMG Ubuntu]]
 ** Internet of things :iot:
 *** [[http://feeds.dzone.com/iot][Dzone IOT]]
 *** [[http://www.raspberrypi.org/feed][Raspberry PI]]
