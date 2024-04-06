@@ -564,7 +564,7 @@
 
 (use-package treesit-auto
   :config
-  (setq treesit-auto-install 'prompt)
+  (setq treesit-auto-install t)
   (global-treesit-auto-mode))
 
 (use-package flycheck
@@ -578,7 +578,7 @@
     (concat
      "-javaagent:"
      (expand-file-name
-      "~/.config/emacs/etc/lombok/lombok-1.18.28.jar")))
+      "~/.config/emacs/etc/lombok/lombok-1.18.32.jar")))
   (setq-default eglot-java-eclipse-jdt-args
                 (cons
                  lombok-path
