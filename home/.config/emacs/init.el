@@ -319,6 +319,14 @@
   :config
   (global-flycheck-eglot-mode 1))
 
+(use-package consult-eglot
+  :after (consult eglot))
+
+(use-package consult-eglot-embark
+  :after (embark consult-eglot)
+  :config
+  (consult-eglot-embark-mode))
+
 (use-package which-key
   :init
   (which-key-mode))
@@ -564,39 +572,41 @@
 
 (use-package yasnippet :config (yas-global-mode))
 
-(add-hook 'java-mode-hook 'eglot-ensure)
-(add-hook 'java-ts-mode-hook 'eglot-ensure)
-(defvar lombok-path
-  (concat
-   "-javaagent:"
-   (expand-file-name
-    "~/.config/emacs/libs/lombok/lombok-1.18.28.jar")))
-
-(setq-default eglot-java-eclipse-jdt-args
-              (cons
-               lombok-path
-               '("-XX:+UseParallelGC"
-	         "-XX:GCTimeRatio=4"
-	         "-XX:AdaptiveSizePolicyWeight=90"
-	         "-Dsun.zip.disableMemoryMapping=true"
-	         "-Xmx4G"
-	         "-Xms100m")))
-
-(setq-default lsp-java-configuration-runtimes '[(:name "JavaSE-17"
-                                                       :path "/home/sahir/.sdkman/candidates/java/17.0.10-amzn/"
-                                                       :default t)])
 (use-package eglot-java
   :config
+  (defvar lombok-path
+    (concat
+     "-javaagent:"
+     (expand-file-name
+      "~/.config/emacs/etc/lombok/lombok-1.18.28.jar")))
+  (setq-default eglot-java-eclipse-jdt-args
+                (cons
+                 lombok-path
+                 '("-XX:+UseParallelGC"
+	           "-XX:GCTimeRatio=4"
+	           "-XX:AdaptiveSizePolicyWeight=90"
+	           "-Dsun.zip.disableMemoryMapping=true"
+	           "-Xmx4G"
+	           "-Xms1G")))
+  (setq-default lsp-java-configuration-runtimes '[(:name "JavaSE-17"
+                                                         :path "/home/sahir/.sdkman/candidates/java/17.0.10-amzn/"
+                                                         :default t)])
   (setq eglot-java-user-init-opts-fn 'custom-eglot-java-init-opts)
   (defun custom-eglot-java-init-opts (server eglot-java-eclipse-jdt)
     ;;   "Custom options that will be merged with default settings."
-    '( ;;:bundles ["/home/me/.emacs.d/lsp-bundles/com.microsoft.java.debug.plugin-0.50.0.jar"]
-      :settings
+    '(:settings
       (:java
+       ;;(:jdt
+       ;; (:ls
+       ;;  (:lombokSupport
+       ;;   (:enabled t))))
        (:format
         (:settings
-         (:url "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml")
-         :enabled t))))))
+         (:url "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-;;style.xml")
+         :enabled t)))))
+  :hook
+  (java-mode . eglot-java-mode)
+  (java-ts-mode  . eglot-java-mode))
 
 (use-package editorconfig
   :config
@@ -604,7 +614,8 @@
 
 ;; Kotlin
 (use-package kotlin-mode
-  :hook (kotlin-mode . eglot-ensure)
+  :hook
+  (kotlin-mode . eglot-ensure)
   :config
   (setq-default lsp-kotlin-debug-adapter-enabled t))
 
