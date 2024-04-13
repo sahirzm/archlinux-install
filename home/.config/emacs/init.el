@@ -163,11 +163,11 @@
 (use-package vertico
   :bind
   (:map vertico-map
-	("C-j" . vertico-next)
-	("C-k" . vertico-previous)
-	("C-f" . vertico-exit)
-	:map minibuffer-local-map
-	("M-h" . backward-kill-word))
+	      ("C-j" . vertico-next)
+	      ("C-k" . vertico-previous)
+	      ("C-f" . vertico-exit)
+	      :map minibuffer-local-map
+	      ("M-h" . backward-kill-word))
   :custom
   (vertico-cycle t)
   :init
@@ -282,7 +282,7 @@
   :init
   (projectile-mode +1)
   :bind (:map projectile-mode-map
-	      ("C-c p" . projectile-command-map))
+	            ("C-c p" . projectile-command-map))
   :config
   (setq projectile-project-search-path '("~/workspace/")))
 
@@ -348,7 +348,7 @@
          ("C-c k" . consult-kmacro)
          ("C-c m" . consult-man)
          ("C-c i" . consult-info)
-	 ("C-c r" . consult-recent-file)
+	       ("C-c r" . consult-recent-file)
          ([remap Info-search] . consult-info)
          ;; C-x bindings in `ctl-x-map'
          ("C-x M-:" . consult-complex-command)     ;; orig. repeat-complex-command
@@ -465,8 +465,8 @@
 (use-package consult-flycheck
   :after consult
   :bind (
-	 ("M-g f" . consult-flycheck)               ;; Alternative: consult-flycheck
-	 ))
+	       ("M-g f" . consult-flycheck)               ;; Alternative: consult-flycheck
+	       ))
 
 ;; Enable rich annotations using the Marginalia package
 (use-package marginalia
@@ -531,7 +531,6 @@
   (add-to-list 'completion-at-point-functions #'cape-abbrev)
   (add-to-list 'completion-at-point-functions #'cape-file)
   (add-to-list 'completion-at-point-functions #'cape-elisp-block)
-  (add-to-list 'completion-at-point-functions #'cape-elisp-symbol)
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
   (add-to-list 'completion-at-point-functions #'cape-dict))
 
@@ -583,11 +582,11 @@
                 (cons
                  lombok-path
                  '("-XX:+UseParallelGC"
-	           "-XX:GCTimeRatio=4"
-	           "-XX:AdaptiveSizePolicyWeight=90"
-	           "-Dsun.zip.disableMemoryMapping=true"
-	           "-Xmx4G"
-	           "-Xms1G")))
+	                 "-XX:GCTimeRatio=4"
+	                 "-XX:AdaptiveSizePolicyWeight=90"
+	                 "-Dsun.zip.disableMemoryMapping=true"
+	                 "-Xmx4G"
+	                 "-Xms1G")))
   (setq-default lsp-java-configuration-runtimes '[(:name "JavaSE-17"
                                                          :path "/home/sahir/.sdkman/candidates/java/17.0.10-amzn/"
                                                          :default t)])
@@ -613,11 +612,10 @@
   (editorconfig-mode 1))
 
 ;; Kotlin
-(use-package kotlin-mode
+(use-package kotlin-ts-mode
+  :mode ("\\.kts?\\" . kotlin-ts-mode)
   :hook
-  (kotlin-mode . eglot-ensure)
-  :config
-  (setq-default lsp-kotlin-debug-adapter-enabled t))
+  (kotlin-ts-mode . eglot-ensure))
 
 (use-package flycheck-kotlin
   :hook
@@ -627,7 +625,7 @@
 (use-package typescript-ts-mode
   :mode (("\\.ts\\'" . typescript-ts-mode))
   :hook ((typescript-ts-mode . eglot-ensure)
-	 (tsx-ts-mode . eglot-ensure))
+	       (tsx-ts-mode . eglot-ensure))
   :config
   (setq-default typescript-indent-level 'tab-width)
   (setq typescript-ts-mode-indent-offset 'tab-width)
@@ -725,17 +723,19 @@
   (setq magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1))
 
 ;; lib vterm
-(use-package vterm)
+(use-package vterm
+  :custom
+  (vterm-always-compile-module t))
 (use-package multi-vterm
   :after (vterm))
 
 ;; elfeed
 (use-package elfeed
-  :config
-  (setq elfeed-search-filter "@2-week-ago "
-        elfeed-show-entry-switch #'pop-to-buffer
-        elfeed-show-entry-delete #'+rss/delete-pane
-        shr-max-image-proportion 0.8)
+  :custom
+  (elfeed-search-filter "@2-week-ago")
+  (elfeed-show-entry-switch #'pop-to-buffer)
+  (elfeed-show-entry-delete #'+rss/delete-pane)
+  (shr-max-image-proportion 0.8)
   :bind
   (("C-x w" . elfeed)))
 (use-package elfeed-org
