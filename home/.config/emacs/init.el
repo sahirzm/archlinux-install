@@ -613,7 +613,7 @@
 
 ;; Kotlin
 (use-package kotlin-ts-mode
-  :mode ("\\.kts?\\" . kotlin-ts-mode)
+  :mode ("\\.kts?\\'" . kotlin-ts-mode)
   :hook
   (kotlin-ts-mode . eglot-ensure))
 
