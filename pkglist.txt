@@ -27,10 +27,11 @@ docker
 docker-compose
 docker-rootless-extras
 dockfmt-git
+downgrade
 dunst
 efibootmgr
-emacs
 emacs-lsp-booster-git
+emacs-nativecomp
 eza
 feh
 filezilla

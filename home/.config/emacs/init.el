@@ -28,12 +28,15 @@
 
 (eval-and-compile
   (setq use-package-always-ensure t
-        use-package-expand-minimally t))
+        use-package-expand-minimally t
+        package-native-compile t
+        native-comp-async-report-warnings-errors nil))
 
 (use-package auto-package-update
+  :custom
+  (auto-package-update-delete-old-versions t)
+  (auto-package-update-hide-results t)
   :config
-  (setq auto-package-update-delete-old-versions t
-        auto-package-update-hide-results t)
   (auto-package-update-maybe))
 
 ;; set firacode font
@@ -163,11 +166,11 @@
 (use-package vertico
   :bind
   (:map vertico-map
-	      ("C-j" . vertico-next)
-	      ("C-k" . vertico-previous)
-	      ("C-f" . vertico-exit)
-	      :map minibuffer-local-map
-	      ("M-h" . backward-kill-word))
+	("C-j" . vertico-next)
+	("C-k" . vertico-previous)
+	("C-f" . vertico-exit)
+	:map minibuffer-local-map
+	("M-h" . backward-kill-word))
   :custom
   (vertico-cycle t)
   :init
@@ -282,7 +285,7 @@
   :init
   (projectile-mode +1)
   :bind (:map projectile-mode-map
-	            ("C-c p" . projectile-command-map))
+	      ("C-c p" . projectile-command-map))
   :config
   (setq projectile-project-search-path '("~/workspace/")))
 
@@ -348,7 +351,7 @@
          ("C-c k" . consult-kmacro)
          ("C-c m" . consult-man)
          ("C-c i" . consult-info)
-	       ("C-c r" . consult-recent-file)
+	 ("C-c r" . consult-recent-file)
          ([remap Info-search] . consult-info)
          ;; C-x bindings in `ctl-x-map'
          ("C-x M-:" . consult-complex-command)     ;; orig. repeat-complex-command
@@ -465,8 +468,8 @@
 (use-package consult-flycheck
   :after consult
   :bind (
-	       ("M-g f" . consult-flycheck)               ;; Alternative: consult-flycheck
-	       ))
+	 ("M-g f" . consult-flycheck)               ;; Alternative: consult-flycheck
+	 ))
 
 ;; Enable rich annotations using the Marginalia package
 (use-package marginalia
@@ -582,11 +585,11 @@
                 (cons
                  lombok-path
                  '("-XX:+UseParallelGC"
-	                 "-XX:GCTimeRatio=4"
-	                 "-XX:AdaptiveSizePolicyWeight=90"
-	                 "-Dsun.zip.disableMemoryMapping=true"
-	                 "-Xmx4G"
-	                 "-Xms1G")))
+	           "-XX:GCTimeRatio=4"
+	           "-XX:AdaptiveSizePolicyWeight=90"
+	           "-Dsun.zip.disableMemoryMapping=true"
+	           "-Xmx4G"
+	           "-Xms1G")))
   (setq-default lsp-java-configuration-runtimes '[(:name "JavaSE-17"
                                                          :path "/home/sahir/.sdkman/candidates/java/17.0.10-amzn/"
                                                          :default t)])
@@ -625,7 +628,7 @@
 (use-package typescript-ts-mode
   :mode (("\\.ts\\'" . typescript-ts-mode))
   :hook ((typescript-ts-mode . eglot-ensure)
-	       (tsx-ts-mode . eglot-ensure))
+	 (tsx-ts-mode . eglot-ensure))
   :config
   (setq-default typescript-indent-level 'tab-width)
   (setq typescript-ts-mode-indent-offset 'tab-width)
