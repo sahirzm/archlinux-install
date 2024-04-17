@@ -157,10 +157,10 @@
   :after (doom-themes)
   :init
   (doom-modeline-mode 1)
-  :config
-  (setq doom-modeline-height 30
-        doom-modeline-project-detection 'auto
-        doom-modeline-persp-name t))
+  :custom
+  (doom-modeline-height 30)
+  (doom-modeline-project-detection 'auto)
+  (doom-modeline-persp-name t))
 
 ;; vertico
 (use-package vertico
@@ -728,7 +728,10 @@
 ;; lib vterm
 (use-package vterm
   :custom
-  (vterm-always-compile-module t))
+  (vterm-always-compile-module t)
+  (display-fill-column-indicator nil)
+  (display-line-numbers-mode nil)
+  (global-display-line-numbers-mode nil))
 (use-package multi-vterm
   :after (vterm))
 
