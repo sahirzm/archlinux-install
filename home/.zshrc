@@ -14,11 +14,10 @@ alias vi=nvim
 alias vim=nvim
 alias cdk='npx cdk'
 alias rm='rm -i'
-# alias ls="lsd -l"
 alias exa="exa -l --icons"
 alias ls="exa"
-export EDITOR="nvim"
-export VISUAL="nvim"
+export EDITOR="emacsclient -t -a emacs"
+export VISUAL="emacsclient -c -a emacs"
 
 # autocomplete
 autoload -Uz compinit
@@ -47,8 +46,14 @@ export SAVEHIST=10000
 export HISTFILE=~/.zsh_history
 
 setopt HIST_FIND_NO_DUPS
-# following should be turned off, if sharing history via setopt SHARE_HISTORY
-setopt INC_APPEND_HISTORY
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_SAVE_NO_DUPS
+setopt APPEND_HISTORY
+setopt SHARE_HISTORY
+
+bindkey -e
 
 # paths
 export PATH="$HOME/tools/local/bin:$HOME/.local/bin:/snap/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"

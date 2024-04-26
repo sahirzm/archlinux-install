@@ -66,6 +66,7 @@ lxappearance
 lxsession-gtk3
 maim
 mpd
+neofetch
 neovim
 networkmanager
 nginx-config-formatter
