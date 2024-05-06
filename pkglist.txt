@@ -114,7 +114,6 @@ stow
 sudo
 system-config-printer
 tamsyn-font
-teams-for-linux
 the_silver_searcher
 thunar
 thunar-archive-plugin
