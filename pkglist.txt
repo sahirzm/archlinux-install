@@ -28,8 +28,10 @@ docker
 docker-compose
 docker-rootless-extras
 dockfmt-git
+dos2unix
 downgrade
 dunst
+editorconfig-core-c
 efibootmgr
 emacs-lsp-booster-git
 emacs-nativecomp
@@ -38,6 +40,7 @@ fd
 feh
 filezilla
 firefox
+fuse-overlayfs
 fzf
 ghostscript
 gimp
@@ -105,10 +108,14 @@ pipewire-jack
 pipewire-pulse
 pipewire-zeroconf
 playerctl
-polkit
 polybar
+python-black
+python-isort
 python-pip
+python-pipenv
+python-poetry
 python-psutil
+python-pyflakes
 qt5-graphicaleffects
 qt5-quickcontrols2
 ranger
@@ -118,11 +125,9 @@ rofi-power-menu
 sddm
 shellcheck
 shfmt
-skypeforlinux-stable-bin
 slack-desktop
 stow
 stylelint
-sudo
 system-config-printer
 tamsyn-font
 texlive-basic
