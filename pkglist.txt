@@ -206,6 +206,7 @@ wireplumber
 xclip
 xdg-user-dirs
 xdotool
+xfce4-power-manager
 xorg-bdftopcf
 xorg-docs
 xorg-font-util
@@ -255,6 +256,7 @@ xorg-xwininfo
 xorg-xwud
 xsel
 yaml-language-server
+zellij
 zip
 zsh
 zsh-antidote
