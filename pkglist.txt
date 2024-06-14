@@ -138,6 +138,7 @@ thunar
 thunar-archive-plugin
 thunar-volman
 tidy
+tldr
 tmux
 ttf-3270-nerd
 ttf-agave-nerd
@@ -258,6 +259,7 @@ xsel
 yaml-language-server
 zellij
 zip
+zoxide
 zsh
 zsh-antidote
 zsh-completions

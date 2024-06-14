@@ -2,6 +2,10 @@ if [ -x /usr/bin/neofetch ]; then
     neofetch
 fi
 
+include () {
+  [[ -f "$1" ]] && source "$1"
+}
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -16,8 +20,9 @@ alias cdk='npx cdk'
 alias rm='rm -i'
 alias exa="exa -l --icons"
 alias ls="exa"
-export EDITOR="emacsclient -t -a emacs"
-export VISUAL="emacsclient -c -a emacs"
+alias cat='bat'
+export EDITOR="nvim"
+export VISUAL="nvim"
 
 # autocomplete
 autoload -Uz compinit
@@ -39,6 +44,8 @@ fi
 # source antidote
 source '/usr/share/zsh-antidote/antidote.zsh'
 
+eval "$(zoxide init zsh --cmd cd)"
+
 # history
 export HISTFILESIZE=10000
 export HISTSIZE=10000
@@ -53,7 +60,7 @@ setopt HIST_SAVE_NO_DUPS
 setopt APPEND_HISTORY
 setopt SHARE_HISTORY
 
-bindkey -e
+bindkey -v
 
 # paths
 export PATH="$HOME/tools/local/bin:$HOME/.local/bin:/snap/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
@@ -73,15 +80,23 @@ export PATH=$HOME/.cargo/bin:$PATH
 
 export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
 
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
-
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 . $(pack completion --shell zsh)
+
+# FZF
+export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --follow --exclude .git'
+include /usr/share/fzf/completion.zsh
+include /usr/share/fzf/key-bindings.zsh
+bindkey '^E' fzf-file-widget
+
+export BAT_THEME=Coldark-Dark
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 # initialize plugins statically with ~/.zsh_plugins.txt
 antidote load
