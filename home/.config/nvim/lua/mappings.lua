@@ -12,3 +12,11 @@ map("v", ">", ">gv", { desc = "indent"})
 -- keybindings for motion - leap.nvim
 map({"n", "x", "o"}, "s", "<Plug>(leap-forward)")
 map({"n", "x", "o"}, "S", "<Plug>(leap-backward)")
+
+-- ranger
+map("n", "<leader>ef", "", {
+  noremap = true,
+  callback = function()
+    require("ranger-nvim").open(true)
+  end,
+})
