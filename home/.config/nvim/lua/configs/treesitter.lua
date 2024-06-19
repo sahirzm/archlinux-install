@@ -45,6 +45,9 @@ local opts = {
     --   "python"
     -- },
   },
+  highlight = {
+    enable = true,
+  },
 }
 
 return opts
