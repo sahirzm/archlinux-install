@@ -1,5 +1,4 @@
 zsh-users/zsh-autosuggestions
-romkatv/powerlevel10k
 zsh-users/zsh-completions
 zsh-users/zsh-syntax-highlighting
 belak/zsh-utils path:completion

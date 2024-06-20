@@ -3,8 +3,9 @@ local options = {
     lua = { "stylua" },
     css = { "prettier" },
     html = { "prettier" },
-    jsx = { "prettier"},
+    jsx = { "prettier" },
     javascript = { "prettier" },
+    sql = { "sql_formatter" },
     ["_"] = { "trim_whitespace" },
   },
 

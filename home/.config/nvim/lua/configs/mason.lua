@@ -1,4 +1,4 @@
-local opts  = {
+local opts = {
   ensure_installed = {
     -- lsp
     "awk-language-server",
@@ -25,6 +25,7 @@ local opts  = {
     "google-java-format",
     "prettier",
     "stylua",
+    "sql-formatter",
     -- linter
     "checkstyle",
     "editorconfig-checker",
@@ -39,4 +40,4 @@ local opts  = {
   },
 }
 
-return opts;
+return opts

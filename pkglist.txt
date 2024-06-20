@@ -126,6 +126,7 @@ sddm
 shellcheck
 shfmt
 slack-desktop
+starship
 stow
 stylelint
 system-config-printer
