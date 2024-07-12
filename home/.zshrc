@@ -82,7 +82,7 @@ export NVM_DIR="$HOME/.nvm"
 export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --follow --exclude .git'
 include /usr/share/fzf/completion.zsh
 include /usr/share/fzf/key-bindings.zsh
-bindkey '^E' fzf-file-widget
+bindkey '^F' fzf-file-widget
 
 export BAT_THEME=Coldark-Dark
 
