@@ -10,6 +10,7 @@ base
 base-devel
 bat
 bc
+bind
 blueberry
 blueman
 bluez-utils
@@ -123,6 +124,7 @@ ranger
 ripgrep
 rofi
 rofi-power-menu
+s3cmd
 sddm
 shellcheck
 shfmt

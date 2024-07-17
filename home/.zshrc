@@ -9,8 +9,6 @@ include () {
 eval "$(starship init zsh)"
 
 # aliases
-alias vi=nvim
-alias vim=nvim
 alias cdk='npx cdk'
 alias rm='rm -i'
 alias exa="exa -l --icons"
@@ -18,23 +16,6 @@ alias ls="exa"
 alias cat='bat'
 export EDITOR="nvim"
 export VISUAL="nvim"
-
-# autocomplete
-autoload -Uz compinit
-ZSH_COMPDUMP=${ZSH_COMPDUMP:-${ZDOTDIR:-~}/.zcompdump}
-
-# cache .zcompdump for about a day
-if [[ $ZSH_COMPDUMP(#qNmh-20) ]]; then
-  compinit -C -d "$ZSH_COMPDUMP"
-else
-  compinit -i -d "$ZSH_COMPDUMP"; touch "$ZSH_COMPDUMP"
-fi
-{
-  # compile .zcompdump
-  if [[ -s "$ZSH_COMPDUMP" && (! -s "${ZSH_COMPDUMP}.zwc" || "$ZSH_COMPDUMP" -nt "${ZSH_COMPDUMP}.zwc") ]]; then
-    zcompile "$ZSH_COMPDUMP"
-  fi
-} &!
 
 # source antidote
 source '/usr/share/zsh-antidote/antidote.zsh'
@@ -79,6 +60,29 @@ export NVM_DIR="$HOME/.nvm"
 . $(pack completion --shell zsh)
 
 # FZF
+export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
+  --highlight-line \
+  --info=inline-right \
+  --ansi \
+  --layout=reverse \
+  --border=none
+  --color=bg+:#2d3f76 \
+  --color=bg:#1e2030 \
+  --color=border:#589ed7 \
+  --color=fg:#c8d3f5 \
+  --color=gutter:#1e2030 \
+  --color=header:#ff966c \
+  --color=hl+:#65bcff \
+  --color=hl:#65bcff \
+  --color=info:#545c7e \
+  --color=marker:#ff007c \
+  --color=pointer:#ff007c \
+  --color=prompt:#65bcff \
+  --color=query:#c8d3f5:regular \
+  --color=scrollbar:#589ed7 \
+  --color=separator:#ff966c \
+  --color=spinner:#ff007c \
+"
 export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --follow --exclude .git'
 include /usr/share/fzf/completion.zsh
 include /usr/share/fzf/key-bindings.zsh

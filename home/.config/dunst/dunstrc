@@ -1,16 +1,17 @@
-[global]
-frame_color = "#8AADF4"
-separator_color= frame
+# TokyoNight colors for dunst
+# For more configuration options see https://github.com/dunst-project/dunst/blob/master/dunstrc
 
 [urgency_low]
-background = "#24273A"
-foreground = "#CAD3F5"
+    background = "#1e2030"
+    foreground = "#c8d3f5"
+    frame_color = "#c8d3f5"
 
 [urgency_normal]
-background = "#24273A"
-foreground = "#CAD3F5"
+    background = "#222436"
+    foreground = "#c8d3f5"
+    frame_color = "#c8d3f5"
 
 [urgency_critical]
-background = "#24273A"
-foreground = "#CAD3F5"
-frame_color = "#F5A97F"
+    background = "#2f334d"
+    foreground = "#c53b53"
+    frame_color = "#c53b53"

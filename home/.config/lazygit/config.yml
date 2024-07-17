@@ -1,26 +1,30 @@
 gui:
+  nerdFontsVersion: "3"
   theme:
-  activeBorderColor:
-    - '#8aadf4'
-    - bold
-  inactiveBorderColor:
-    - '#a5adcb'
-  optionsTextColor:
-    - '#8aadf4'
-  selectedLineBgColor:
-    - '#363a4f'
-  selectedRangeBgColor:
-    - '#363a4f'
-  cherryPickedCommitBgColor:
-    - '#494d64'
-  cherryPickedCommitFgColor:
-    - '#8aadf4'
-  unstagedChangesColor:
-    - '#ed8796'
-  defaultFgColor:
-    - '#cad3f5'
-  searchingActiveBorderColor:
-    - '#eed49f'
+    activeBorderColor:
+      - "#ff966c"
+      - "bold"
+    inactiveBorderColor:
+      - "#589ed7"
+    searchingActiveBorderColor:
+      - "#ff966c"
+      - "bold"
+    optionsTextColor:
+      - "#82aaff"
+    selectedLineBgColor:
+      - "#2d3f76"
+    cherryPickedCommitFgColor:
+      - "#82aaff"
+    cherryPickedCommitBgColor:
+      - "#c099ff"
+    markedBaseCommitFgColor:
+      - "#82aaff"
+    markedBaseCommitBgColor:
+      - "#ffc777"
+    unstagedChangesColor:
+      - "#c53b53"
+    defaultFgColor:
+      - "#c8d3f5"
 git:
   paging:
     colorArg: always
