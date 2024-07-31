@@ -72,6 +72,7 @@ libreoffice-fresh
 linux-firmware
 linux-lts
 linux-lts-headers
+luarocks
 lxappearance
 lxsession-gtk3
 maim
@@ -118,6 +119,7 @@ python-pipenv
 python-poetry
 python-psutil
 python-pyflakes
+python-pynvim
 qt5-graphicaleffects
 qt5-quickcontrols2
 ranger
