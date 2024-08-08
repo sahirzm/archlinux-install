@@ -11,8 +11,8 @@ eval "$(starship init zsh)"
 # aliases
 alias cdk='npx cdk'
 alias rm='rm -i'
-alias exa="exa -l --icons"
-alias ls="exa"
+alias eza="eza -l --icons"
+alias ls="eza"
 alias cat='bat'
 export EDITOR="nvim"
 export VISUAL="nvim"
