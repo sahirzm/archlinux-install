@@ -29,3 +29,10 @@
 	name = "Sahir Maredia"
 [init]
 	defaultBranch = main
+[merge]
+  tool = "nvimdiff"
+[mergetool]
+  prompt = true
+  keepBackup = false
+[mergetool "nvimdiff"]
+  layout = "LOCAL,BASE,REMOTE / MERGED"
