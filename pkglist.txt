@@ -57,6 +57,7 @@ gst-plugins-good
 gst-plugins-ugly
 gutenprint
 helvum
+hplip
 i3-wm
 i3blocks
 i3lock
