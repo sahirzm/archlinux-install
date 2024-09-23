@@ -95,7 +95,7 @@ otf-hasklig-nerd
 otf-hermit-nerd
 otf-opendyslexic-nerd
 otf-overpass-nerd
-pack-cli
+pack-cli-git
 pamixer
 pandoc-cli
 papirus-icon-theme
@@ -116,6 +116,7 @@ polybar
 pumble-desktop-bin
 python-black
 python-isort
+python-pandas
 python-pip
 python-pipenv
 python-poetry

@@ -127,7 +127,7 @@ assign [class="Google-chrome"] $ws1
 assign [class="Alacritty"] $ws2
 assign [class="Intellij IDEA"] $ws3
 assign [class="Slack"] $ws9
-assign [class="Pumble"] $ws9
+assign [class="pumble-desktop"] $ws9
 
 # switch to workspace
 bindsym $mod+1 workspace number $ws1
