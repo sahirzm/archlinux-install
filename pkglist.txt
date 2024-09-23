@@ -113,6 +113,7 @@ pipewire-zeroconf
 playerctl
 polkit
 polybar
+pumble-desktop-bin
 python-black
 python-isort
 python-pip
