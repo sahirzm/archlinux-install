@@ -111,21 +111,22 @@ bindsym $mod+a focus parent
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "1:Chrome"
-set $ws2 "2:Terminal"
-set $ws3 "3:Intellij"
-set $ws4 "4"
+set $ws1 "1:Web"
+set $ws2 "2:Term"
+set $ws3 "3:Ide"
+set $ws4 "4:Db"
 set $ws5 "5"
 set $ws6 "6"
 set $ws7 "7"
 set $ws8 "8"
-set $ws9 "9:Comms"
+set $ws9 "9:Chat"
 set $ws10 "10"
 
 # Assign default workspaces for applications
 assign [class="Google-chrome"] $ws1
 assign [class="Alacritty"] $ws2
-assign [class="Intellij IDEA"] $ws3
+assign [class="jetbrains-idea-ce"] $ws3
+assign [class="Dbeaver"] $ws4
 assign [class="Slack"] $ws9
 assign [class="pumble-desktop"] $ws9
 
@@ -198,10 +199,12 @@ exec_always --no-startup-id feh --bg-scale --randomize $HOME/.config/wpaperd/wal
 # exec --no-startup-id picom
 exec --no-startup-id xfce4-power-manager
 
+exec --no-startup-id i3-msg "workspace $ws1; exec /usr/sbin/google-chrome-stable"
+exec --no-startup-id i3-msg "workspace $ws2; exec /usr/sbin/alacritty"
+exec --no-startup-id i3-msg "workspace $ws3; exec /home/sahir/tools/idea/bin/idea.sh"
+exec --no-startup-id i3-msg "workspace $ws4: exec /usr/sbin/dbeaver"
 exec --no-startup-id i3-msg "workspace $ws9; exec /usr/sbin/slack"
 exec --no-startup-id i3-msg "workspace $ws9; exec /usr/sbin/pumble-desktop"
-exec --no-startup-id i3-msg "workspace $ws2; exec /usr/sbin/alacritty"
-exec --no-startup-id i3-msg "workspace $ws1; exec /usr/sbin/google-chrome-stable"
 
 # screenshots
 # https://dev.to/dianjuar/i3wm-screenshot-shortcuts-3n7b
