@@ -91,7 +91,7 @@ bindkey '^F' fzf-file-widget
 export BAT_THEME=Coldark-Dark
 
 # custom functions
-my_public_ip() {
+what_is_my_public_ip() {
   dig TXT +short o-o.myaddr.l.google.com @ns1.google.com | awk -F'"' '{ print $2}'
 }
 

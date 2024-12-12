@@ -32,6 +32,7 @@ dockfmt-git
 dos2unix
 downgrade
 dunst
+ed
 editorconfig-core-c
 efibootmgr
 emacs-lsp-booster-git
@@ -62,6 +63,7 @@ i3-wm
 i3blocks
 i3lock
 i3status
+ibus-m17n
 inkscape
 jdtls
 js-beautify
@@ -79,6 +81,7 @@ lxsession-gtk3
 maim
 mpd
 neofetch
+neovide
 neovim
 networkmanager
 nginx-config-formatter
@@ -95,7 +98,7 @@ otf-hasklig-nerd
 otf-hermit-nerd
 otf-opendyslexic-nerd
 otf-overpass-nerd
-pack-cli-git
+pack-cli
 pamixer
 pandoc-cli
 papirus-icon-theme
@@ -116,7 +119,6 @@ polybar
 pumble-desktop-bin
 python-black
 python-isort
-python-pandas
 python-pip
 python-pipenv
 python-poetry
@@ -167,6 +169,8 @@ ttf-fantasque-nerd
 ttf-firacode-nerd
 ttf-font-awesome
 ttf-go-nerd
+ttf-google-fonts-git
+ttf-gujrati-fonts
 ttf-hack
 ttf-hack-nerd
 ttf-heavydata-nerd
@@ -176,6 +180,7 @@ ttf-inconsolata
 ttf-inconsolata-go-nerd
 ttf-inconsolata-lgc-nerd
 ttf-inconsolata-nerd
+ttf-indic-otf
 ttf-iosevka-nerd
 ttf-iosevkaterm-nerd
 ttf-jetbrains-mono
@@ -270,6 +275,7 @@ xsel
 yaml-language-server
 zellij
 zip
+zoom
 zoxide
 zsh
 zsh-antidote
