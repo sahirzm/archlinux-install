@@ -57,6 +57,7 @@ gst-plugins-base
 gst-plugins-good
 gst-plugins-ugly
 gutenprint
+helm
 helvum
 hplip
 i3-wm

@@ -103,7 +103,7 @@ antidote load
 . $(pack-cli completion --shell zsh)
 alias pack='pack-cli'
 
-# auto-completion for kubectl
+# auto-completion for k8s
 source <(kubectl completion zsh)
-
+source <(helm completion zsh)
 
