@@ -70,6 +70,7 @@ js-beautify
 keyd
 kotlin-language-server
 ktlint
+kubectl
 lazygit
 libreoffice-fresh
 linux-firmware
@@ -79,6 +80,7 @@ luarocks
 lxappearance
 lxsession-gtk3
 maim
+minikube
 mpd
 neofetch
 neovide

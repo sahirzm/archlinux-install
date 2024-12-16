@@ -57,9 +57,6 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-. $(pack-cli completion --shell zsh)
-alias pack='pack-cli'
-
 # FZF
 export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
   --highlight-line \
@@ -102,3 +99,11 @@ export SDKMAN_DIR="$HOME/.sdkman"
 
 # initialize plugins statically with ~/.zsh_plugins.txt
 antidote load
+
+. $(pack-cli completion --shell zsh)
+alias pack='pack-cli'
+
+# auto-completion for kubectl
+source <(kubectl completion zsh)
+
+
