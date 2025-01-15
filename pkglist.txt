@@ -35,7 +35,6 @@ dunst
 ed
 editorconfig-core-c
 efibootmgr
-emacs-lsp-booster-git
 emacs-nativecomp
 eza
 fd
@@ -106,6 +105,7 @@ pamixer
 pandoc-cli
 papirus-icon-theme
 paru
+paru-debug
 pavucontrol
 pdftk
 pgformatter
@@ -131,11 +131,13 @@ python-pynvim
 qt5-graphicaleffects
 qt5-quickcontrols2
 ranger
+reflector
 ripgrep
 rofi
 rofi-power-menu
 s3cmd
 sddm
+sddm-theme-tokyo-night-git
 shellcheck
 shfmt
 slack-desktop
