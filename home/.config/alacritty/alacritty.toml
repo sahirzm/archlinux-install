@@ -24,7 +24,4 @@ save_to_clipboard = true
 history = 100000
 
 [general]
-import = [
-  "~/.config/alacritty/themes/themes/tokyo-night-storm.toml"
-]
-
+import = ["~/.config/alacritty/themes/themes/tokyo-night-storm.toml"]
