@@ -190,17 +190,17 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-gaps inner 2px
+gaps inner 4px
 default_border pixel
 exec_always --no-startup-id $HOME/.config/polybar/launcher.sh
 exec_always --no-startup-id feh --bg-scale --randomize $HOME/.config/wpaperd/wallpapers/*
-# exec --no-startup-id picom
+exec --no-startup-id picom
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id "setxkbmap -layout us,in -variant ,guj -option grp:alt_shift_toggle"
 
 exec --no-startup-id i3-msg "workspace $ws1; exec /usr/sbin/google-chrome-stable"
 exec --no-startup-id i3-msg "workspace $ws2; exec /usr/sbin/alacritty"
-exec --no-startup-id i3-msg "workspace $ws3; exec /home/sahir/tools/idea/bin/idea.sh"
+# exec --no-startup-id i3-msg "workspace $ws3; exec /home/sahir/tools/idea/bin/idea.sh"
 
 # screenshots
 # https://dev.to/dianjuar/i3wm-screenshot-shortcuts-3n7b
