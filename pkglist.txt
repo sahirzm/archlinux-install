@@ -10,7 +10,7 @@ base
 base-devel
 bat
 bc
-bibata-cursor-theme
+bibata-cursor-theme-bin
 bind
 blueberry
 blueman
@@ -38,7 +38,6 @@ dunst
 ed
 editorconfig-core-c
 efibootmgr
-emacs-nativecomp
 eza
 fd
 feh
@@ -103,6 +102,7 @@ nginx-config-formatter
 noto-fonts
 ntfs-3g
 nvidia-470xx-dkms
+openrazer-daemon
 openssh
 otf-aurulent-nerd
 otf-codenewroman-nerd
@@ -118,7 +118,6 @@ pamixer
 pandoc-cli
 papirus-icon-theme
 paru
-paru-debug
 pavucontrol
 pdftk
 pgformatter
@@ -130,8 +129,9 @@ pipewire-jack
 pipewire-pulse
 pipewire-zeroconf
 playerctl
+polkit
 polybar
-pumble-desktop-bin
+polychromatic
 python-black
 python-isort
 python-pip
@@ -153,7 +153,6 @@ sddm
 sddm-theme-tokyo-night-git
 shellcheck
 shfmt
-slack-desktop
 starship
 stow
 stylelint
