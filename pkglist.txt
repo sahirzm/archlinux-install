@@ -236,6 +236,7 @@ visual-studio-code-bin
 vlc
 volumeicon
 vscode-langservers-extracted
+walker-bin
 waybar
 wget
 wireplumber
