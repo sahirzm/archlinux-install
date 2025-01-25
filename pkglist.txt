@@ -46,6 +46,7 @@ firefox
 fuse-overlayfs
 fzf
 ghostscript
+ghostty
 gimp
 git
 gnuplot
