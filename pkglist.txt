@@ -78,6 +78,7 @@ intellij-idea-community-edition
 jdtls
 js-beautify
 keyd
+kitty
 kotlin-language-server
 ktlint
 kubectl
