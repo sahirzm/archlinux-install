@@ -149,6 +149,7 @@ reflector
 ripgrep
 rofi
 rofi-power-menu
+rose-pine-hyprcursor
 s3cmd
 sddm
 sddm-theme-tokyo-night-git
