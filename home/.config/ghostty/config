@@ -3,3 +3,8 @@ font-family = FiraCode Nerd Font
 theme = tokyonight_moon
 
 window-decoration = false
+
+copy-on-select = clipboard
+clipboard-read = allow
+clipboard-write = allow
+clipboard-trim-trailing-space = true
