@@ -48,7 +48,7 @@ floating_modifier $mod
 tiling_drag modifier titlebar
 
 # start a terminal
-bindsym $mod+Return exec alacritty
+bindsym $mod+Return exec ghostty
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -124,7 +124,7 @@ set $ws10 "10"
 
 # Assign default workspaces for applications
 assign [class="Google-chrome"] $ws1
-assign [class="Alacritty"] $ws2
+assign [class="Ghostty"] $ws2
 assign [class="jetbrains-idea-ce"] $ws3
 assign [class="Dbeaver"] $ws4
 
@@ -200,7 +200,7 @@ exec --no-startup-id "setxkbmap -layout us,in -variant ,guj -option grp:alt_shif
 exec xrandr --dpi=192
 
 exec --no-startup-id i3-msg "workspace $ws1; exec /usr/sbin/google-chrome-stable"
-exec --no-startup-id i3-msg "workspace $ws2; exec /usr/sbin/alacritty"
+exec --no-startup-id i3-msg "workspace $ws2; exec /usr/sbin/ghostty"
 # exec --no-startup-id i3-msg "workspace $ws3; exec /home/sahir/tools/idea/bin/idea.sh"
 
 # screenshots
