@@ -60,7 +60,6 @@ gutenprint
 helm
 helvum
 hplip
-hypridle
 i3-wm
 i3blocks
 i3lock
