@@ -4,6 +4,7 @@ alsa-firmware
 alsa-plugins
 alsa-utils
 autorandr-launcher-git
+awesome
 awesome-terminal-fonts
 aws-cli-v2
 base
@@ -227,6 +228,7 @@ visual-studio-code-bin
 vlc
 volumeicon
 vscode-langservers-extracted
+wezterm-git
 wget
 wireplumber
 xclip
