@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Terminate already running bar instances
+killall -q polybar
+
 # Add this script to your wm startup file.
 DIR="$HOME/.config/polybar"
 

@@ -20,3 +20,7 @@
 *color13: #c099ff
 *color14: #86e1fc
 *color15: #c8d3f5
+
+*dpi: 192
+Xft.dpi: 192
+
