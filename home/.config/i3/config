@@ -9,6 +9,7 @@
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 set $mod Mod4
+set $dpi 96
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -54,7 +55,7 @@ bindsym $mod+Return exec wezterm
 bindsym $mod+Shift+q kill
 
 # start rofi (a program launcher)
-bindsym $mod+d exec --no-startup-id rofi -dpi 192 -show drun -show-icons
+bindsym $mod+d exec --no-startup-id rofi -dpi $dpi -show drun -show-icons
 # There also is i3-dmenu-desktop which only displays applications shipping a
 # .desktop file. It is a wrapper around dmenu, so you need that installed.
 # bindcode $mod+40 exec --no-startup-id i3-dmenu-desktop
@@ -192,12 +193,12 @@ bindsym $mod+r mode "resize"
 
 gaps inner 4px
 default_border pixel
-exec --no-startup-id $HOME/.config/polybar/launcher.sh
+exec_always --no-startup-id $HOME/.config/polybar/launcher.sh $dpi
 exec_always --no-startup-id feh --bg-scale --randomize $HOME/.config/wpaperd/wallpapers/*
 exec --no-startup-id picom
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id "setxkbmap -layout us,in -variant ,guj -option grp:alt_shift_toggle"
-exec xrandr --dpi=192
+exec xrandr --dpi=$dpi
 
 exec --no-startup-id i3-msg "workspace $ws1; exec /usr/sbin/google-chrome-stable"
 exec --no-startup-id i3-msg "workspace $ws2; exec /usr/sbin/ghostty"
