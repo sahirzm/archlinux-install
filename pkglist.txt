@@ -3,6 +3,7 @@ alacritty
 alsa-firmware
 alsa-plugins
 alsa-utils
+auto-cpufreq
 autorandr-launcher-git
 awesome-terminal-fonts
 aws-cli-v2
