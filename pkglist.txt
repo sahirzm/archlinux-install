@@ -283,6 +283,7 @@ xorg-xwd
 xorg-xwininfo
 xorg-xwud
 xsel
+xss-lock
 yaml-language-server
 zellij
 zip
