@@ -17,6 +17,7 @@ blueman
 bluez-utils
 brightnessctl
 btop
+caffeinate
 catppuccin-gtk-theme-frappe
 catppuccin-gtk-theme-latte
 catppuccin-gtk-theme-macchiato
@@ -235,6 +236,7 @@ xclip
 xdg-user-dirs
 xdotool
 xfce4-power-manager
+xidlehook
 xorg-bdftopcf
 xorg-docs
 xorg-font-util
