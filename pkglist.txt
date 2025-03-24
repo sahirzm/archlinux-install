@@ -4,6 +4,8 @@ alsa-firmware
 alsa-plugins
 alsa-utils
 auto-cpufreq
+aspell
+aspell-en
 autorandr-launcher-git
 awesome-terminal-fonts
 aws-cli-v2
@@ -24,6 +26,7 @@ catppuccin-gtk-theme-macchiato
 catppuccin-gtk-theme-mocha
 clang
 cmake
+codespell
 cups
 cups-pdf
 dbeaver
