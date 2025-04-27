@@ -132,7 +132,6 @@ pipewire-jack
 pipewire-pulse
 pipewire-zeroconf
 playerctl
-polkit
 polybar
 polychromatic
 python-black
@@ -244,7 +243,6 @@ wireplumber
 xclip
 xdg-user-dirs
 xdotool
-xfce4-power-manager
 xidlehook
 xorg-bdftopcf
 xorg-docs
