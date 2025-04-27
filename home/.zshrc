@@ -104,6 +104,7 @@ antidote load
 alias pack='pack-cli'
 
 # auto-completion for k8s
+source <(minikube completion zsh)
 source <(kubectl completion zsh)
 source <(helm completion zsh)
 

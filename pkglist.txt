@@ -3,9 +3,10 @@ alacritty
 alsa-firmware
 alsa-plugins
 alsa-utils
-auto-cpufreq
+arandr
 aspell
 aspell-en
+auto-cpufreq
 autorandr-launcher-git
 awesome-terminal-fonts
 aws-cli-v2
@@ -47,6 +48,7 @@ feh
 filezilla
 firefox
 fuse-overlayfs
+fwupd
 fzf
 ghostscript
 ghostty
@@ -81,6 +83,7 @@ ktlint
 kubectl
 lazygit
 libreoffice-fresh
+libvirt
 linux-firmware
 linux-lts
 linux-lts-headers
@@ -89,6 +92,8 @@ lvm2
 lxappearance
 lxsession-gtk3
 maim
+mesa
+mesa-utils
 minikube
 mpd
 neofetch
@@ -199,6 +204,7 @@ ttf-iosevka-nerd
 ttf-iosevkaterm-nerd
 ttf-jetbrains-mono
 ttf-jetbrains-mono-nerd
+ttf-joypixels
 ttf-lekton-nerd
 ttf-liberation-mono-nerd
 ttf-lilex-nerd
