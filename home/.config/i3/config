@@ -96,14 +96,14 @@ bindsym $mod+a focus parent
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
 set $ws1 "1:web"
-set $ws2 "2:term"
-set $ws3 "3:ide"
-set $ws4 "4:db"
+set $ws2 "2:terminal"
+set $ws3 "3:intellij"
+set $ws4 "4:dbeaver"
 set $ws5 "5:neovide"
-set $ws6 "6"
-set $ws7 "7"
-set $ws8 "8"
-set $ws9 "9:comm"
+set $ws6 "6:libreoffice"
+set $ws7 "7:music"
+set $ws8 "8:"
+set $ws9 "9:slack"
 set $ws10 "10"
 
 # Assign default workspaces for applications
