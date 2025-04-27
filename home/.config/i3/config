@@ -34,6 +34,9 @@ floating_modifier $mod
 # or left-clicking anywhere into the window while holding the floating modifier.
 tiling_drag modifier titlebar
 
+bindsym $mod+Ctrl+Shift+l exec --no-startup-id ~/.local/bin/lock
+bindsym $mod+Ctrl+Shift+s exec --no-startup-id ~/.local/bin/lock_and_suspend
+
 # start a terminal
 bindsym $mod+Return exec kitty
 
@@ -110,8 +113,11 @@ set $ws10 "10"
 assign [class="Google-chrome"] $ws1
 assign [class="kitty"] $ws2
 assign [class="jetbrains-idea-ce"] $ws3
+assign [class="jetbrains-idea"] $ws3
+assign [class="dcvviewer"] $ws3
 assign [class="Dbeaver"] $ws4
 assign [class="neovide"] $ws5
+assign [class="Slack"] $ws9
 
 # switch to workspace
 bindsym $mod+1 workspace number $ws1
@@ -183,8 +189,10 @@ exec --no-startup-id picom
 exec --no-startup-id "setxkbmap -layout us,in -variant ,guj -option grp:alt_shift_toggle"
 exec xrandr --dpi=$dpi
 
-exec --no-startup-id i3-msg "workspace $ws1; exec /usr/sbin/google-chrome-stable"
-exec --no-startup-id i3-msg "workspace $ws2; exec /usr/sbin/kitty"
+exec --no-startup-id i3-msg "workspace $ws1; exec /usr/bin/google-chrome-stable"
+exec --no-startup-id i3-msg "workspace $ws2; exec /usr/bin/kitty"
+exec --no-startup-id i3-msg "workspace $ws3; exec ~/tools/idea/bin/idea"
+exec --no-startup-id i3-msg "workspace $ws9; exec /usr/bin/slack"
 
 # screenshots
 # https://dev.to/dianjuar/i3wm-screenshot-shortcuts-3n7b
