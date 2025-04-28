@@ -108,3 +108,6 @@ source <(minikube completion zsh)
 source <(kubectl completion zsh)
 source <(helm completion zsh)
 
+if [ -z "$TMUX" ] && [ "$TERM" = "xterm-kitty" ]; then
+  tmux attach || exec tmux new-session && exit;
+fi
