@@ -6,7 +6,6 @@ alsa-utils
 arandr
 aspell
 aspell-en
-auto-cpufreq
 autorandr-launcher-git
 awesome-terminal-fonts
 aws-cli-v2
@@ -54,6 +53,7 @@ ghostscript
 ghostty
 gimp
 git
+gnome-keyring
 gnuplot
 google-chrome
 graphviz
