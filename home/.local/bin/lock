@@ -3,7 +3,8 @@
 if [ -f /tmp/screenshot.png ]; then
   rm /tmp/screenshot.png
 fi
-maim /tmp/screenshot.png
+MONITOR=$(xrandr | grep primary | awk '{print $4}')
+maim -g "$MONITOR" -u /tmp/screenshot.png
 magick /tmp/screenshot.png -blur 0x20 /tmp/screenshot_blur.png
 magick /tmp/screenshot_blur.png "$HOME/.local/share/images/lock-banner.png" -gravity center -composite -alpha set /tmp/screenshot_lock.png
-i3lock -i /tmp/screenshot_lock.png
+i3lock -t -e -k -i /tmp/screenshot_lock.png
