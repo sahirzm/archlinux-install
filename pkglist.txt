@@ -8,7 +8,6 @@ aspell
 aspell-en
 autorandr-launcher-git
 awesome-terminal-fonts
-aws-cli-v2
 base
 base-devel
 bat
