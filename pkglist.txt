@@ -74,6 +74,7 @@ ibus-m17n
 inkscape
 intellij-idea-community-edition
 jdtls
+jq
 js-beautify
 keyd
 kitty
