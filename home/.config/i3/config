@@ -22,10 +22,30 @@ exec --no-startup-id xidlehook --not-when-fullscreen --not-when-audio \
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+# bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
+# bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
+# bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+# bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+
+bindsym XF86AudioRaiseVolume exec --no-startup-id $HOME/.config/hypr/scripts/volume --inc
+bindsym XF86AudioLowerVolume exec --no-startup-id $HOME/.config/hypr/scripts/volume --dec
+bindsym XF86AudioMicMute exec --no-startup-id $HOME/.config/hypr/scripts/volume --toggle-mic
+bindsym XF86AudioMute exec --no-startup-id $HOME/.config/hypr/scripts/volume --toggle
+
+# Screen brightness
+bindsym XF86MonBrightnessUp exec --no-startup-id $HOME/.config/hypr/scripts/backlight --inc
+bindsym XF86MonBrightnessDown exec --no-startup-id $HOME/.config/hypr/scripts/backlight --dec
+
+# Keyboard brightness
+# bind = keyboard_brightness_up_shortcut, exec, ~/.config/hypr/scripts/kbbacklight --inc
+# bind = keyboard_brightness_down_shortcut, exec, ~/.config/hypr/scripts/kbbacklight --dec
+
+# Requires playerctl
+bindsym XF86AudioNext exec --no-startup-id playerctl next
+bindsym XF86AudioPause exec --no-startup-id playerctl play-pause
+bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
+bindsym XF86AudioPrev exec --no-startup-id playerctl previous
+
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -115,9 +135,12 @@ assign [class="kitty"] $ws2
 assign [class="jetbrains-idea-ce"] $ws3
 assign [class="jetbrains-idea"] $ws3
 assign [class="dcvviewer"] $ws3
-assign [class="Dbeaver"] $ws4
+assign [class="DBeaver"] $ws4
 assign [class="neovide"] $ws5
 assign [class="Slack"] $ws9
+
+# Move floating windows to center of screen
+for_window [floating] move position center
 
 # switch to workspace
 bindsym $mod+1 workspace number $ws1
