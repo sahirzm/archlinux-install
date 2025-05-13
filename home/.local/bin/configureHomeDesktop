@@ -1,0 +1,3 @@
+#!/bin/zsh
+xrandr --output DVI-D-0 --auto --output HDMI-0 --auto --right-of DVI-D-0 --primary && sleep 5 && i3-msg restart
+

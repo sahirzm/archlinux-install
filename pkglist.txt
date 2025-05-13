@@ -3,7 +3,6 @@ alacritty
 alsa-firmware
 alsa-plugins
 alsa-utils
-arandr
 aspell
 aspell-en
 autorandr-launcher-git
@@ -132,6 +131,7 @@ pipewire-jack
 pipewire-pulse
 pipewire-zeroconf
 playerctl
+polkit
 polybar
 polychromatic
 python-black

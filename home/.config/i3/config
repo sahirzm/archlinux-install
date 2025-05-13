@@ -15,7 +15,7 @@ exec --no-startup-id dex --autostart --environment i3
 # exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork & sleep 5 && xset dpms force off
 # exec --no-startup-id xautolock -detectsleep -time 1 -locker "$HOME/.local/bin/lock" -notify 30 -notifier "notify-send -u critial -t 10000 -- 'Locking screen in 30 secs'"
 exec --no-startup-id xidlehook --not-when-fullscreen --not-when-audio \
-  --timer 120 "$HOME/.local/bin/lock" "" \
+  --timer 300 "$HOME/.local/bin/lock" "" \
   --timer 600 "xset dpms force off" "" \
   --timer 600 "systemctl suspend" "" \
   --socket "/tmp/xidlehook.sock"
