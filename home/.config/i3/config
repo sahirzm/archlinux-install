@@ -137,6 +137,7 @@ assign [class="jetbrains-idea"] $ws3
 assign [class="dcvviewer"] $ws3
 assign [class="DBeaver"] $ws4
 assign [class="neovide"] $ws5
+assign [class="libreoffice"] $ws6
 assign [class="Slack"] $ws9
 
 # Move floating windows to center of screen
@@ -220,9 +221,9 @@ exec --no-startup-id i3-msg "workspace $ws3; exec /usr/sbin/idea"
 # https://dev.to/dianjuar/i3wm-screenshot-shortcuts-3n7b
 # paru -Syy xdotool maim xclip
 ## Screenshots
-bindsym Print exec --no-startup-id maim "/home/$USER/Pictures/$(date -u +%Y-%m-%dT%H:%M:%S%Z).png"
-bindsym $mod+Print exec --no-startup-id maim --window $(xdotool getactivewindow) "/home/$USER/Pictures/$(date -u +%Y-%m-%dT%H:%M:%S%Z).png"
-bindsym Shift+Print exec --no-startup-id maim --select "/home/$USER/Pictures/$(date -u +%Y-%m-%dT%H:%M:%S%Z).png"
+bindsym Print exec --no-startup-id maim "$HOME/Pictures/$(date -u +%Y-%m-%dT%H:%M:%S%Z).png"
+bindsym $mod+Print exec --no-startup-id maim --window $(xdotool getactivewindow) "$HOME/Pictures/$(date -u +%Y-%m-%dT%H:%M:%S%Z).png"
+bindsym Shift+Print exec --no-startup-id maim --select "$HOME/Pictures/$(date -u +%Y-%m-%dT%H:%M:%S%Z).png"
 
 ## Clipboard Screenshots
 bindsym Ctrl+Print exec --no-startup-id maim | xclip -selection clipboard -t image/png

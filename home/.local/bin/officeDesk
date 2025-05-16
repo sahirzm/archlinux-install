@@ -1,0 +1,2 @@
+#!/bin/zsh
+xrandr --output eDP-1 --auto --output DP-2 --primary --right-of DP-1 --auto --output DP-1 --right-of eDP-1 --auto && sleep 3 && i3-msg restart
