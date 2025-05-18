@@ -21,6 +21,6 @@
 *color14: #86e1fc
 *color15: #c8d3f5
 
-*dpi: 192
-Xft.dpi: 192
+*dpi: $USE_DPI
+Xft.dpi: $USE_DPI
 
