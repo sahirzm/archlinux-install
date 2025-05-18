@@ -3,7 +3,7 @@
 -- Add any additional options here
 
 if vim.g.neovide then
-  vim.o.guifont = "FiraCode Nerd Font Mono:h10"
+  vim.o.guifont = "FiraCode Nerd Font Mono:h12"
   vim.g.neovide_opacity = 0.95
   vim.g.neovide_cursor_animation_length = 0.06
   vim.g.neovide_scroll_animation_length = 0
