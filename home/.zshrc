@@ -38,6 +38,10 @@ setopt SHARE_HISTORY
 
 bindkey -v
 
+# zsh-autosuggestions
+export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+bindkey '^ ' autosuggest-accept
+
 # paths
 export PATH="$HOME/tools/local/bin:$HOME/.local/bin:/snap/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 export JAVA_HOME="$SDKMAN_DIR/candidates/java/current"
