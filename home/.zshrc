@@ -87,6 +87,7 @@ include /usr/share/fzf/key-bindings.zsh
 bindkey '^F' fzf-file-widget
 
 export BAT_THEME=Coldark-Dark
+export BC_ENV_ARGS="$HOME/.config/bc"
 
 # custom functions
 what_is_my_public_ip() {
