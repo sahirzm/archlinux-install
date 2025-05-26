@@ -5,7 +5,7 @@ alsa-plugins
 alsa-utils
 aspell
 aspell-en
-autorandr-launcher-git
+auto-cpufreq
 awesome-terminal-fonts
 base
 base-devel
@@ -83,7 +83,9 @@ kubectl
 lazygit
 libreoffice-fresh
 libvirt
+linux
 linux-firmware
+linux-headers
 linux-lts
 linux-lts-headers
 luarocks
@@ -131,7 +133,6 @@ pipewire-jack
 pipewire-pulse
 pipewire-zeroconf
 playerctl
-polkit
 polybar
 polychromatic
 python-black
@@ -160,6 +161,7 @@ stylelint
 sudo
 system-config-printer
 tamsyn-font
+terminus-font
 texlive-basic
 texlive-bin
 texlive-mathscience
