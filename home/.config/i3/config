@@ -210,6 +210,7 @@ default_border pixel
 exec_always --no-startup-id $HOME/.config/polybar/launcher.sh $dpi
 exec_always --no-startup-id feh --bg-max --randomize $HOME/.config/wpaperd/wallpapers/*
 exec --no-startup-id "setxkbmap -layout us,in -variant ,guj -option grp:alt_shift_toggle"
+exec --no-startup-id dbus-update-activation-environment --all
 exec --no-startup-id /usr/bin/gnome-keyring-daemon --start --components=ssh,secrets,pkcs11
 
 exec --no-startup-id i3-msg "workspace $ws1; exec /usr/sbin/google-chrome-stable"
