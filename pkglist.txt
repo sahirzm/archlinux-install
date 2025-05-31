@@ -18,6 +18,7 @@ bluez-utils
 brightnessctl
 btop
 caffeinate
+calibre
 catppuccin-gtk-theme-frappe
 catppuccin-gtk-theme-latte
 catppuccin-gtk-theme-macchiato
@@ -88,6 +89,7 @@ linux-firmware
 linux-headers
 linux-lts
 linux-lts-headers
+lsplug
 luarocks
 lvm2
 lxappearance
