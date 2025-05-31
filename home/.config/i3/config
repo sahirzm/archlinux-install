@@ -215,7 +215,7 @@ exec --no-startup-id /usr/bin/gnome-keyring-daemon --start --components=ssh,secr
 
 exec --no-startup-id i3-msg "workspace $ws1; exec /usr/sbin/google-chrome-stable"
 exec --no-startup-id i3-msg "workspace $ws2; exec /usr/sbin/kitty"
-exec --no-startup-id i3-msg "workspace $ws3; exec /usr/sbin/idea"
+exec --no-startup-id i3-msg "workspace $ws3; exec $HOME/tools/intellij/bin/idea"
 
 # screenshots
 # https://dev.to/dianjuar/i3wm-screenshot-shortcuts-3n7b
