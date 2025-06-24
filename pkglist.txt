@@ -30,6 +30,7 @@ cups
 cups-pdf
 dbeaver
 diff-so-fancy
+displaylink
 docker
 docker-compose
 docker-rootless-extras
@@ -40,6 +41,7 @@ dunst
 ed
 editorconfig-core-c
 efibootmgr
+evdi
 eza
 fd
 feh
@@ -52,10 +54,12 @@ ghostscript
 ghostty
 gimp
 git
+glab
 gnome-keyring
 gnuplot
 google-chrome
 graphviz
+grim
 grub
 gsfonts
 gst-plugins-bad
@@ -105,8 +109,6 @@ networkmanager
 nginx-config-formatter
 noto-fonts
 ntfs-3g
-nvidia-470xx-dkms
-nvidia-470xx-utils
 openrazer-daemon
 openssh
 otf-aurulent-nerd
@@ -114,6 +116,7 @@ otf-codenewroman-nerd
 otf-comicshanns-nerd
 otf-droid-nerd
 otf-firamono-nerd
+otf-font-awesome
 otf-hasklig-nerd
 otf-hermit-nerd
 otf-opendyslexic-nerd
@@ -156,10 +159,14 @@ sddm
 sddm-theme-tokyo-night-git
 shellcheck
 shfmt
+slurp
 starship
 stow
 stylelint
 sudo
+sway
+swayidle
+swaylock
 system-config-printer
 tamsyn-font
 terminus-font
@@ -240,10 +247,14 @@ visual-studio-code-bin
 vlc
 volumeicon
 vscode-langservers-extracted
+waybar
 wezterm
 wget
 wireplumber
+wl-clipboard
+wpaperd
 xclip
+xdg-desktop-portal-wlr
 xdg-user-dirs
 xdotool
 xidlehook

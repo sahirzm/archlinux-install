@@ -128,12 +128,12 @@ bindsym $mod+a focus parent
 set $ws1 "1:web"
 set $ws2 "2:terminal"
 set $ws3 "3:intellij"
-set $ws4 "4:dbeaver"
+set $ws4 "4:code"
 set $ws5 "5:neovide"
 set $ws6 "6:libreoffice"
 set $ws7 "7:music"
-set $ws8 "8:"
-set $ws9 "9:slack"
+set $ws8 "8:misc"
+set $ws9 "9:messaging"
 set $ws10 "10"
 
 # Assign default workspaces for applications
@@ -146,6 +146,7 @@ assign [class="jetbrains-idea-ce"] $ws3
 assign [class="jetbrains-idea"] $ws3
 assign [class="dcvviewer"] $ws3
 assign [class="DBeaver"] $ws4
+assign [class="Code"] $ws4
 assign [app_id="neovide"] $ws5
 assign [class="neovide"] $ws5
 assign [class="libreoffice"] $ws6
@@ -183,7 +184,7 @@ bindsym $mod+Ctrl+greater move workspace to output right
 bindsym $mod+Ctrl+less move workspace to output left
 
 # Reload the configuration file
-bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r reload
 # Exit sway (logs you out of your Wayland session)
 bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
 
@@ -215,18 +216,19 @@ default_border pixel
 
 # Status bar (waybar is recommended for sway instead of polybar)
 # Replace polybar with waybar
-exec_always --no-startup-id waybar
+exec_always --no-startup-id $HOME/.config/waybar/launcher.sh
 
 # Wallpaper (swaybg replaces feh)
 # You can set a static wallpaper with:
 # output * bg ~/.config/wpaperd/wallpapers/your_wallpaper.jpg fill
 # For random wallpapers, you might need a script or use wpaperd
-# exec_always --no-startup-id wpaperd
+exec_always --no-startup-id wpaperd
 
 # Auto-start applications
 exec --no-startup-id swaymsg "workspace $ws1; exec /usr/bin/google-chrome-stable"
 exec --no-startup-id swaymsg "workspace $ws2; exec /usr/bin/kitty"
-exec --no-startup-id swaymsg "workspace $ws3; exec $HOME/tools/idea/bin/idea"
+exec --no-startup-id swaymsg "workspace $ws3; exec $HOME/tools/intellij/bin/idea"
+exec --no-startup-id swaymsg "workspace $ws4; exec /usr/bin/code"
 exec --no-startup-id swaymsg "workspace $ws9; exec /usr/bin/slack"
 
 # Screenshots (using grim and slurp instead of maim and xdotool)
