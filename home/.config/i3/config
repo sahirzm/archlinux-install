@@ -12,6 +12,9 @@ font pango:FiraCode Nerd Font Mono 12
 # https://wiki.archlinux.org/index.php/XDG_Autostart
 exec --no-startup-id dex --autostart --environment i3
 
+exec --no-startup-id export GTK_THEME=Adwaita:dark
+exec --no-startup-id export QT_STYLE_OVERRIDE=adwaita-dark
+
 # exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork & sleep 5 && xset dpms force off
 # exec --no-startup-id xautolock -detectsleep -time 1 -locker "$HOME/.local/bin/lock" -notify 30 -notifier "notify-send -u critial -t 10000 -- 'Locking screen in 30 secs'"
 exec --no-startup-id xidlehook --not-when-fullscreen --not-when-audio \
@@ -138,6 +141,7 @@ assign [class="dcvviewer"] $ws3
 assign [class="DBeaver"] $ws4
 assign [class="neovide"] $ws5
 assign [class="libreoffice"] $ws6
+
 assign [class="Slack"] $ws9
 
 # Move floating windows to center of screen

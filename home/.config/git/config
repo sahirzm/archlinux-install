@@ -4,7 +4,7 @@
 [color]
 	ui = "auto"
 [core]
-	excludesFile = "$HOME/.config/git/exclude"
+	excludesFile = "~/.config/git/exclude"
 	fileMode = false
 	pager = "diff-so-fancy | less '--tabs=4' '-RFX'"
 [diff]

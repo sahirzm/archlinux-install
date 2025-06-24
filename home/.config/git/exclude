@@ -1,2 +1,46 @@
 # Projectile
 .projectile
+
+# Eclipse
+.project
+.classpath
+.externalToolBuilders/
+.settings/
+eclipse*/
+
+# Intellij
+*.iml
+.idea
+/out
+
+# generated files
+/build
+/generated*/
+/*bin/
+
+# Java Class Files
+*.class
+
+# Log files
+*.log
+
+# OS X
+.DS_Store
+._*
+
+# Android
+gen/
+local.properties
+*.dex
+*.apk
+*.ap_
+ant.properties
+
+# JDT Annotation Processing
+.factorypath
+.apt_generated/
+
+# Local
+*~
+
+.vscode

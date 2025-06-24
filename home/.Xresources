@@ -23,4 +23,5 @@
 
 *dpi: $USE_DPI
 Xft.dpi: $USE_DPI
+Xcursor.size: 32
 
