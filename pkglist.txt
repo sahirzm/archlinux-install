@@ -98,6 +98,7 @@ lvm2
 lxappearance
 lxsession-gtk3
 maim
+mako
 mesa
 mesa-utils
 minikube
@@ -243,6 +244,7 @@ udiskie
 udisks2
 unrar
 unzip
+usbutils
 visual-studio-code-bin
 vlc
 volumeicon
@@ -252,6 +254,7 @@ wezterm
 wget
 wireplumber
 wl-clipboard
+wlr-randr
 wpaperd
 xclip
 xdg-desktop-portal-wlr
