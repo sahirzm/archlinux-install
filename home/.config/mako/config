@@ -1,0 +1,73 @@
+# Mako configuration - migrated from dunst
+# https://github.com/emersion/mako
+
+# Basic appearance
+font=FiraCode Nerd Font Mono 10
+background-color=#414868
+text-color=#ffffff
+border-color=#aaaaaa
+border-size=5
+border-radius=0
+
+# Positioning and geometry
+anchor=top-right
+margin=10,50,0,0
+width=300
+height=300
+max-visible=20
+
+# Padding
+padding=12
+outer-margin=0
+
+# Progress bar (mako doesn't have direct equivalent, but we can style notifications)
+progress-color=#7dcfff
+
+# Icons
+icon-path=/usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
+max-icon-size=48
+icons=1
+
+# Behavior
+default-timeout=20000
+ignore-timeout=0
+group-by=summary
+
+# Text formatting
+markup=1
+format=<b>%s</b>\n%b
+text-alignment=left
+
+# History
+max-history=20
+
+# Mouse actions
+on-button-left=dismiss
+on-button-middle=invoke-default-action
+on-button-right=dismiss-all
+
+# Urgency-specific styling
+[urgency=low]
+background-color=#414868
+text-color=#ffffff
+border-color=#a9b1d6
+default-timeout=20000
+
+[urgency=normal]
+background-color=#414868
+text-color=#ffffff
+border-color=#7dcfff
+default-timeout=20000
+
+[urgency=critical]
+background-color=#414868
+text-color=#ff757f
+border-color=#c53b53
+default-timeout=0
+
+# Application-specific rules (examples)
+# [app-name="Firefox"]
+# default-timeout=10000
+
+# [summary~=".*volume.*"]
+# group-by=summary
