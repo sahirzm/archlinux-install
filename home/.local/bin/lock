@@ -6,4 +6,4 @@ fi
 grim /tmp/screenshot.png
 convert /tmp/screenshot.png -blur 0x20 /tmp/screenshot_blur.png
 convert /tmp/screenshot_blur.png "$HOME/.local/share/images/lock-banner.png" -gravity east -composite -alpha set /tmp/screenshot_lock.png
-swaylock -e -k -i /tmp/screenshot_lock.png
+swaylock -f -e -k -i /tmp/screenshot_lock.png

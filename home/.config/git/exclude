@@ -43,4 +43,8 @@ ant.properties
 # Local
 *~
 
+# vscode
 .vscode
+
+# claude code
+**/.claude/settings.local.json
