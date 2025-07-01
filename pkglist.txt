@@ -254,6 +254,7 @@ wezterm
 wget
 wireplumber
 wl-clipboard
+wlprop
 wlr-randr
 wpaperd
 xclip
