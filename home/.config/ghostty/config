@@ -8,3 +8,5 @@ copy-on-select = clipboard
 clipboard-read = allow
 clipboard-write = allow
 clipboard-trim-trailing-spaces = true
+
+command = $HOME/.local/bin/terminal_start.sh

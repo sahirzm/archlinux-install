@@ -141,11 +141,12 @@ assign [app_id="google-chrome"] $ws1
 assign [class="Google-chrome"] $ws1
 assign [app_id="kitty"] $ws2
 assign [class="kitty"] $ws2
+assign [app_id="com.mitchellh.ghostty"] $ws2
 assign [class="jetbrains-idea-ce"] $ws3
 assign [class="jetbrains-idea"] $ws3
 assign [class="dcvviewer"] $ws3
 assign [class="DBeaver"] $ws4
-assign [class="Code"] $ws4
+assign [app_id="code"] $ws4
 assign [app_id="neovide"] $ws5
 assign [class="neovide"] $ws5
 assign [class="libreoffice"] $ws6
@@ -210,7 +211,7 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 # Gaps and borders
-gaps inner 4px
+gaps inner 2px
 default_border pixel
 
 # Status bar (waybar is recommended for sway instead of polybar)
