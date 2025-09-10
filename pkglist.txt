@@ -37,6 +37,7 @@ docker
 docker-compose
 docker-rootless-extras
 dockfmt-git
+doctl
 dos2unix
 downgrade
 dunst
@@ -112,6 +113,7 @@ networkmanager
 nginx-config-formatter
 noto-fonts
 ntfs-3g
+okular
 openrazer-daemon
 openssh
 otf-aurulent-nerd
@@ -165,6 +167,7 @@ shellcheck
 shfmt
 slurp
 starship
+step-cli
 stow
 stylelint
 sudo
@@ -199,7 +202,6 @@ ttf-dejavu-nerd
 ttf-droid
 ttf-fantasque-nerd
 ttf-firacode-nerd
-ttf-font-awesome
 ttf-go-nerd
 ttf-google-fonts-git
 ttf-gujrati-fonts
@@ -259,6 +261,7 @@ wireplumber
 wl-clipboard
 wlprop
 wlr-randr
+woff2-font-awesome
 wpaperd
 xclip
 xdg-desktop-portal-wlr

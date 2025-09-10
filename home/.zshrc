@@ -54,6 +54,7 @@ export ANDROID_HOME="$HOME/tools/Android/sdk/"
 export PATH=$ANDROID_HOME/platform-tools:$PATH
 
 export PATH=$HOME/.cargo/bin:$PATH
+export PATH=$HOME/.linkerd2/bin:$PATH
 
 export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
 
@@ -106,12 +107,12 @@ export SDKMAN_DIR="$HOME/.sdkman"
 antidote load
 
 . $(pack-cli completion --shell zsh)
-alias pack='pack-cli'
 
 # auto-completion for k8s
 source <(minikube completion zsh)
 source <(kubectl completion zsh)
 source <(helm completion zsh)
+source <(doctl completion zsh)
 
 if [ -z "$TMUX" ] && [ "$TERM" = "xterm-kitty" ]; then
   tmux attach || exec tmux new-session && exit;

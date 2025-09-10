@@ -227,9 +227,6 @@ exec_always --no-startup-id wpaperd
 # Auto-start applications
 exec --no-startup-id swaymsg "workspace $ws1; exec /usr/bin/google-chrome-stable"
 exec --no-startup-id swaymsg "workspace $ws2; exec /usr/bin/kitty"
-exec --no-startup-id swaymsg "workspace $ws3; exec $HOME/tools/intellij/bin/idea"
-exec --no-startup-id swaymsg "workspace $ws4; exec /usr/bin/code"
-exec --no-startup-id swaymsg "workspace $ws9; exec /usr/bin/slack"
 
 # Screenshots (using grim and slurp instead of maim and xdotool)
 # Full screen screenshot
