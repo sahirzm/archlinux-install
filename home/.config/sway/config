@@ -138,9 +138,8 @@ set $ws10 "10"
 # Assign default workspaces for applications
 # Note: Use app_id for native Wayland apps, class for X11 apps
 assign [app_id="google-chrome"] $ws1
-assign [class="Google-chrome"] $ws1
+assign [app_id="firefox"] $ws1
 assign [app_id="kitty"] $ws2
-assign [class="kitty"] $ws2
 assign [app_id="com.mitchellh.ghostty"] $ws2
 assign [class="jetbrains-idea-ce"] $ws3
 assign [class="jetbrains-idea"] $ws3
@@ -148,7 +147,6 @@ assign [class="dcvviewer"] $ws3
 assign [class="DBeaver"] $ws4
 assign [app_id="code"] $ws4
 assign [app_id="neovide"] $ws5
-assign [class="neovide"] $ws5
 assign [class="libreoffice"] $ws6
 assign [class="Slack"] $ws9
 
@@ -225,7 +223,7 @@ exec_always --no-startup-id $HOME/.config/waybar/launcher.sh
 exec_always --no-startup-id wpaperd
 
 # Auto-start applications
-exec --no-startup-id swaymsg "workspace $ws1; exec /usr/bin/google-chrome-stable"
+exec --no-startup-id swaymsg "workspace $ws1; exec /usr/bin/firefox"
 exec --no-startup-id swaymsg "workspace $ws2; exec /usr/bin/kitty"
 
 # Screenshots (using grim and slurp instead of maim and xdotool)

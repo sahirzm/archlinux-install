@@ -28,6 +28,7 @@ chaotic-mirrorlist
 clang
 cmake
 codespell
+csvlens
 cups
 cups-pdf
 dbeaver
@@ -145,8 +146,10 @@ playerctl
 polybar
 polychromatic
 powerpill
+ptpython
 python-black
 python-isort
+python-pandas
 python-pip
 python-pipenv
 python-poetry
