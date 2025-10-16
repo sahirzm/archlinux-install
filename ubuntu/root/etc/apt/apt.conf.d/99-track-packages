@@ -1,0 +1,8 @@
+// APT hook to track installed packages
+// This hook runs after any apt install/remove operation
+// and updates the package list in the workspace directory
+// Update WORKSPACE_DIR to match your actual path
+
+DPkg::Post-Invoke {
+    "if [ -d $HOME/workspace/archlinux-install ]; then apt-mark showmanual | sort > $HOME/workspace/archlinux-install/ubuntu-pkglist.txt; fi";
+};
