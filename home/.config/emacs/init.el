@@ -5,6 +5,11 @@
 (setq inhibit-startup-message t ; Don't show the splash screen
       visible-bell t)           ; Flash when the bell rings
 
+;; Emacs 30 performance optimizations
+(setq native-comp-speed 2)            ;; Optimize native compilation
+(setq native-comp-async-jobs-number 4) ;; Parallel compilation
+(setq read-process-output-max (* 1024 1024)) ;; Increase LSP performance (1MB)
+
 (menu-bar-mode -1)              ; no menu bar
 (tool-bar-mode -1)              ; no toolbar
 (scroll-bar-mode -1)            ; no scrollbar
@@ -13,14 +18,16 @@
 
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(add-to-list 'package-archive-priorities '("melpa-stable" . 50) t)
-(add-to-list 'package-archive-priorities '("melpa" . 10) t)
 
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
+;; Modern package priorities for Emacs 30
+(setq package-archive-priorities
+      '(("melpa-stable" . 50)
+        ("melpa" . 10)
+        ("gnu" . 5)
+        ("nongnu" . 5)))
 
-(require 'use-package-ensure)
+;; use-package is built-in since Emacs 29
+(require 'use-package)
 
 (unless (package-installed-p 'vc-use-package)
   (package-vc-install "https://github.com/slotThe/vc-use-package"))
@@ -29,7 +36,7 @@
 (eval-and-compile
   (setq use-package-always-ensure t
         use-package-expand-minimally t
-        package-native-compile t
+        use-package-vc-prefer-newest t
         native-comp-async-report-warnings-errors nil))
 
 (use-package auto-package-update
@@ -133,28 +140,16 @@
 
 (use-package all-the-icons)
 (use-package nerd-icons)
-;; doom themes
-(use-package doom-themes
+
+;; Catppuccin theme
+(use-package catppuccin-theme
   :after (all-the-icons nerd-icons)
   :config
-  ;; Global settings (defaults)
-  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-        doom-themes-enable-italic t) ; if nil, italics is universally disabled
-  (load-theme 'doom-tokyo-night t)
-
-  ;; Enable flashing mode-line on errors
-  (doom-themes-visual-bell-config)
-  ;; Enable custom neotree theme (all-the-icons must be installed!)
-  (doom-themes-neotree-config)
-  ;; or for treemacs users
-  (setq-default doom-themes-treemacs-theme "doom-colors") ; use "doom-colors" for less minimal icon theme
-  (doom-themes-treemacs-config)
-  ;; Corrects (and improves) org-mode's native fontification.
-  (doom-themes-org-config))
+  (setq catppuccin-flavor 'mocha) ; Options: 'latte, 'frappe, 'macchiato, 'mocha
+  (load-theme 'catppuccin t))
 
 ;; modeline
 (use-package doom-modeline
-  :after (doom-themes)
   :init
   (doom-modeline-mode 1)
   :custom
@@ -218,6 +213,11 @@
 
 ;; highlight current line in buffer
 (global-hl-line-mode 1)
+
+;; Modern Emacs 30 features
+(setq use-short-answers t)         ;; y/n instead of yes/no
+(pixel-scroll-precision-mode 1)    ;; Smooth scrolling
+(context-menu-mode 1)              ;; Right-click context menus
 
 (setq user-full-name "Sahir Maredia"
       user-mail-address "sahirzm@gmail.com")
@@ -293,7 +293,7 @@
 (use-package flycheck-projectile
   :after (projectile flycheck))
 
-;; eglot
+;; eglot - Built-in LSP client
 (use-package eglot
   :custom
   (fset #'jsonrpc--log-event #'ignore)
@@ -304,7 +304,26 @@
   (eglot-send-changes-idle-time 3)
   (flymake-no-changes-timeout 5)
   (eldoc-echo-area-use-multiline-p nil)
-  (setq eglot-ignored-server-capabilities '( :documentHighlightProvider)))
+  :bind (:map eglot-mode-map
+              ("C-c l a" . eglot-code-actions)
+              ("C-c l r" . eglot-rename)
+              ("C-c l f" . eglot-format)
+              ("C-c l d" . eldoc-doc-buffer)
+              ("C-c l i" . eglot-find-implementation)
+              ("C-c l t" . eglot-find-typeDefinition))
+  :config
+  (setq eglot-ignored-server-capabilities '(:documentHighlightProvider))
+
+  ;; Additional LSP servers configuration
+  (add-to-list 'eglot-server-programs
+               '((bash-ts-mode sh-mode) . ("bash-language-server" "start")))
+  (add-to-list 'eglot-server-programs
+               '((dockerfile-mode dockerfile-ts-mode) . ("docker-langserver" "--stdio")))
+  (add-to-list 'eglot-server-programs
+               '((yaml-mode yaml-ts-mode) . ("yaml-language-server" "--stdio")))
+
+  ;; Enhance eldoc display
+  (setq eldoc-echo-area-prefer-doc-buffer t))
 
 ;; use native eglot booster
 (use-package eglot-booster
@@ -333,6 +352,22 @@
 (use-package which-key
   :init
   (which-key-mode))
+
+;; embark for contextual actions
+(use-package embark
+  :bind
+  (("C-." . embark-act)         ;; pick some comfortable binding
+   ("C-;" . embark-dwim)        ;; good alternative: M-.
+   ("C-h B" . embark-bindings)) ;; alternative for `describe-bindings'
+  :init
+  ;; Optionally replace the key help with a completing-read interface
+  (setq prefix-help-command #'embark-prefix-help-command))
+
+;; Consult integration with Embark
+(use-package embark-consult
+  :after (embark consult)
+  :hook
+  (embark-collect-mode . consult-preview-at-point-mode))
 
 ;; multiple cursors
 (use-package multiple-cursors
@@ -517,7 +552,10 @@
   :init
   (global-corfu-mode)
   :config
-  (setq tab-always-indent 'complete))
+  (setq tab-always-indent 'complete)
+  ;; Emacs 30 performance improvements
+  (setq corfu-auto-delay 0.1)   ;; Faster auto-completion
+  (setq corfu-auto-prefix 2))   ;; Complete after 2 chars
 
 ;; display icons for completion
 (use-package kind-icon
@@ -537,7 +575,7 @@
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
   (add-to-list 'completion-at-point-functions #'cape-dict))
 
-;; Treesitter
+;; Treesitter Configuration
 (setq-default treesit-auto-langs '(python
                                    rust
                                    go
@@ -565,14 +603,193 @@
                                    typescript))
 
 (use-package treesit-auto
+  :custom
+  (treesit-auto-install 'prompt)  ;; Prompt before installing grammars
   :config
-  (setq treesit-auto-install t)
+  (setq treesit-font-lock-level 4)  ;; Maximum syntax highlighting
   (global-treesit-auto-mode))
+
+;; Enhanced treesitter navigation and manipulation
+(use-package combobulate
+  :vc (:url "https://github.com/mickeynp/combobulate")
+  :hook
+  ((python-ts-mode . combobulate-mode)
+   (js-ts-mode . combobulate-mode)
+   (tsx-ts-mode . combobulate-mode)
+   (typescript-ts-mode . combobulate-mode)
+   (json-ts-mode . combobulate-mode)
+   (yaml-ts-mode . combobulate-mode)))
 
 (use-package flycheck
   :init (global-flycheck-mode))
 
 (use-package yasnippet :config (yas-global-mode))
+
+;; ========================================
+;; Language-Specific LSP Configurations
+;; ========================================
+
+;; ========================================
+;; Python Development Environment
+;; ========================================
+
+;; Python with enhanced LSP support
+(use-package python
+  :ensure nil  ;; built-in
+  :mode ("\\.py\\'" . python-ts-mode)
+  :hook ((python-ts-mode . eglot-ensure)
+         (python-ts-mode . (lambda ()
+                             (setq-local fill-column 88)  ;; Black default
+                             (setq-local tab-width 4))))
+  :config
+  ;; Configure eglot for Python with pyright
+  (add-to-list 'eglot-server-programs
+               '((python-mode python-ts-mode)
+                 . ("pyright-langserver" "--stdio")))
+  (setq python-indent-offset 4)
+  (setq python-shell-interpreter "python3"))
+
+;; Virtual environment support
+(use-package pyvenv
+  :config
+  (setq pyvenv-mode-line-indicator '(pyvenv-virtual-env-name ("[venv:" pyvenv-virtual-env-name "] ")))
+  (add-hook 'python-ts-mode-hook 'pyvenv-mode)
+  ;; Auto-activate virtualenv
+  (add-hook 'python-ts-mode-hook
+            (lambda ()
+              (let ((venv-dir (locate-dominating-file default-directory ".venv")))
+                (when venv-dir
+                  (pyvenv-activate (concat venv-dir ".venv")))))))
+
+;; Python testing with pytest
+(use-package python-pytest
+  :after python
+  :bind (:map python-ts-mode-map
+              ("C-c t t" . python-pytest-dispatch)
+              ("C-c t f" . python-pytest-file)
+              ("C-c t s" . python-pytest-function)))
+
+;; Python debugging (DAP Mode)
+(use-package dap-mode
+  :after eglot
+  :config
+  (dap-auto-configure-mode)
+  (require 'dap-python)
+  ;; Use debugpy
+  (setq dap-python-debugger 'debugpy)
+  :bind (:map python-ts-mode-map
+              ("C-c d d" . dap-debug)
+              ("C-c d l" . dap-debug-last)
+              ("C-c d r" . dap-debug-recent)))
+
+(use-package dap-ui
+  :ensure nil
+  :after dap-mode
+  :config
+  (dap-ui-mode 1))
+
+;; Import sorting with isort
+(use-package py-isort
+  :hook (python-ts-mode . (lambda ()
+                            (add-hook 'before-save-hook 'py-isort-before-save nil t))))
+
+;; Python docstring support
+(use-package python-docstring
+  :hook (python-ts-mode . python-docstring-mode))
+
+;; Jupyter notebook support
+(use-package jupyter
+  :commands (jupyter-run-repl jupyter-connect-repl)
+  :config
+  (setq jupyter-repl-echo-eval-p t))
+
+;; Code cells in Python (like Jupyter)
+(use-package code-cells
+  :hook (python-ts-mode . code-cells-mode-maybe)
+  :bind (:map python-ts-mode-map
+              ("C-c %" . code-cells-command)))
+
+;; Rust with rust-analyzer
+(use-package rust-ts-mode
+  :mode "\\.rs\\'"
+  :hook (rust-ts-mode . eglot-ensure)
+  :config
+  (add-to-list 'eglot-server-programs
+               '(rust-ts-mode . ("rust-analyzer")))
+  (setq rust-ts-mode-indent-offset tab-width))
+
+;; Go with gopls
+(use-package go-ts-mode
+  :mode "\\.go\\'"
+  :hook (go-ts-mode . eglot-ensure)
+  :config
+  (add-to-list 'eglot-server-programs
+               '(go-ts-mode . ("gopls")))
+  ;; Run gofmt on save
+  (add-hook 'go-ts-mode-hook
+            (lambda ()
+              (add-hook 'before-save-hook 'eglot-format-buffer nil t))))
+
+;; C/C++ with clangd
+(use-package c-ts-mode
+  :ensure nil  ;; built-in
+  :mode (("\\.c\\'" . c-ts-mode)
+         ("\\.h\\'" . c-ts-mode))
+  :hook (c-ts-mode . eglot-ensure)
+  :config
+  (add-to-list 'eglot-server-programs
+               '((c-mode c-ts-mode c++-mode c++-ts-mode)
+                 . ("clangd"
+                    "--background-index"
+                    "--clang-tidy"
+                    "--completion-style=detailed"
+                    "--header-insertion=iwyu"))))
+
+(use-package c++-ts-mode
+  :ensure nil  ;; built-in
+  :mode (("\\.cpp\\'" . c++-ts-mode)
+         ("\\.cc\\'" . c++-ts-mode)
+         ("\\.cxx\\'" . c++-ts-mode)
+         ("\\.hpp\\'" . c++-ts-mode)
+         ("\\.hxx\\'" . c++-ts-mode))
+  :hook (c++-ts-mode . eglot-ensure))
+
+;; CMake
+(use-package cmake-mode
+  :mode (("CMakeLists\\.txt\\'" . cmake-ts-mode)
+         ("\\.cmake\\'" . cmake-ts-mode))
+  :hook (cmake-ts-mode . eglot-ensure))
+
+;; Bash scripting
+(use-package bash-ts-mode
+  :ensure nil  ;; built-in
+  :mode (("\\.sh\\'" . bash-ts-mode)
+         ("\\.bash\\'" . bash-ts-mode))
+  :hook (bash-ts-mode . eglot-ensure))
+
+;; Markdown
+(use-package markdown-mode
+  :mode (("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :config
+  (setq markdown-command "multimarkdown"))
+
+;; Lua
+(use-package lua-mode
+  :mode "\\.lua\\'"
+  :hook (lua-mode . eglot-ensure)
+  :config
+  (add-to-list 'eglot-server-programs
+               '(lua-mode . ("lua-language-server"))))
+
+;; Ruby
+(use-package ruby-ts-mode
+  :ensure nil  ;; built-in
+  :mode "\\.rb\\'"
+  :hook (ruby-ts-mode . eglot-ensure)
+  :config
+  (add-to-list 'eglot-server-programs
+               '(ruby-ts-mode . ("solargraph" "stdio"))))
 
 (use-package eglot-java
   :config
@@ -708,11 +925,19 @@
 
 (use-package apheleia
   :config
-  (apheleia-global-mode 1))
+  ;; Python formatters (prefer Ruff over Black)
+  (setf (alist-get 'python-mode apheleia-mode-alist) '(ruff-isort ruff))
+  (setf (alist-get 'python-ts-mode apheleia-mode-alist) '(ruff-isort ruff))
 
-(use-package editorconfig
-  :config
-  (editorconfig-mode 1))
+  ;; Add Ruff formatter if not present
+  (unless (assoc 'ruff apheleia-formatters)
+    (setf (alist-get 'ruff apheleia-formatters)
+          '("ruff" "format" "--stdin-filename" filepath "-")))
+  (unless (assoc 'ruff-isort apheleia-formatters)
+    (setf (alist-get 'ruff-isort apheleia-formatters)
+          '("ruff" "check" "--select" "I" "--fix" "--stdin-filename" filepath "-")))
+
+  (apheleia-global-mode 1))
 
 ;; colorful parens
 (use-package rainbow-delimiters
@@ -762,7 +987,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-vc-selected-packages
-   '((vc-use-package :vc-backend Git :url "https://github.com/slotThe/vc-use-package"))))
+   '((vc-use-package :vc-backend Git :url
+		     "https://github.com/slotThe/vc-use-package"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

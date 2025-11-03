@@ -46,6 +46,7 @@ dunst
 ed
 editorconfig-core-c
 efibootmgr
+emacs-lsp-booster
 emacs-wayland
 evdi-dkms
 eza
