@@ -15,6 +15,7 @@ bind
 blueberry
 blueman
 bluez-utils
+bolt
 brightnessctl
 btop
 caffeinate
@@ -100,14 +101,14 @@ lsplug
 luarocks
 lvm2
 lxappearance
-lxsession-gtk3
+lxsession
 maim
 mako
 mesa
 mesa-utils
 minikube
 mpd
-neofetch
+neofetch-git
 neovide
 neovim
 networkmanager
