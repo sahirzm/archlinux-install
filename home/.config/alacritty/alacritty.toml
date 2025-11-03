@@ -24,4 +24,4 @@ save_to_clipboard = true
 history = 100000
 
 [general]
-import = ["~/.config/alacritty/tokyonight_moon.toml"]
+import = ["~/.config/alacritty/catppuccin_mocha.toml"]

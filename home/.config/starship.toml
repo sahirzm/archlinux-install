@@ -26,7 +26,7 @@ $time\
 [ ](fg:#1d2230)\
 \n$character"""
 
-palette = 'tokyonight_moon'
+palette = 'catppuccin_mocha'
 
 [palettes.tokyonight_moon]
 color_bg0 = "#222436"
@@ -59,6 +59,38 @@ color_red1 = "#c53b53"
 color_teal = "#4fd6be"
 color_terminal_black = "#444a73"
 color_yellow = "#ffc777"
+
+[palettes.catppuccin_mocha]
+color_bg0 = "#1e1e2e"
+color_bg_dark = "#11111b"
+color_bg_dark1 = "#181825"
+color_bg_highlight = "#313244"
+color_blue = "#89b4fa"
+color_blue0 = "#74c7ec"
+color_blue1 = "#89b4fa"
+color_blue2 = "#89dceb"
+color_blue5 = "#b4befe"
+color_blue6 = "#89dceb"
+color_blue7 = "#45475a"
+color_comment = "#6c7086"
+color_cyan = "#94e2d5"
+color_dark3 = "#585b70"
+color_dark5 = "#7f849c"
+color_fg0 = "#cdd6f4"
+color_fg_dark = "#bac2de"
+color_fg_gutter = "#45475a"
+color_green = "#a6e3a1"
+color_green1 = "#94e2d5"
+color_green2 = "#89dceb"
+color_magenta = "#f5c2e7"
+color_magenta2 = "#eba0ac"
+color_orange = "#fab387"
+color_purple = "#cba6f7"
+color_red = "#f38ba8"
+color_red1 = "#eba0ac"
+color_teal = "#94e2d5"
+color_terminal_black = "#585b70"
+color_yellow = "#f9e2af"
 
 [os]
 disabled = false

@@ -1,4 +1,4 @@
-DPI=96
+DPI=192
 
 export USE_DPI=$DPI
 export GDK_SCALE=1

@@ -3,9 +3,9 @@
 
 # Basic appearance
 font=FiraCode Nerd Font Mono 10
-background-color=#414868
-text-color=#ffffff
-border-color=#aaaaaa
+background-color=#313244
+text-color=#cdd6f4
+border-color=#7f849c
 border-size=5
 border-radius=0
 
@@ -21,7 +21,7 @@ padding=12
 outer-margin=0
 
 # Progress bar (mako doesn't have direct equivalent, but we can style notifications)
-progress-color=#7dcfff
+progress-color=#89b4fa
 
 # Icons
 icon-path=/usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
@@ -48,21 +48,21 @@ on-button-right=dismiss-all
 
 # Urgency-specific styling
 [urgency=low]
-background-color=#414868
-text-color=#ffffff
-border-color=#a9b1d6
+background-color=#313244
+text-color=#cdd6f4
+border-color=#a6adc8
 default-timeout=20000
 
 [urgency=normal]
-background-color=#414868
-text-color=#ffffff
-border-color=#7dcfff
+background-color=#313244
+text-color=#cdd6f4
+border-color=#89b4fa
 default-timeout=20000
 
 [urgency=critical]
-background-color=#414868
-text-color=#ff757f
-border-color=#c53b53
+background-color=#313244
+text-color=#f38ba8
+border-color=#eba0ac
 default-timeout=0
 
 # Application-specific rules (examples)

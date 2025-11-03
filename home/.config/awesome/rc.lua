@@ -51,7 +51,7 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font.
-beautiful.init(gears.filesystem.get_configuration_dir() .. "tokyo-night-moon/theme.lua")
+beautiful.init(gears.filesystem.get_configuration_dir() .. "catppuccin-mocha/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "wezterm"

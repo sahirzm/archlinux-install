@@ -1,7 +1,7 @@
 local wezterm = require("wezterm")
 
 local config = {}
-config.color_scheme = "Tokyo Night Moon"
+config.color_scheme = "Catppuccin Mocha"
 
 config.leader = { key = "b", mods = "CTRL", timeout_milliseconds = 3000 }
 config.keys = {

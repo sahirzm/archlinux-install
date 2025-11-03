@@ -277,9 +277,24 @@ themes {
         white "#828bb8"
         orange "#ff966c"
     }
+    catppuccin_mocha {
+        fg "#cdd6f4"
+        bg "#313244"
+        // Black should match the terminal background color
+        // This ensures the top and bottom bars are transparent
+        black "#1e1e2e"
+        red "#f38ba8"
+        green "#a6e3a1"
+        yellow "#f9e2af"
+        blue "#89b4fa"
+        magenta "#f5c2e7"
+        cyan "#94e2d5"
+        white "#bac2de"
+        orange "#fab387"
+    }
 }
 // Choose the theme that is specified in the themes section.
-theme "tokyonight_moon"
+theme "catppuccin_mocha"
 
 // The name of the default layout to load on startup
 // Default: "default"

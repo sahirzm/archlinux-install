@@ -46,6 +46,7 @@ dunst
 ed
 editorconfig-core-c
 efibootmgr
+emacs-wayland
 evdi-dkms
 eza
 fd
