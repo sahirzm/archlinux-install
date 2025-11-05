@@ -47,9 +47,7 @@
   (auto-package-update-maybe))
 
 ;; set firacode font
-(set-face-attribute 'default nil :font "FiraCode Nerd Font-11")
-(add-to-list 'default-frame-alist
-             '(font . "FiraCode Nerd Font-11"))
+(add-to-list 'default-frame-alist '(font . "FiraCode Nerd Font-11"))
 (setq line-spacing 0.1)
 
 ;; Display line numbers in all buffers
@@ -296,8 +294,7 @@
 ;; eglot - Built-in LSP client
 (use-package eglot
   :custom
-  (fset #'jsonrpc--log-event #'ignore)
-  (eglot-events-buffer-size 0)
+  (eglot-events-buffer-size 0)  ;; Disable event logging for performance
   (eglot-sync-connect nil)
   (eglot-connect-timeout nil)
   (eglot-autoshutdown t)
@@ -506,22 +503,6 @@
 	 ("M-g f" . consult-flycheck)               ;; Alternative: consult-flycheck
 	 ))
 
-;; Enable rich annotations using the Marginalia package
-(use-package marginalia
-  ;; Bind `marginalia-cycle' locally in the minibuffer.  To make the binding
-  ;; available in the *Completions* buffer, add it to the
-  ;; `completion-list-mode-map'.
-  :bind (:map minibuffer-local-map
-              ("M-A" . marginalia-cycle))
-
-  ;; The :init section is always executed.
-  :init
-
-  ;; Marginalia must be activated in the :init section of use-package such that
-  ;; the mode gets enabled right away. Note that this forces loading the
-  ;; package.
-  (marginalia-mode))
-
 (use-package corfu
   ;; Optional customizations
   :custom
@@ -576,42 +557,41 @@
   (add-to-list 'completion-at-point-functions #'cape-dict))
 
 ;; Treesitter Configuration
-(setq-default treesit-auto-langs '(python
-                                   rust
-                                   go
-                                   awk
-                                   bash
-                                   c
-                                   cmake
-                                   commonlisp
-                                   cpp
-                                   css
-                                   dart
-                                   dockerfile
-                                   html
-                                   javascript
-                                   json
-                                   kotlin
-                                   lua
-                                   make
-                                   markdown
-                                   ruby
-                                   toml
-                                   yaml
-                                   java
-                                   tsx
-                                   typescript))
-
 (use-package treesit-auto
   :custom
   (treesit-auto-install 'prompt)  ;; Prompt before installing grammars
   :config
+  (setq-default treesit-auto-langs '(python
+                                     rust
+                                     go
+                                     awk
+                                     bash
+                                     c
+                                     cmake
+                                     commonlisp
+                                     cpp
+                                     css
+                                     dart
+                                     dockerfile
+                                     html
+                                     javascript
+                                     json
+                                     kotlin
+                                     lua
+                                     make
+                                     markdown
+                                     ruby
+                                     toml
+                                     yaml
+                                     java
+                                     tsx
+                                     typescript))
   (setq treesit-font-lock-level 4)  ;; Maximum syntax highlighting
   (global-treesit-auto-mode))
 
 ;; Enhanced treesitter navigation and manipulation
 (use-package combobulate
-  :vc (:url "https://github.com/mickeynp/combobulate")
+  :vc (:fetcher github :repo mickeynp/combobulate)
   :hook
   ((python-ts-mode . combobulate-mode)
    (js-ts-mode . combobulate-mode)
@@ -636,6 +616,7 @@
 ;; Python with enhanced LSP support
 (use-package python
   :ensure nil  ;; built-in
+  :after eglot
   :mode ("\\.py\\'" . python-ts-mode)
   :hook ((python-ts-mode . eglot-ensure)
          (python-ts-mode . (lambda ()
@@ -711,6 +692,7 @@
 
 ;; Rust with rust-analyzer
 (use-package rust-ts-mode
+  :after eglot
   :mode "\\.rs\\'"
   :hook (rust-ts-mode . eglot-ensure)
   :config
@@ -720,6 +702,7 @@
 
 ;; Go with gopls
 (use-package go-ts-mode
+  :after eglot
   :mode "\\.go\\'"
   :hook (go-ts-mode . eglot-ensure)
   :config
@@ -733,6 +716,7 @@
 ;; C/C++ with clangd
 (use-package c-ts-mode
   :ensure nil  ;; built-in
+  :after eglot
   :mode (("\\.c\\'" . c-ts-mode)
          ("\\.h\\'" . c-ts-mode))
   :hook (c-ts-mode . eglot-ensure)
@@ -776,6 +760,7 @@
 
 ;; Lua
 (use-package lua-mode
+  :after eglot
   :mode "\\.lua\\'"
   :hook (lua-mode . eglot-ensure)
   :config
@@ -785,6 +770,7 @@
 ;; Ruby
 (use-package ruby-ts-mode
   :ensure nil  ;; built-in
+  :after eglot
   :mode "\\.rb\\'"
   :hook (ruby-ts-mode . eglot-ensure)
   :config
@@ -821,7 +807,7 @@
        ;;   (:enabled t))))
        (:format
         (:settings
-         (:url "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-;;style.xml")
+         (:url "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml")
          :enabled t)))))
   :hook
   (java-mode . eglot-java-mode)
@@ -916,13 +902,6 @@
 (use-package dockerfile-mode
   :hook (dockerfile-mode . eglot-ensure))
 
-;; format code
-(use-package format-all
-  :commands
-  format-all-mode
-  :hook
-  (prog-mode . format-all-mode))    ;; format on save
-
 (use-package apheleia
   :config
   ;; Python formatters (prefer Ruff over Black)
@@ -981,17 +960,3 @@
 
 (provide 'init)
 ;;; init.el ends here
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-vc-selected-packages
-   '((vc-use-package :vc-backend Git :url
-		     "https://github.com/slotThe/vc-use-package"))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
