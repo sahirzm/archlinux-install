@@ -261,7 +261,7 @@ vlc
 volumeicon
 vscode-langservers-extracted
 waybar
-wezterm
+wezterm-git
 wget
 wireplumber
 wl-clipboard
