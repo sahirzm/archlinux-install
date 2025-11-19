@@ -26,6 +26,6 @@ gui:
     defaultFgColor:
       - "#c8d3f5"
 git:
-  paging:
-    colorArg: always
-    useConfig: true
+  pagers:
+    - colorArg: always
+      useConfig: true

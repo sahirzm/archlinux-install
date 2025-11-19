@@ -114,10 +114,7 @@ source <(kubectl completion zsh)
 source <(helm completion zsh)
 source <(doctl completion zsh)
 
-# if [ -z "$TMUX" ] && [ "$TERM" = "xterm-kitty" ]; then
-#   tmux attach || exec tmux new-session && exit;
-# fi
-#
-export ZELLIJ_AUTO_ATTACH=true
+if [ -z "$TMUX" ] && [ "$TERM" = "xterm-kitty" ]; then
+  tmux attach || exec tmux new-session && exit;
+fi
 
-source <(zellij setup --generate-auto-start zsh)
