@@ -44,8 +44,6 @@ bindkey '^ ' autosuggest-accept
 
 # paths
 export PATH="$HOME/tools/local/bin:$HOME/.local/bin:/snap/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-export JAVA_HOME="$SDKMAN_DIR/candidates/java/current"
-export M2_HOME="$SDKMAN_DIR/candidates/maven/current"
 
 export PATH="$JAVA_HOME/bin:$M2_HOME/bin:$HOME/tools/local/bin:$PATH"
 export PATH="$PATH:$HOME/tools/flutter/bin"
@@ -57,10 +55,6 @@ export PATH=$HOME/.cargo/bin:$PATH
 export PATH=$HOME/.linkerd2/bin:$PATH
 
 export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # FZF
 export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
@@ -99,14 +93,8 @@ what_is_my_public_ip() {
   dig TXT +short o-o.myaddr.l.google.com @ns1.google.com | awk -F'"' '{ print $2}'
 }
 
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
-
 # initialize plugins statically with ~/.zsh_plugins.txt
 antidote load
-
-. $(pack-cli completion --shell zsh)
 
 # auto-completion for k8s
 source <(minikube completion zsh)
@@ -114,7 +102,13 @@ source <(kubectl completion zsh)
 source <(helm completion zsh)
 source <(doctl completion zsh)
 
+# Claude Code aliases (Jobbersoft Bedrock)
+alias claude-login='aws sso login --profile jobbersoft-bedrock'
+alias claude-check='aws bedrock list-foundation-models --region us-west-2 --profile jobbersoft-bedrock --query "modelSummaries[?contains(modelId, \`claude\`)].modelId" --output table'
+alias claude-logout='aws sso logout --profile jobbersoft-bedrock'
+
+eval "$(mise activate --shims zsh)"
+
 if [ -z "$TMUX" ] && [ "$TERM" = "xterm-kitty" ]; then
   tmux attach || exec tmux new-session && exit;
 fi
-

@@ -109,6 +109,7 @@ mako
 mesa
 mesa-utils
 minikube
+mise
 mpd
 neofetch-git
 neovide
@@ -130,7 +131,6 @@ otf-hasklig-nerd
 otf-hermit-nerd
 otf-opendyslexic-nerd
 otf-overpass-nerd
-pack-cli
 pamixer
 pandoc-cli
 papirus-icon-theme

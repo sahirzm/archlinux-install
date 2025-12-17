@@ -141,14 +141,14 @@ assign [app_id="google-chrome"] $ws1
 assign [app_id="firefox"] $ws1
 assign [app_id="kitty"] $ws2
 assign [app_id="com.mitchellh.ghostty"] $ws2
-assign [class="jetbrains-idea-ce"] $ws3
-assign [class="jetbrains-idea"] $ws3
-assign [class="dcvviewer"] $ws3
-assign [class="DBeaver"] $ws4
+assign [app_id="jetbrains-idea-ce"] $ws3
+assign [app_id="jetbrains-idea"] $ws3
+assign [app_id="dcvviewer"] $ws3
+assign [app_id="DBeaver"] $ws4
 assign [app_id="code"] $ws4
 assign [app_id="neovide"] $ws5
-assign [class="libreoffice"] $ws6
-assign [class="Slack"] $ws9
+assign [app_id="libreoffice"] $ws6
+assign [app_id="Slack"] $ws9
 
 # Move floating windows to center of screen
 for_window [floating] move position center

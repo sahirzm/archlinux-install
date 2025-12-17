@@ -5,7 +5,7 @@ hlissner/zsh-autopair
 ohmyzsh/ohmyzsh path:plugins/git
 ohmyzsh/ohmyzsh path:plugins/aws
 MichaelAquilina/zsh-you-should-use
-# jeffreytse/zsh-vi-mode - breaks fzf plugin history search
+jeffreytse/zsh-vi-mode - breaks fzf plugin history search
 joshskidmore/zsh-fzf-history-search
 
 # Completions should be at the end
