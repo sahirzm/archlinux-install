@@ -1,0 +1,4 @@
+[tools]
+java = "corretto-17"
+node = "latest"
+pack = "latest"
