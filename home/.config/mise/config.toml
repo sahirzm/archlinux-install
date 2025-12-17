@@ -1,4 +1,5 @@
 [tools]
-java = "corretto-17"
-node = "latest"
+java = ["corretto-24", "corretto-21", "corretto-17", "corretto-11"]
+node = ["latest", "18.20.2"]
 pack = "latest"
+python = ["3.12", "3.11", "3.10", "3.9", "3.8"]
