@@ -1,0 +1,114 @@
+# Claude Code Configuration Backup - .gitignore
+# Excludes credentials, cache, logs, and temporary files
+
+# ============================================
+# Authentication & Credentials (NEVER COMMIT)
+# ============================================
+auth/
+credentials
+credentials.json
+.credentials.json
+*.key
+*.pem
+*.p12
+*.pfx
+token
+tokens/
+.auth
+api_keys
+.env
+.env.*
+
+# ============================================
+# Cache & Temporary Files
+# ============================================
+cache/
+.cache/
+tmp/
+temp/
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+paste-cache/
+stats-cache.json
+statsig/
+plugins/*-cache.json
+plugins/marketplaces/
+
+# ============================================
+# Logs
+# ============================================
+logs/
+*.log
+*.log.*
+log/
+debug/
+
+# ============================================
+# Session & Runtime Data
+# ============================================
+sessions/
+.sessions/
+runtime/
+pid
+*.pid
+*.lock
+session-env/
+shell-snapshots/
+file-history/
+history.jsonl
+projects/
+
+# ============================================
+# Backup Files
+# ============================================
+*.bak
+*.backup
+*~
+*.swp
+*.swo
+
+# ============================================
+# OS-Specific Files
+# ============================================
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ============================================
+# IDE & Editor Files
+# ============================================
+.vscode/
+.idea/
+*.sublime-*
+.project
+.settings/
+
+# ============================================
+# Optional: Plans & Todos (Uncomment to exclude)
+# ============================================
+# Uncomment these if you don't want to backup work-in-progress plans/todos
+plans/
+todos/
+
+# ============================================
+# Large Binary Files (Optional)
+# ============================================
+# Uncomment if you want to exclude large downloaded models or datasets
+# models/
+# *.bin
+# *.model
+
+# ============================================
+# Keep Important Directories (Even If Empty)
+# ============================================
+!skills/.gitkeep
+!agents/.gitkeep
+!mcp/.gitkeep
+!marketplace/.gitkeep
+!plugins/.gitkeep

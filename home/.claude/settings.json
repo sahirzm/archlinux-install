@@ -1,0 +1,32 @@
+{
+  "awsAuthRefresh": "aws sso login --profile jobbersoft-bedrock",
+  "env": {
+    "CLAUDE_CODE_USE_BEDROCK": "1",
+    "AWS_PROFILE": "jobbersoft-bedrock",
+    "AWS_REGION": "us-west-2",
+    "ANTHROPIC_MODEL": "global.anthropic.claude-sonnet-4-5-20250929-v1:0",
+    "ANTHROPIC_SMALL_FAST_MODEL": "global.claude-haiku-4-5-20251001-v1:0",
+    "CLAUDE_CODE_MAX_OUTPUT_TOKENS": "16096",
+    "MAX_THINKING_TOKENS": "4096"
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "npx -y ccstatusline@latest",
+    "padding": 0
+  },
+  "enabledPlugins": {
+    "jdtls-lsp@claude-plugins-official": true,
+    "voltagent-lang@voltagent-subagents": true,
+    "voltagent-infra@voltagent-subagents": true,
+    "voltagent-core-dev@voltagent-subagents": true,
+    "voltagent-qa-sec@voltagent-subagents": true,
+    "voltagent-data-ai@voltagent-subagents": true,
+    "voltagent-dev-exp@voltagent-subagents": true,
+    "voltagent-domains@voltagent-subagents": true,
+    "voltagent-biz@voltagent-subagents": true,
+    "voltagent-meta@voltagent-subagents": true,
+    "voltagent-research@voltagent-subagents": true,
+    "document-skills@anthropic-agent-skills": true,
+    "superpowers@claude-plugins-official": true
+  }
+}

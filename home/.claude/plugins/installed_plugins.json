@@ -1,0 +1,134 @@
+{
+  "version": 2,
+  "plugins": {
+    "jdtls-lsp@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/home/sahir/.claude/plugins/cache/claude-plugins-official/jdtls-lsp/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-01-02T08:28:31.541Z",
+        "lastUpdated": "2026-01-02T08:28:31.541Z"
+      }
+    ],
+    "voltagent-lang@voltagent-subagents": [
+      {
+        "scope": "user",
+        "installPath": "/home/sahir/.claude/plugins/cache/voltagent-subagents/voltagent-lang/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-01-24T18:08:17.340Z",
+        "lastUpdated": "2026-01-24T18:08:17.340Z",
+        "gitCommitSha": "4462fb6a32f89aa86e86aefff7adcc3c9ce8dfa0"
+      }
+    ],
+    "voltagent-infra@voltagent-subagents": [
+      {
+        "scope": "user",
+        "installPath": "/home/sahir/.claude/plugins/cache/voltagent-subagents/voltagent-infra/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-01-24T18:08:22.499Z",
+        "lastUpdated": "2026-01-24T18:08:22.499Z",
+        "gitCommitSha": "4462fb6a32f89aa86e86aefff7adcc3c9ce8dfa0"
+      }
+    ],
+    "voltagent-core-dev@voltagent-subagents": [
+      {
+        "scope": "user",
+        "installPath": "/home/sahir/.claude/plugins/cache/voltagent-subagents/voltagent-core-dev/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-01-24T18:08:33.143Z",
+        "lastUpdated": "2026-01-24T18:08:33.143Z",
+        "gitCommitSha": "4462fb6a32f89aa86e86aefff7adcc3c9ce8dfa0"
+      }
+    ],
+    "voltagent-qa-sec@voltagent-subagents": [
+      {
+        "scope": "user",
+        "installPath": "/home/sahir/.claude/plugins/cache/voltagent-subagents/voltagent-qa-sec/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-01-24T18:08:58.833Z",
+        "lastUpdated": "2026-01-24T18:08:58.833Z",
+        "gitCommitSha": "4462fb6a32f89aa86e86aefff7adcc3c9ce8dfa0"
+      }
+    ],
+    "voltagent-data-ai@voltagent-subagents": [
+      {
+        "scope": "user",
+        "installPath": "/home/sahir/.claude/plugins/cache/voltagent-subagents/voltagent-data-ai/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-01-24T18:09:16.848Z",
+        "lastUpdated": "2026-01-24T18:09:16.848Z",
+        "gitCommitSha": "4462fb6a32f89aa86e86aefff7adcc3c9ce8dfa0"
+      }
+    ],
+    "voltagent-dev-exp@voltagent-subagents": [
+      {
+        "scope": "user",
+        "installPath": "/home/sahir/.claude/plugins/cache/voltagent-subagents/voltagent-dev-exp/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-01-24T18:09:31.868Z",
+        "lastUpdated": "2026-01-24T18:09:31.868Z",
+        "gitCommitSha": "4462fb6a32f89aa86e86aefff7adcc3c9ce8dfa0"
+      }
+    ],
+    "voltagent-domains@voltagent-subagents": [
+      {
+        "scope": "user",
+        "installPath": "/home/sahir/.claude/plugins/cache/voltagent-subagents/voltagent-domains/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-01-24T18:09:44.204Z",
+        "lastUpdated": "2026-01-24T18:09:44.204Z",
+        "gitCommitSha": "4462fb6a32f89aa86e86aefff7adcc3c9ce8dfa0"
+      }
+    ],
+    "voltagent-biz@voltagent-subagents": [
+      {
+        "scope": "user",
+        "installPath": "/home/sahir/.claude/plugins/cache/voltagent-subagents/voltagent-biz/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-01-24T18:09:54.490Z",
+        "lastUpdated": "2026-01-24T18:09:54.490Z",
+        "gitCommitSha": "4462fb6a32f89aa86e86aefff7adcc3c9ce8dfa0"
+      }
+    ],
+    "voltagent-meta@voltagent-subagents": [
+      {
+        "scope": "user",
+        "installPath": "/home/sahir/.claude/plugins/cache/voltagent-subagents/voltagent-meta/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-01-24T18:10:13.273Z",
+        "lastUpdated": "2026-01-24T18:10:13.273Z",
+        "gitCommitSha": "4462fb6a32f89aa86e86aefff7adcc3c9ce8dfa0"
+      }
+    ],
+    "voltagent-research@voltagent-subagents": [
+      {
+        "scope": "user",
+        "installPath": "/home/sahir/.claude/plugins/cache/voltagent-subagents/voltagent-research/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-01-24T18:10:25.075Z",
+        "lastUpdated": "2026-01-24T18:10:25.075Z",
+        "gitCommitSha": "4462fb6a32f89aa86e86aefff7adcc3c9ce8dfa0"
+      }
+    ],
+    "document-skills@anthropic-agent-skills": [
+      {
+        "scope": "user",
+        "installPath": "/home/sahir/.claude/plugins/cache/anthropic-agent-skills/document-skills/69c0b1a06741",
+        "version": "69c0b1a06741",
+        "installedAt": "2026-01-25T19:18:17.350Z",
+        "lastUpdated": "2026-01-25T19:18:17.350Z",
+        "gitCommitSha": "69c0b1a0674149f27b61b2635f935524b6add202"
+      }
+    ],
+    "superpowers@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/home/sahir/.claude/plugins/cache/claude-plugins-official/superpowers/4.1.1",
+        "version": "4.1.1",
+        "installedAt": "2026-01-25T19:33:20.636Z",
+        "lastUpdated": "2026-01-25T19:33:20.636Z",
+        "gitCommitSha": "469a6d81ebb8b827e284d4afb090c6c622d97747"
+      }
+    ]
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "claude-plugins-official": {
+    "source": {
+      "source": "github",
+      "repo": "anthropics/claude-plugins-official"
+    },
+    "installLocation": "/home/sahir/.claude/plugins/marketplaces/claude-plugins-official",
+    "lastUpdated": "2026-01-25T23:38:43.009Z"
+  },
+  "voltagent-subagents": {
+    "source": {
+      "source": "github",
+      "repo": "VoltAgent/awesome-claude-code-subagents"
+    },
+    "installLocation": "/home/sahir/.claude/plugins/marketplaces/voltagent-subagents",
+    "lastUpdated": "2026-01-24T18:08:00.395Z"
+  },
+  "anthropic-agent-skills": {
+    "source": {
+      "source": "github",
+      "repo": "anthropics/skills"
+    },
+    "installLocation": "/home/sahir/.claude/plugins/marketplaces/anthropic-agent-skills",
+    "lastUpdated": "2026-01-25T19:14:13.691Z"
+  },
+  "superpowers-marketplace": {
+    "source": {
+      "source": "github",
+      "repo": "obra/superpowers-marketplace"
+    },
+    "installLocation": "/home/sahir/.claude/plugins/marketplaces/superpowers-marketplace",
+    "lastUpdated": "2026-01-25T19:33:08.802Z"
+  },
+  "playwright-skill": {
+    "source": {
+      "source": "github",
+      "repo": "lackeyjb/playwright-skill"
+    },
+    "installLocation": "/home/sahir/.claude/plugins/marketplaces/playwright-skill",
+    "lastUpdated": "2026-01-25T19:33:44.455Z"
+  }
+}
