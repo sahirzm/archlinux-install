@@ -1,0 +1,78 @@
+{
+  "version": 3,
+  "lines": [
+    [
+      {
+        "id": "1",
+        "type": "model",
+        "color": "cyan",
+        "rawValue": true
+      },
+      {
+        "id": "3",
+        "type": "context-percentage",
+        "color": "brightBlack"
+      },
+      {
+        "id": "761c127b-0733-409d-8b97-d94c5c550bc8",
+        "type": "context-length",
+        "backgroundColor": "bgRed"
+      },
+      {
+        "id": "8f81991e-c9db-47bd-8d64-7e1937c8f7fa",
+        "type": "tokens-input",
+        "backgroundColor": "bgCyan"
+      },
+      {
+        "id": "03832e65-723a-4bbe-a3d5-f883c3fff78d",
+        "type": "tokens-output",
+        "backgroundColor": "bgBrightMagenta"
+      },
+      {
+        "id": "0261b589-bd43-46ad-aefe-68159389b2d3",
+        "type": "tokens-total",
+        "backgroundColor": "bgBrightGreen"
+      },
+      {
+        "id": "5",
+        "type": "git-branch",
+        "color": "magenta"
+      },
+      {
+        "id": "8fb6bf7f-f6d0-454f-8695-12b8db6dd9d7",
+        "type": "git-worktree",
+        "backgroundColor": "bgBrightYellow"
+      },
+      {
+        "id": "7",
+        "type": "git-changes",
+        "color": "yellow"
+      }
+    ],
+    [],
+    []
+  ],
+  "flexMode": "full",
+  "compactThreshold": 60,
+  "colorLevel": 3,
+  "defaultPadding": " ",
+  "inheritSeparatorColors": false,
+  "globalBold": false,
+  "powerline": {
+    "enabled": true,
+    "separators": [
+      ""
+    ],
+    "separatorInvertBackground": [
+      false
+    ],
+    "startCaps": [
+      ""
+    ],
+    "endCaps": [
+      ""
+    ],
+    "theme": "tokyonight",
+    "autoAlign": true
+  }
+}
