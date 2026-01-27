@@ -60,6 +60,7 @@ ghostscript
 ghostty
 gimp
 git
+git-delta
 glab
 gnuplot
 google-chrome
