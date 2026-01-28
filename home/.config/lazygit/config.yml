@@ -27,5 +27,5 @@ gui:
       - "#c8d3f5"
 git:
   pagers:
-    - colorArg: always
-      useConfig: true
+    - pager: delta --dark --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
+      useExternalDiffGitConfig: true
