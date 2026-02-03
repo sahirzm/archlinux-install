@@ -12,7 +12,6 @@ base-devel
 bat
 bc
 bind
-blueberry
 blueman
 bluez-utils
 bolt
@@ -95,7 +94,6 @@ libvirt
 linux
 linux-firmware
 linux-headers
-lsplug
 luarocks
 lvm2
 mako
