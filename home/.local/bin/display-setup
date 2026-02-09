@@ -15,26 +15,31 @@ swaymsg output DP-5 disable
 swaymsg output DP-6 disable
 
 case $MODE in
-    1)
-        echo "Enabling laptop screen only..."
-        swaymsg output eDP-1 enable
-        ;;
-    2)
-        echo "Enabling external displays only..."
-        swaymsg output DP-5 enable pos 0 0
-        swaymsg output DP-6 enable pos 2560 0
-        ;;
-    3)
-        echo "Enabling all displays..."
-        swaymsg output eDP-1 enable pos 0 0
-        swaymsg output DP-5 enable pos 1920 0
-        swaymsg output DP-6 enable pos 4480 0
-        ;;
-    *)
-        echo "Error: Invalid option '$1'"
-        echo "Usage: $0 [1|2|3]"
-        exit 1
-        ;;
+1)
+  echo "Enabling laptop screen only..."
+  swaymsg output eDP-1 enable
+  ;;
+2)
+  echo "Enabling external displays only..."
+  swaymsg output DP-5 enable pos 0 0
+  swaymsg output DP-6 enable pos 2560 0
+  ;;
+3)
+  echo "Enabling all displays..."
+  swaymsg output eDP-1 enable pos 0 0
+  swaymsg output DP-5 enable pos 1920 0
+  swaymsg output DP-6 enable pos 4480 0
+  ;;
+4)
+  echo "Enabling external displays only..."
+  swaymsg output DP-6 enable pos 0 0
+  swaymsg output DP-5 enable pos 2560 0
+  ;;
+*)
+  echo "Error: Invalid option '$1'"
+  echo "Usage: $0 [1|2|3]"
+  exit 1
+  ;;
 esac
 
 echo "Display configuration complete."

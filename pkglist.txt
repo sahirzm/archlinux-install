@@ -160,6 +160,7 @@ s3cmd
 shellcheck
 shfmt
 slurp
+socat
 starship
 step-cli
 stow
