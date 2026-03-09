@@ -27,6 +27,13 @@
         <line x1="12" y1="15" x2="12" y2="3"/>
     </svg>`;
 
+    const ICON_SCP = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="17 8 21 12 17 16"/>
+        <polyline points="7 8 3 12 7 16"/>
+        <line x1="21" y1="12" x2="3" y2="12"/>
+    </svg>`;
+
     // ── Parse connection details from panel ────────────────────────────────────
     function parseDetails(panel) {
         const details = {};
@@ -53,11 +60,22 @@
         return cmd;
     }
 
-    function buildDumpCmd(d) {
+    let lastDumpTs = null;
+
+    function getUtcTs() {
         const now = new Date();
         const pad = n => String(n).padStart(2, '0');
-        const ts = `${now.getUTCFullYear()}${pad(now.getUTCMonth() + 1)}${pad(now.getUTCDate())}_${pad(now.getUTCHours())}${pad(now.getUTCMinutes())}`;
-        return `PGPASSWORD=${d.password} pg_dump -U ${d.username} -h ${d.host} -p ${d.port} -Fc --no-owner ${d.database} > db_dump_${ts}.sql`;
+        return `${now.getUTCFullYear()}${pad(now.getUTCMonth() + 1)}${pad(now.getUTCDate())}_${pad(now.getUTCHours())}${pad(now.getUTCMinutes())}`;
+    }
+
+    function buildDumpCmd(d) {
+        lastDumpTs = getUtcTs();
+        return `PGPASSWORD=${d.password} pg_dump -U ${d.username} -h ${d.host} -p ${d.port} -Fc --no-owner ${d.database} > db_dump_${lastDumpTs}.sql`;
+    }
+
+    function buildScpCmd(d) {
+        const ts = lastDumpTs ?? getUtcTs();
+        return `scp jobbersoft@${d.database}.jobbersoft.com:~/db_dump_${ts}.sql dump.sql`;
     }
 
     // ── Clipboard ──────────────────────────────────────────────────────────────
@@ -159,8 +177,15 @@
             toast('pg_dump command copied!');
         });
 
+        const scpBtn = makeButton(ICON_SCP, 'scp dump', () => {
+            const d = parseDetails(panel);
+            copyText(buildScpCmd(d));
+            toast('scp command copied!');
+        });
+
         bar.appendChild(psqlBtn);
         bar.appendChild(dumpBtn);
+        bar.appendChild(scpBtn);
         pre.insertAdjacentElement('afterend', bar);
     }
 
