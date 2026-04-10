@@ -11,8 +11,7 @@ eval "$(starship init zsh)"
 # aliases
 alias cdk='npx cdk'
 alias rm='rm -i'
-alias eza="eza -l --icons"
-alias ls="eza"
+alias ls="eza -l --icons --git --group-directories-first"
 alias cat='bat'
 export EDITOR="nvim"
 export VISUAL="nvim"
@@ -20,7 +19,9 @@ export VISUAL="nvim"
 # source antidote
 source '/usr/share/zsh-antidote/antidote.zsh'
 
-eval "$(zoxide init zsh --cmd cd)"
+if [[ "$CLAUDECODE" != "1" ]]; then
+    eval "$(zoxide init --cmd cd zsh)"
+fi
 
 # history
 export HISTFILESIZE=10000
@@ -108,6 +109,7 @@ alias claude-check='aws bedrock list-foundation-models --region us-west-2 --prof
 alias claude-logout='aws sso logout --profile jobbersoft-bedrock'
 
 eval "$(mise activate --shims zsh)"
+export MISE_TRUSTED_CONFIG_PATHS="$HOME/workspace"
 
 if [ -z "$TMUX" ] && [ "$TERM" = "xterm-kitty" ]; then
   tmux attach || exec tmux new-session && exit;

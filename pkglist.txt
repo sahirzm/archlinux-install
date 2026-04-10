@@ -55,6 +55,7 @@ firefox
 fuse-overlayfs
 fwupd
 fzf
+gemini-cli
 ghostscript
 ghostty
 gimp
@@ -97,6 +98,7 @@ linux-headers
 luarocks
 lvm2
 mako
+man-db
 mesa
 mesa-utils
 minikube
@@ -111,6 +113,7 @@ ninja
 noto-fonts
 ntfs-3g
 okular
+opencode
 openrazer-daemon
 openssh
 otf-aurulent-nerd
@@ -139,7 +142,6 @@ pipewire-zeroconf
 playerctl
 polychromatic
 powerpill
-ptpython
 python-black
 python-isort
 python-pandas
@@ -180,7 +182,11 @@ thunar-archive-plugin
 thunar-volman
 tidy
 tldr
+tlp
+tlp-pd
+tlp-rdw
 tmux
+tree-sitter-cli
 ttf-3270-nerd
 ttf-agave-nerd
 ttf-anonymouspro-nerd

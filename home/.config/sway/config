@@ -227,18 +227,18 @@ exec_always --no-startup-id wpaperd
 exec --no-startup-id swaymsg "workspace $ws1; exec /usr/bin/firefox"
 exec --no-startup-id swaymsg "workspace $ws2; exec /usr/bin/kitty"
 
-# Screenshots (using grim and slurp instead of maim and xdotool)
+# Screenshots (using grim and slurp via screenshot script)
 # Full screen screenshot
-bindsym Print exec grim "$HOME/Pictures/$(date -u +%Y-%m-%dT%H:%M:%S%Z).png"
+bindsym Print exec $HOME/.local/bin/screenshot full file
 # Active window screenshot
-bindsym $mod+Print exec grim -g "$(swaymsg -t get_tree | jq -r '.. | select(.focused?) | .rect | "\(.x),\(.y) \(.width)x\(.height)"')" "$HOME/Pictures/$(date -u +%Y-%m-%dT%H:%M:%S%Z).png"
+bindsym $mod+Print exec $HOME/.local/bin/screenshot window file
 # Selection screenshot
-bindsym Shift+Print exec grim -g "$(slurp)" "$HOME/Pictures/$(date -u +%Y-%m-%dT%H:%M:%S%Z).png"
+bindsym Shift+Print exec $HOME/.local/bin/screenshot selection file
 
 # Clipboard Screenshots
-bindsym Ctrl+Print exec grim - | wl-copy
-bindsym Ctrl+$mod+Print exec grim -g "$(swaymsg -t get_tree | jq -r '.. | select(.focused?) | .rect | "\(.x),\(.y) \(.width)x\(.height)"')" - | wl-copy
-bindsym Ctrl+Shift+Print exec grim -g "$(slurp)" - | wl-copy
+bindsym Ctrl+Print exec $HOME/.local/bin/screenshot full clipboard
+bindsym Ctrl+$mod+Print exec $HOME/.local/bin/screenshot window clipboard
+bindsym Ctrl+Shift+Print exec $HOME/.local/bin/screenshot selection clipboard
 
 # Move connections window to workspace 10
 for_window [instance="amazonconnections"] move container to workspace number $ws10

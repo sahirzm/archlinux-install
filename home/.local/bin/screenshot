@@ -1,0 +1,98 @@
+#!/usr/bin/env bash
+# Screenshot utility for sway using grim and slurp
+
+set -euo pipefail
+
+
+# Configuration
+SCREENSHOT_DIR="$HOME/Pictures"
+TIMESTAMP=$(date -u +%Y-%m-%dT%H:%M:%S%Z)
+FILENAME="$SCREENSHOT_DIR/$TIMESTAMP.png"
+
+# Ensure screenshot directory exists
+mkdir -p "$SCREENSHOT_DIR"
+
+
+# Function to show notification
+notify() {
+    if command -v notify-send &> /dev/null; then
+        notify-send -t 2000 "Screenshot" "$1"
+    fi
+}
+
+# Parse arguments
+MODE="${1:-full}"
+CLIPBOARD="${2:-file}"
+
+case "$MODE" in
+    full)
+        # Full screen screenshot
+        if [[ "$CLIPBOARD" == "clipboard" ]]; then
+            grim - | wl-copy
+            notify "Full screen copied to clipboard"
+        else
+            grim "$FILENAME"
+            notify "Full screen saved to $FILENAME"
+        fi
+        ;;
+
+    window)
+        # Active window screenshot
+        GEOMETRY=$(swaymsg -t get_tree | jq -r '.. | select(.focused?) | .rect | "\(.x),\(.y) \(.width)x\(.height)"')
+
+        if [[ -z "$GEOMETRY" || "$GEOMETRY" == "null" ]]; then
+            notify "Error: Could not get window geometry"
+            exit 1
+        fi
+
+        if [[ "$CLIPBOARD" == "clipboard" ]]; then
+            grim -g "$GEOMETRY" - | wl-copy
+            notify "Window screenshot copied to clipboard"
+        else
+            grim -g "$GEOMETRY" "$FILENAME"
+            notify "Window screenshot saved to $FILENAME"
+        fi
+        ;;
+
+    selection)
+        # Selection screenshot using slurp
+        GEOMETRY=$(slurp 2>&1)
+        SLURP_EXIT=$?
+
+        # Check if slurp was cancelled or failed
+        if [[ $SLURP_EXIT -ne 0 ]]; then
+            if [[ "$GEOMETRY" == *"cancelled"* ]]; then
+                notify "Selection cancelled"
+            else
+                notify "Error: $GEOMETRY"
+            fi
+            exit 1
+        fi
+
+        LOG_FILE="/tmp/screenshot_error.log"
+
+        if [[ "$CLIPBOARD" == "clipboard" ]]; then
+            if ! (grim -g "$GEOMETRY" - | wl-copy) 2> "$LOG_FILE"; then
+                notify "Screenshot failed. See $LOG_FILE"
+                exit 1
+            fi
+            notify "Selection copied to clipboard"
+        else
+            if ! grim -g "$GEOMETRY" "$FILENAME" 2> "$LOG_FILE"; then
+                notify "Screenshot failed. See $LOG_FILE"
+                exit 1
+            fi
+            notify "Selection saved to $FILENAME"
+        fi
+        ;;
+
+    *)
+        echo "Usage: screenshot [full|window|selection] [file|clipboard]"
+        echo "Examples:"
+        echo "  screenshot full            # Full screen to file"
+        echo "  screenshot full clipboard  # Full screen to clipboard"
+        echo "  screenshot window          # Active window to file"
+        echo "  screenshot selection       # Interactive selection to file"
+        exit 1
+        ;;
+esac

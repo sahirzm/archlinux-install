@@ -7,9 +7,12 @@
 ```shell
 sudo systemctl enable --now keyd.service
 sudo systemctl enable --now NetworkManager.service
+sudo systemctl enable --now NetworkManager-dispatcher.service
 sudo systemctl enable --now reflector.service
 sudo systemctl enable --now sddm.service
 sudo systemctl enable --now seatd.service
+sudo systemctl enable --now tlp.service
+sudo systemctl enable --now tlp-pd.service
 ```
 
 ### As user
