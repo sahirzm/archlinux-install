@@ -78,7 +78,7 @@ helvum
 hplip
 ibus-m17n
 inkscape
-iptables-nft
+iptables
 jdtls
 jq
 js-beautify
