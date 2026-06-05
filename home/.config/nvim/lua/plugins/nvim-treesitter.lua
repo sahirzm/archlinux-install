@@ -19,7 +19,9 @@ return {
       "scss",
       "sql",
       "toml",
+      "tsx",
       "typescript",
+      "kotlin",
       "yaml",
     },
     highlight = {
