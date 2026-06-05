@@ -33,6 +33,7 @@ input "type:touchpad" {
 # Idle configuration (replaces xidlehook)
 exec swayidle -w \
     timeout 300 '$HOME/.local/bin/lock' \
+    timeout 590 '$HOME/.local/bin/display-setup 1' \
     timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
     timeout 600 'systemctl suspend'
 

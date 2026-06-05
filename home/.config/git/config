@@ -33,6 +33,7 @@
 [init]
 	defaultBranch = main
 [merge]
+  tool = nvimdiff
   conflictStyle = "zdiff3"
 [mergetool]
   prompt = true

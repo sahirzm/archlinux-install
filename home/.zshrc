@@ -108,7 +108,7 @@ alias claude-login='aws sso login --profile jobbersoft-bedrock'
 alias claude-check='aws bedrock list-foundation-models --region us-west-2 --profile jobbersoft-bedrock --query "modelSummaries[?contains(modelId, \`claude\`)].modelId" --output table'
 alias claude-logout='aws sso logout --profile jobbersoft-bedrock'
 
-eval "$(mise activate --shims zsh)"
+eval "$(mise activate zsh)"
 export MISE_TRUSTED_CONFIG_PATHS="$HOME/workspace"
 
 if [ -z "$TMUX" ] && [ "$TERM" = "xterm-kitty" ]; then

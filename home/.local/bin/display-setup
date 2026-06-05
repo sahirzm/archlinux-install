@@ -1,43 +1,59 @@
 #!/bin/bash
 
 # Display configuration script for Sway
-# Usage: display-setup [1|2|3]
-# 1 = Laptop only (eDP-1) [default]
-# 2 = External displays only (DP-5, DP-6)
-# 3 = All displays (eDP-1, DP-5, DP-6)
+# Usage: display-setup [1|2|3|swap]
+# 1    = Laptop only (eDP-1) [default]
+# 2    = External displays only (DP-5, DP-6)
+# 3    = All displays (eDP-1, DP-5, DP-6)
+# swap = Swap positions of current two active displays
 
-# Default to option 1 if no argument provided
 MODE=${1:-1}
-
-# Disable all displays first to ensure clean state
-swaymsg output eDP-1 disable
-swaymsg output DP-5 disable
-swaymsg output DP-6 disable
 
 case $MODE in
 1)
   echo "Enabling laptop screen only..."
+  swaymsg output eDP-1 disable
+  swaymsg output DP-5 disable
+  swaymsg output DP-6 disable
   swaymsg output eDP-1 enable
   ;;
 2)
   echo "Enabling external displays only..."
+  swaymsg output eDP-1 disable
+  swaymsg output DP-5 disable
+  swaymsg output DP-6 disable
   swaymsg output DP-5 enable pos 0 0
   swaymsg output DP-6 enable pos 2560 0
   ;;
 3)
   echo "Enabling all displays..."
+  swaymsg output eDP-1 disable
+  swaymsg output DP-5 disable
+  swaymsg output DP-6 disable
   swaymsg output eDP-1 enable pos 0 0
   swaymsg output DP-5 enable pos 1920 0
   swaymsg output DP-6 enable pos 4480 0
   ;;
-4)
-  echo "Enabling external displays only..."
-  swaymsg output DP-6 enable pos 0 0
-  swaymsg output DP-5 enable pos 2560 0
+swap)
+  echo "Swapping display positions..."
+  OUTPUTS=$(swaymsg -t get_outputs)
+  EDP_X=$(echo "$OUTPUTS" | jq -r '.[] | select(.name=="eDP-1") | .rect.x')
+  EDP_W=$(echo "$OUTPUTS" | jq -r '.[] | select(.name=="eDP-1") | .rect.width')
+  HDMI_X=$(echo "$OUTPUTS" | jq -r '.[] | select(.name=="HDMI-A-1") | .rect.x')
+  HDMI_W=$(echo "$OUTPUTS" | jq -r '.[] | select(.name=="HDMI-A-1") | .rect.width')
+  # Place the monitor that was on the right at pos 0, the other adjacent to it,
+  # so they stay non-overlapping regardless of their individual widths.
+  if [ "$EDP_X" -lt "$HDMI_X" ]; then
+    swaymsg output HDMI-A-1 pos 0 0
+    swaymsg output eDP-1 pos "$HDMI_W" 0
+  else
+    swaymsg output eDP-1 pos 0 0
+    swaymsg output HDMI-A-1 pos "$EDP_W" 0
+  fi
   ;;
 *)
   echo "Error: Invalid option '$1'"
-  echo "Usage: $0 [1|2|3]"
+  echo "Usage: $0 [1|2|3|swap]"
   exit 1
   ;;
 esac

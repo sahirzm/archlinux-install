@@ -1,0 +1,33 @@
+#!/bin/bash
+
+find_tmux_pane_from_ancestors() {
+    local pid=$$
+    while [[ $pid -gt 1 ]]; do
+        local pane
+        pane=$(tr '\0' '\n' < /proc/$pid/environ 2>/dev/null | awk -F= '/^TMUX_PANE=/{print $2}')
+        if [[ -n "$pane" ]]; then
+            echo "$pane"
+            return
+        fi
+        pid=$(awk '/^PPid:/{print $2}' /proc/$pid/status 2>/dev/null)
+    done
+}
+
+PANE=$(find_tmux_pane_from_ancestors)
+
+if [[ -n "$PANE" ]]; then
+    INFO=$(tmux list-panes -a -F '#{pane_id} #{pane_tty} #{window_index}: #{window_name}' 2>/dev/null \
+        | awk -v pane="$PANE" '$1==pane {print}')
+    TTY=$(echo "$INFO" | awk '{print $2}')
+    WIN=$(echo "$INFO" | cut -d' ' -f3-)
+else
+    WIN="unknown"
+    TTY=""
+fi
+
+MESSAGE="${1:-waiting for input}"
+ICON="${2:-/usr/share/icons/AdwaitaLegacy/32x32/legacy/dialog-information.png}"
+TITLE="Claude Code"
+BODY="[win ${WIN:-unknown}] $MESSAGE"
+
+notify-send -i "$ICON" -t 8000 "$TITLE" "$BODY"

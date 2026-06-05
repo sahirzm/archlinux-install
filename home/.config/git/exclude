@@ -48,3 +48,5 @@ ant.properties
 
 # claude code
 **/.claude/settings.local.json
+**/.omc/
+.local-review

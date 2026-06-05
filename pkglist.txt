@@ -95,6 +95,8 @@ libvirt
 linux
 linux-firmware
 linux-headers
+linux-lts
+linux-lts-headers
 luarocks
 lvm2
 mako
@@ -113,6 +115,7 @@ ninja
 noto-fonts
 ntfs-3g
 okular
+onetbb
 opencode
 openrazer-daemon
 openssh
@@ -153,6 +156,7 @@ python-pyflakes
 python-pynvim
 qt5-graphicaleffects
 qt5-quickcontrols2
+qt6-tools
 ranger
 reflector
 ripgrep
