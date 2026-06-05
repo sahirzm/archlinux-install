@@ -49,6 +49,7 @@ emacs-lsp-booster
 emacs-wayland
 evdi-dkms
 eza
+fastfetch
 fd
 filezilla
 firefox
@@ -106,7 +107,6 @@ mesa-utils
 minikube
 mise
 mpd
-neofetch-git
 neovide
 neovim
 networkmanager
@@ -156,7 +156,6 @@ python-pyflakes
 python-pynvim
 qt5-graphicaleffects
 qt5-quickcontrols2
-qt6-tools
 ranger
 reflector
 ripgrep

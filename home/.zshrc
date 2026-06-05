@@ -1,4 +1,6 @@
-if [ -x /usr/bin/neofetch ]; then
+if [ -x /usr/bin/fastfetch ]; then
+    fastfetch
+elif [ -x /usr/bin/neofetch ]; then
     neofetch
 fi
 
@@ -7,6 +9,8 @@ include () {
 }
 
 eval "$(starship init zsh)"
+
+typeset -U path
 
 # aliases
 alias cdk='npx cdk'
@@ -55,7 +59,7 @@ export PATH=$ANDROID_HOME/platform-tools:$PATH
 export PATH=$HOME/.cargo/bin:$PATH
 export PATH=$HOME/.linkerd2/bin:$PATH
 
-export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
+[[ -n "$XDG_RUNTIME_DIR" ]] && export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
 
 # FZF
 export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
@@ -98,10 +102,10 @@ what_is_my_public_ip() {
 antidote load
 
 # auto-completion for k8s
-source <(minikube completion zsh)
-source <(kubectl completion zsh)
-source <(helm completion zsh)
-source <(doctl completion zsh)
+(( $+commands[minikube] )) && source <(minikube completion zsh)
+(( $+commands[kubectl] )) && source <(kubectl completion zsh)
+(( $+commands[helm] )) && source <(helm completion zsh)
+(( $+commands[doctl] )) && source <(doctl completion zsh)
 
 # Claude Code aliases (Jobbersoft Bedrock)
 alias claude-login='aws sso login --profile jobbersoft-bedrock'
@@ -112,5 +116,5 @@ eval "$(mise activate zsh)"
 export MISE_TRUSTED_CONFIG_PATHS="$HOME/workspace"
 
 if [ -z "$TMUX" ] && [ "$TERM" = "xterm-kitty" ]; then
-  tmux attach || exec tmux new-session && exit;
+  tmux attach || tmux new-session; exit
 fi
