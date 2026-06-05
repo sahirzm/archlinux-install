@@ -5,33 +5,22 @@
       {
         "id": "1",
         "type": "model",
-        "color": "cyan",
-        "rawValue": true
+        "color": "cyan"
       },
       {
         "id": "3",
-        "type": "context-percentage",
+        "type": "context-length",
         "color": "brightBlack"
       },
       {
-        "id": "761c127b-0733-409d-8b97-d94c5c550bc8",
-        "type": "context-length",
-        "backgroundColor": "bgRed"
+        "id": "c5d7fa9b-fb29-4416-ad48-694b314af0d7",
+        "type": "thinking-effort",
+        "backgroundColor": "bgBrightCyan"
       },
       {
-        "id": "8f81991e-c9db-47bd-8d64-7e1937c8f7fa",
-        "type": "tokens-input",
-        "backgroundColor": "bgCyan"
-      },
-      {
-        "id": "03832e65-723a-4bbe-a3d5-f883c3fff78d",
-        "type": "tokens-output",
-        "backgroundColor": "bgBrightMagenta"
-      },
-      {
-        "id": "0261b589-bd43-46ad-aefe-68159389b2d3",
-        "type": "tokens-total",
-        "backgroundColor": "bgBrightGreen"
+        "id": "1ac8240d-4147-4d8b-864b-2a8b69d08589",
+        "type": "weekly-usage",
+        "backgroundColor": "bgMagenta"
       },
       {
         "id": "5",
@@ -39,23 +28,22 @@
         "color": "magenta"
       },
       {
-        "id": "8fb6bf7f-f6d0-454f-8695-12b8db6dd9d7",
-        "type": "git-worktree",
-        "backgroundColor": "bgBrightYellow"
-      },
-      {
         "id": "7",
         "type": "git-changes",
         "color": "yellow"
+      },
+      {
+        "id": "22bceebb-f1f4-4b9e-a239-cd742789d0f6",
+        "type": "current-working-dir",
+        "backgroundColor": "bgBrightBlue"
       }
     ],
     [],
     []
   ],
-  "flexMode": "full",
+  "flexMode": "full-until-compact",
   "compactThreshold": 60,
   "colorLevel": 3,
-  "defaultPadding": " ",
   "inheritSeparatorColors": false,
   "globalBold": false,
   "gitCacheTtlSeconds": 5,
@@ -63,21 +51,22 @@
   "powerline": {
     "enabled": true,
     "separators": [
-      ""
+      ""
     ],
     "separatorInvertBackground": [
       false
     ],
     "startCaps": [
-      ""
+      ""
     ],
     "endCaps": [
-      ""
+      ""
     ],
-    "theme": "tokyonight",
     "autoAlign": true,
-    "continueThemeAcrossLines": true
+    "continueThemeAcrossLines": true,
+    "theme": "catppuccin"
   },
+  "defaultPadding": " ",
   "installation": {
     "method": "auto-update",
     "packageManager": "npm"

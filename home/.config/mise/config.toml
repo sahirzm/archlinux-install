@@ -5,3 +5,12 @@ node = ["24", "20", "18"]
 pack = "latest"
 python = ["3.12", "3.11", "3.10", "3.9", "3.8"]
 yarn = "latest"
+doctl = "latest"
+uv = "latest"
+pandoc = "latest"
+
+[settings]
+experimental = true
+
+[settings.node]
+gpg_verify = false

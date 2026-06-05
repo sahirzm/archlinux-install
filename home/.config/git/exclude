@@ -50,3 +50,4 @@ ant.properties
 **/.claude/settings.local.json
 **/.omc/
 .local-review
+.sisyphus

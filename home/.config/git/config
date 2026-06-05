@@ -17,12 +17,13 @@
 	side-by-side = true
 	line-numbers = true
   features = catppuccin-mocha
+	paging = never
 [difftool]
 	prompt = true
 [difftool "nvimdiff"]
 	cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
 [interactive]
-	diffFilter = "delta --color-only"
+  diffFilter = "delta --color-only --paging=never"
 [pull]
 	rebase = true
 [push]
@@ -35,8 +36,14 @@
 [merge]
   tool = nvimdiff
   conflictStyle = "zdiff3"
+  tool = "nvimdiff"
 [mergetool]
   prompt = true
   keepBackup = false
 [mergetool "nvimdiff"]
   layout = "LOCAL,BASE,REMOTE / MERGED"
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f

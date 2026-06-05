@@ -99,6 +99,9 @@ what_is_my_public_ip() {
 }
 
 # initialize plugins statically with ~/.zsh_plugins.txt
+# Init zsh-vi-mode synchronously so it doesn't reset keymaps after other
+# plugins (e.g. zsh-fzf-history-search) have set their bindings.
+ZVM_INIT_MODE=sourcing
 antidote load
 
 # auto-completion for k8s
