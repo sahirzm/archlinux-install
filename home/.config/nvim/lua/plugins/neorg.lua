@@ -1,9 +1,14 @@
 return {
   "nvim-neorg/neorg",
-  dependencies = { "luarocks.nvim" },
+  dependencies = {
+    "luarocks.nvim",
+    "nvim-treesitter/nvim-treesitter",
+    "nvim-neorg/tree-sitter-norg",
+    "nvim-neorg/tree-sitter-norg-meta",
+  },
   lazy = false, -- Disable lazy loading as some `lazy.nvim` distributions set `lazy = true` by default
   version = false, -- Pin Neorg to the latest stable release
-  enabled = false,
+  enabled = true,
   config = function()
     require("neorg").setup({
       load = {
