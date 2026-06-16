@@ -63,6 +63,7 @@ gimp
 git
 git-delta
 glab
+glow
 gnuplot
 google-chrome
 graphviz
