@@ -1,0 +1,35 @@
+{
+  // Per-agent model settings
+  "agents": {
+    "explore": {
+      "model": "haiku"
+    },
+    "executor": {
+      "model": "sonnet"
+    },
+    "architect": {
+      "model": "sonnet"
+    },
+    "writer": {
+      "model": "haiku"
+    },
+    "omc": {
+      "model": "sonnet"
+    },
+    "analyst": {
+      "model": "sonnet"
+    },
+    "planner": {
+      "model": "sonnet"
+    },
+    "critic": {
+      "model": "sonnet"
+    },
+    "codeReviewer": {
+      "model": "sonnet"
+    },
+    "codeSimplifier": {
+      "model": "sonnet"
+    }
+  }
+}
