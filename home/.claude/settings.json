@@ -10,6 +10,9 @@
     "MAX_THINKING_TOKENS": "4096",
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
   },
+  "permissions": {
+    "defaultMode": "auto"
+  },
   "model": "us.anthropic.claude-sonnet-4-6",
   "hooks": {
     "Stop": [
@@ -68,9 +71,7 @@
     }
   },
   "effortLevel": "low",
-  "editorMode": "vim",
   "skipWorkflowUsageWarning": true,
-  "permissions": {
-    "defaultMode": "acceptEdits"
-  }
+  "theme": "auto",
+  "editorMode": "vim"
 }
