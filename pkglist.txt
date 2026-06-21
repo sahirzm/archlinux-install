@@ -66,6 +66,7 @@ git
 git-delta
 glab
 glow
+gnome-keyring
 gnuplot
 google-chrome
 graphviz
