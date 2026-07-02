@@ -51,3 +51,4 @@ ant.properties
 **/.omc/
 .local-review
 .sisyphus
+.crew

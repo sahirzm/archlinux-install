@@ -1,0 +1,33 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "plugin": [
+    "@plannotator/opencode@latest"
+  ],
+  "lsp": true,
+  "disabled_providers": [
+    "openai",
+    "anthropic",
+    "openrouter",
+    "ollama",
+    "azure",
+    "cerebras",
+    "fireworks",
+    "together",
+    "mistral",
+    "deepseek",
+    "groq",
+    "opencode"
+  ],
+  "instructions": [
+    "/home/sahir/.config/opencode/AGENTS.caveman.md"
+  ],
+  "permission": {
+    "skill": {
+      "caveman": "allow",
+      "caveman-commit": "allow",
+      "caveman-review": "allow",
+      "caveman-help": "allow",
+      "caveman-compress": "allow"
+    }
+  }
+}

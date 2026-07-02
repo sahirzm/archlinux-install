@@ -247,6 +247,11 @@ bindsym Ctrl+Shift+Print exec $HOME/.local/bin/screenshot selection clipboard
 # Move connections window to workspace 10
 for_window [instance="amazonconnections"] move container to workspace number $ws10
 
+# Zoom floating windows
+for_window [app_id="zoom"] floating enable, border normal 2
+for_window [class="zoom"] floating enable, border normal 2
+for_window [class="zoom" title="annotate_toolbar"] floating enable, border none
+
 # Additional sway-specific configurations
 # Enable XWayland for X11 applications
 xwayland enable

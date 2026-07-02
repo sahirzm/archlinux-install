@@ -57,20 +57,10 @@
     "jdtls-lsp@claude-plugins-official": true,
     "document-skills@anthropic-agent-skills": true,
     "frontend-design@claude-plugins-official": true,
-    "oh-my-claudecode@omc": true,
-    "context7@claude-plugins-official": true,
     "code-review@claude-plugins-official": true,
     "skill-creator@claude-plugins-official": true
   },
-  "extraKnownMarketplaces": {
-    "omc": {
-      "source": {
-        "source": "git",
-        "url": "https://github.com/Yeachan-Heo/oh-my-claudecode.git"
-      },
-      "autoUpdate": true
-    }
-  },
+  "extraKnownMarketplaces": {},
   "effortLevel": "low",
   "skipWorkflowUsageWarning": true,
   "theme": "auto",
