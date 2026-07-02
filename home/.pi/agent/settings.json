@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.80.2",
+  "lastChangelogVersion": "0.80.3",
   "theme": "catppuccin-tui-mocha",
   "packages": [
     "npm:@hypabolic/pi-hypa",
@@ -16,7 +16,8 @@
     "npm:pi-agent-browser-native",
     "npm:pi-catppuccin-tui",
     "npm:pi-pixel-header",
-    "npm:pi-landstrip"
+    "npm:pi-landstrip",
+    "npm:pi-intercom"
   ],
   "defaultThinkingLevel": "minimal",
   "enableInstallTelemetry": false,
