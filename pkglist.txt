@@ -42,6 +42,7 @@ doctl
 dos2unix
 downgrade
 dunst
+easy-conflict-bin
 ed
 editorconfig-core-c
 efibootmgr

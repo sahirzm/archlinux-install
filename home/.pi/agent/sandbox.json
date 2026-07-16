@@ -9,9 +9,28 @@
     "deniedDomains": []
   },
   "filesystem": {
-    "denyRead": ["/Users", "/home"],
-    "allowRead": [".", "~/.gitconfig", "~/.config/git/config", "/dev/null"],
-    "allowWrite": [".", "/dev/null"],
+    "denyRead": [
+      "/Users",
+      "/home"
+    ],
+    "allowRead": [
+      ".",
+      "~/.gitconfig",
+      "~/.config/git/config",
+      "/dev/null",
+      "~/.hypa/hypa.db",
+      "~/.hypa",
+      "~/.local/share/mise/",
+      "~/.gradle",
+      "~/.zsh_history"
+    ],
+    "allowWrite": [
+      ".",
+      "/dev/null",
+      "/home/sahir/.hypa",
+      "/home/sahir/.gradle",
+      "/tmp"
+    ],
     "denyWrite": [
       "**/.env",
       "**/.env.*",

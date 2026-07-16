@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.80.3",
+  "lastChangelogVersion": "0.80.7",
   "theme": "catppuccin-tui-mocha",
   "packages": [
     "npm:@hypabolic/pi-hypa",
@@ -17,7 +17,8 @@
     "npm:pi-catppuccin-tui",
     "npm:pi-pixel-header",
     "npm:pi-landstrip",
-    "npm:pi-intercom"
+    "npm:pi-intercom",
+    "npm:@diegopetrucci/pi-context-cap"
   ],
   "defaultThinkingLevel": "minimal",
   "enableInstallTelemetry": false,

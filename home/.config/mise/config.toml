@@ -8,6 +8,7 @@ yarn = "latest"
 doctl = "latest"
 uv = "latest"
 pandoc = "latest"
+rust = "latest"
 
 [settings]
 experimental = true

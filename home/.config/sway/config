@@ -41,7 +41,7 @@ exec swayidle -w \
 # Start applications on sway startup
 
 # --- Automated Keyring Configurations ---
-exec dbus-update-activation-environment --systemd DISPLAY XAUTHORITY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=GNOME
+exec dbus-update-activation-environment --systemd DISPLAY XAUTHORITY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
 exec gnome-keyring-daemon --start --components=secrets,ssh,pkcs11
 # ----------------------------------------
 
