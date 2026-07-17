@@ -1,7 +1,8 @@
 {
-  "lastChangelogVersion": "0.80.7",
+  "lastChangelogVersion": "0.80.10",
   "theme": "catppuccin-tui-mocha",
   "packages": [
+    "npm:pi-extmgr",
     "npm:@hypabolic/pi-hypa",
     "npm:pi-web-access",
     "npm:pi-subagents",

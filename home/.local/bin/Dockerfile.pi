@@ -1,0 +1,21 @@
+FROM node:lts-slim
+
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    build-essential \
+    python3 \
+    unzip \
+    zip \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN npm install -g --ignore-scripts @earendil-works/pi-coding-agent
+
+RUN curl https://mise.run | sh
+
+RUN curl -fsSL https://raw.githubusercontent.com/Hypabolic/Hypa/main/install.sh | sh
+
+ENV PATH="/root/.local/bin:/root/.local/share/mise/shims:${PATH}"
+
+WORKDIR /workspace
+ENTRYPOINT ["pi"]

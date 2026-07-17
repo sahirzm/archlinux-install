@@ -35,6 +35,7 @@ cups-pdf
 dbeaver
 diff-so-fancy
 docker
+docker-buildx
 docker-compose
 docker-rootless-extras
 dockfmt-git

@@ -1,8 +1,8 @@
 {
   "enabled": true,
   "network": {
-    "allowNetwork": false,
-    "allowLocalBinding": false,
+    "allowNetwork": true,
+    "allowLocalBinding": true,
     "allowAllUnixSockets": false,
     "allowUnixSockets": [],
     "allowedDomains": [],

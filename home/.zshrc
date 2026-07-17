@@ -111,6 +111,7 @@ antidote load
 (( $+commands[doctl] )) && source <(doctl completion zsh)
 
 # Claude Code aliases (Jobbersoft Bedrock)
+export AWS_PROFILE=jobbersoft-bedrock
 alias claude-login='aws sso login --profile jobbersoft-bedrock'
 alias claude-check='aws bedrock list-foundation-models --region us-west-2 --profile jobbersoft-bedrock --query "modelSummaries[?contains(modelId, \`claude\`)].modelId" --output table'
 alias claude-logout='aws sso logout --profile jobbersoft-bedrock'
