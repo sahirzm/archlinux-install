@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.80.10",
+  "lastChangelogVersion": "0.82.1",
   "theme": "catppuccin-tui-mocha",
   "packages": [
     "npm:pi-extmgr",
@@ -13,7 +13,6 @@
     "npm:pi-simplify",
     "npm:@ff-labs/pi-fff",
     "npm:pi-hermes-memory",
-    "npm:pi-crew",
     "npm:pi-agent-browser-native",
     "npm:pi-catppuccin-tui",
     "npm:pi-pixel-header",
@@ -29,5 +28,5 @@
   },
   "editorPaddingX": 1,
   "defaultProvider": "amazon-bedrock",
-  "defaultModel": "global.anthropic.claude-sonnet-4-6"
+  "defaultModel": "zai.glm-5"
 }

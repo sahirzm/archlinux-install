@@ -31,6 +31,10 @@ input "type:touchpad" {
     drag_lock disabled
 }
 
+input "type:pointer" {
+    natural_scroll enabled
+}
+
 # Idle configuration (replaces xidlehook)
 exec swayidle -w \
     timeout 300 '$HOME/.local/bin/lock' \

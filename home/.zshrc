@@ -98,6 +98,11 @@ what_is_my_public_ip() {
   dig TXT +short o-o.myaddr.l.google.com @ns1.google.com | awk -F'"' '{ print $2}'
 }
 
+js_restore_db() {
+  psql -U gasjobber -d gasjobber -h localhost -p 5432 -c "DROP SCHEMA public CASCADE; CREATE SCHEMA public;"
+  gunzip -c "$1" | grep -Ev "^(ALTER.*OWNER TO|REVOKE|GRANT)" | psql -U gasjobber -d gasjobber -h localhost -p 5432
+}
+
 # initialize plugins statically with ~/.zsh_plugins.txt
 # Init zsh-vi-mode synchronously so it doesn't reset keymaps after other
 # plugins (e.g. zsh-fzf-history-search) have set their bindings.

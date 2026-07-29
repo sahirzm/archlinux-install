@@ -7,64 +7,65 @@ CONTAINER_NAME="pi-agent-$RANDOM"
 # Parse -n/--name argument; collect remaining args for docker
 DOCKER_ARGS=()
 while [[ $# -gt 0 ]]; do
-    case "$1" in
-        -n|--name)
-            CONTAINER_NAME="$2"
-            shift 2
-            ;;
-        *)
-            DOCKER_ARGS+=("$1")
-            shift
-            ;;
-    esac
+  case "$1" in
+  -n | --name)
+    CONTAINER_NAME="$2"
+    shift 2
+    ;;
+  *)
+    DOCKER_ARGS+=("$1")
+    shift
+    ;;
+  esac
 done
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-DOCKERFILE_NAME="$SCRIPT_DIR/Dockerfile.pi"
+DOCKERFILE_PATH="$SCRIPT_DIR/Dockerfile.pi"
+DOCKERFILE_NAME=$(readlink -f "$DOCKERFILE_PATH" 2>/dev/null || echo "$DOCKERFILE_PATH")
 SHOULD_BUILD=false
 
 # Ensure the Dockerfile exists before running checks
 if [ ! -f "$DOCKERFILE_NAME" ]; then
-    echo "❌ Error: 'Dockerfile.pi' not found in '$SCRIPT_DIR'."
-    exit 1
+  echo "❌ Error: 'Dockerfile.pi' not found in '$SCRIPT_DIR'."
+  exit 1
 fi
 
 # 1. Check if the Docker image exists locally
 if ! docker image inspect "$IMAGE_NAME" >/dev/null 2>&1; then
-    echo "🔍 Image '$IMAGE_NAME' not found. Forcing a new build..."
-    SHOULD_BUILD=true
+  echo "🔍 Image '$IMAGE_NAME' not found. Forcing a new build..."
+  SHOULD_BUILD=true
 else
-    # 2. Extract image creation time and file modification time
-    IMAGE_CREATED_TIME=$(docker image inspect --format='{{.Created}}' "$IMAGE_NAME")
-    IMAGE_EPOCH=$(date -d "$IMAGE_CREATED_TIME" +%s)
+  # 2. Extract image creation time and file modification time
+  IMAGE_CREATED_TIME=$(docker image inspect --format='{{.Created}}' "$IMAGE_NAME")
+  IMAGE_EPOCH=$(date -d "$IMAGE_CREATED_TIME" +%s)
 
-    # Get last modification time of Dockerfile.pi using GNU stat (native to Arch)
-    DOCKERFILE_EPOCH=$(stat -c %Y "$DOCKERFILE_NAME")
-    CURRENT_EPOCH=$(date +%s)
+  # Get last modification time of Dockerfile.pi using GNU stat (native to Arch)
+  DOCKERFILE_EPOCH=$(stat -c %Y "$DOCKERFILE_NAME")
+  CURRENT_EPOCH=$(date +%s)
 
-    # 3. Check Condition A: Has the Dockerfile been edited since the image was built?
-    if [ "$DOCKERFILE_EPOCH" -gt "$IMAGE_EPOCH" ]; then
-        echo "📝 '$DOCKERFILE_NAME' has been modified since the last build. Forcing a rebuild..."
-        SHOULD_BUILD=true
+  # 3. Check Condition A: Has the Dockerfile been edited since the image was built?
+  if [ "$DOCKERFILE_EPOCH" -gt "$IMAGE_EPOCH" ]; then
+    echo "📝 '$DOCKERFILE_NAME' has been modified since the last build. Forcing a rebuild..."
+    SHOULD_BUILD=true
+  else
+    # 4. Check Condition B: Is the existing image older than 7 days? (604800 seconds)
+    AGE_SECONDS=$((CURRENT_EPOCH - IMAGE_EPOCH))
+    MAX_AGE_SECONDS=604800
+
+    if [ "$AGE_SECONDS" -gt "$MAX_AGE_SECONDS" ]; then
+      AGE_DAYS=$((AGE_SECONDS / 86400))
+      echo "⏳ Image is $AGE_DAYS days old (Threshold: 7 days). Flagging for a rebuild..."
+      SHOULD_BUILD=true
     else
-        # 4. Check Condition B: Is the existing image older than 7 days? (604800 seconds)
-        AGE_SECONDS=$((CURRENT_EPOCH - IMAGE_EPOCH))
-        MAX_AGE_SECONDS=604800
-
-        if [ "$AGE_SECONDS" -gt "$MAX_AGE_SECONDS" ]; then
-            AGE_DAYS=$((AGE_SECONDS / 86400))
-            echo "⏳ Image is $AGE_DAYS days old (Threshold: 7 days). Flagging for a rebuild..."
-            SHOULD_BUILD=true
-        else
-            echo "✅ Image is up-to-date and under 7 days old. Skipping image compilation step."
-        fi
+      echo "✅ Image is up-to-date and under 7 days old. Skipping image compilation step."
     fi
+  fi
 fi
 
 # 5. Trigger build process only if conditions match
 if [ "$SHOULD_BUILD" = true ]; then
-    echo "🔨 Building Docker image with Arch Buildx..."
-    docker build -f "$DOCKERFILE_NAME" -t "$IMAGE_NAME" "$SCRIPT_DIR"
+  echo "🔨 Building Docker image with Arch Buildx..."
+  docker build -f "$DOCKERFILE_NAME" -t "$IMAGE_NAME" "$SCRIPT_DIR"
 fi
 
 echo "🚀 Launching pi.dev agent container..."
@@ -74,16 +75,16 @@ mkdir -p "$HOME/.pi" "$HOME/.aws" "$HOME/.gradle" "$HOME/.local/share/mise" "$HO
 
 # Run the container matching internal mapping defaults
 docker run -it --rm \
-    --name "$CONTAINER_NAME" \
-    -v "$(pwd):/workspace" \
-    -v "$HOME/.pi:/root/.pi" \
-    -v "$HOME/.gradle:/root/.gradle" \
-    -v "$HOME/.local/share/mise:/root/.local/share/mise" \
-    -v "$HOME/.aws:/root/.aws:ro" \
-    -v "$HOME/.config/git:/root/.config/git:ro" \
-    -e AWS_PROFILE=jobbersoft-bedrock \
-    -e AWS_CONFIG_FILE=/root/.aws/config \
-    -e MISE_DATA_DIR=/root/.local/share/mise \
-    -e TERM="$TERM" \
-    -e COLORTERM="$COLORTERM" \
-    "$IMAGE_NAME" "${DOCKER_ARGS[@]}"
+  --name "$CONTAINER_NAME" \
+  -v "$(pwd):/workspace" \
+  -v "$HOME/.pi:/root/.pi" \
+  -v "$HOME/.gradle:/root/.gradle" \
+  -v "$HOME/.local/share/mise:/root/.local/share/mise" \
+  -v "$HOME/.aws:/root/.aws:ro" \
+  -v "$HOME/.config/git:/root/.config/git:ro" \
+  -e AWS_PROFILE=jobbersoft-bedrock \
+  -e AWS_CONFIG_FILE=/root/.aws/config \
+  -e MISE_DATA_DIR=/root/.local/share/mise \
+  -e TERM="$TERM" \
+  -e COLORTERM="$COLORTERM" \
+  "$IMAGE_NAME" "${DOCKER_ARGS[@]}"

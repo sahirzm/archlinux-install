@@ -3,9 +3,19 @@
   "network": {
     "allowNetwork": true,
     "allowLocalBinding": true,
-    "allowAllUnixSockets": false,
+    "allowAllUnixSockets": true,
     "allowUnixSockets": [],
-    "allowedDomains": [],
+    "allowedDomains": [
+      "localhost",
+      "127.0.0.1",
+      "html.duckduckgo.com",
+      "*.npmjs.org",
+      "*.pypi.org",
+      "*.github.com",
+      "*.gitlab.com",
+      "raw.githubusercontent.com",
+      "mcp.context7.com"
+    ],
     "deniedDomains": []
   },
   "filesystem": {
@@ -16,20 +26,27 @@
     "allowRead": [
       ".",
       "~/.gitconfig",
-      "~/.config/git/config",
+      "~/.config",
       "/dev/null",
-      "~/.hypa/hypa.db",
       "~/.hypa",
-      "~/.local/share/mise/",
       "~/.gradle",
-      "~/.zsh_history"
+      "~/.zsh_history",
+      "~/.cache",
+      "~/.local/share",
+      "~/.local/cache",
+      "~/.npm",
+      "~/.cargo",
+      "~/.pi"
     ],
     "allowWrite": [
       ".",
       "/dev/null",
-      "/home/sahir/.hypa",
-      "/home/sahir/.gradle",
-      "/tmp"
+      "~/.hypa",
+      "~/.gradle",
+      "/tmp",
+      "~/.pi",
+      "~/.cache/uv",
+      "~/.agent-browser"
     ],
     "denyWrite": [
       "**/.env",

@@ -156,6 +156,7 @@ pipewire-pulse
 pipewire-zeroconf
 playerctl
 polychromatic
+postgresql-libs
 python-black
 python-isort
 python-pandas
