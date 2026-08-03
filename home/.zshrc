@@ -124,6 +124,8 @@ export PLAN_REVIEW_USE_USER_CONFIG=1
 eval "$(mise activate zsh)"
 export MISE_TRUSTED_CONFIG_PATHS="$HOME/workspace"
 
+include $HOME/.secrets.zsh
+
 if [ -z "$TMUX" ] && [ "$TERM" = "xterm-kitty" ]; then
   tmux attach || tmux new-session; exit
 fi
