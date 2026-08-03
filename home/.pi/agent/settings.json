@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.82.1",
+  "lastChangelogVersion": "0.83.0",
   "theme": "catppuccin-tui-mocha",
   "packages": [
     "npm:pi-extmgr",
@@ -18,7 +18,11 @@
     "npm:pi-pixel-header",
     "npm:pi-landstrip",
     "npm:pi-intercom",
-    "npm:@diegopetrucci/pi-context-cap"
+    "npm:@diegopetrucci/pi-context-cap",
+    "npm:pi-mcp-adapter"
+  ],
+  "extensions": [
+    "/home/sahir/workspace/plan-review.nvim/adapters/pi/index.ts"
   ],
   "defaultThinkingLevel": "minimal",
   "enableInstallTelemetry": false,

@@ -32,8 +32,7 @@
       "~/.gradle",
       "~/.zsh_history",
       "~/.cache",
-      "~/.local/share",
-      "~/.local/cache",
+      "~/.local",
       "~/.npm",
       "~/.cargo",
       "~/.pi"

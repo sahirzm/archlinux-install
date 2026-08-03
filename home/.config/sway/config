@@ -14,6 +14,11 @@ font pango:FiraCode Nerd Font Mono 12
 # You can get output names with: swaymsg -t get_outputs
 output eDP-1 scale 1.8
 
+# Monitor positions (top-bottom configuration)
+# DP-2 is the top monitor, DP-3 is the bottom monitor
+output DP-2 pos 0 0
+output DP-3 pos 0 1440
+
 # Input configuration (replaces xinput in X11)
 # Keyboard configuration
 input "type:keyboard" {
@@ -190,6 +195,8 @@ bindsym $mod+Shift+0 move container to workspace number $ws10
 # Move focused workspace between monitors
 bindsym $mod+Ctrl+right move workspace to output right
 bindsym $mod+Ctrl+left move workspace to output left
+bindsym $mod+Ctrl+up move workspace to output up
+bindsym $mod+Ctrl+down move workspace to output down
 
 # Reload the configuration file
 bindsym $mod+Shift+r reload

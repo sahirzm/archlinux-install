@@ -119,6 +119,7 @@ antidote load
 alias claude-login='aws sso login --profile jobbersoft-bedrock'
 alias claude-check='aws bedrock list-foundation-models --region us-west-2 --profile jobbersoft-bedrock --query "modelSummaries[?contains(modelId, \`claude\`)].modelId" --output table'
 alias claude-logout='aws sso logout --profile jobbersoft-bedrock'
+export PLAN_REVIEW_USE_USER_CONFIG=1
 
 eval "$(mise activate zsh)"
 export MISE_TRUSTED_CONFIG_PATHS="$HOME/workspace"

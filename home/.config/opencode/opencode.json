@@ -17,5 +17,15 @@
     "deepseek",
     "groq",
     "opencode"
-  ]
+  ],
+  "mcp": {
+    "local-review": {
+      "type": "local",
+      "command": [
+        "/home/sahir/workspace/local-code-review/target/release/local-review",
+        "mcp"
+      ],
+      "enabled": true
+    }
+  }
 }
