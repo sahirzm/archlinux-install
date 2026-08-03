@@ -27,6 +27,6 @@
     "showTerminalProgress": true
   },
   "editorPaddingX": 1,
-  "defaultProvider": "amazon-bedrock",
-  "defaultModel": "zai.glm-5"
+  "defaultProvider": "digitalocean",
+  "defaultModel": "glm-5.2"
 }
