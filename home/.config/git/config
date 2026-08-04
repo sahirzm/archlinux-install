@@ -17,7 +17,7 @@
 	side-by-side = true
 	line-numbers = true
   features = catppuccin-mocha
-	paging = never
+	paging = auto
 [difftool]
 	prompt = true
 [difftool "nvimdiff"]
