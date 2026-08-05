@@ -24,13 +24,13 @@
   "extensions": [
     "/home/sahir/workspace/plan-review.nvim/adapters/pi/index.ts"
   ],
-  "defaultThinkingLevel": "minimal",
+  "defaultThinkingLevel": "low",
   "enableInstallTelemetry": false,
   "quietStartup": true,
   "terminal": {
     "showTerminalProgress": true
   },
   "editorPaddingX": 1,
-  "defaultProvider": "digitalocean",
-  "defaultModel": "glm-5.2"
+  "defaultProvider": "openrouter",
+  "defaultModel": "z-ai/glm-5.2"
 }
