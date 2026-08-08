@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DigitalOcean DB Quick Commands
 // @namespace    http://tampermonkey.net/
-// @version      2.3
+// @version      2.4
 // @description  Floating bottom-right psql/pg_dump/scp buttons for DO database pages. Structure-agnostic: parses connection params from page text via regex.
 // @author       You
 // @match        https://cloud.digitalocean.com/databases*
@@ -56,10 +56,14 @@
 		const tag = el.tagName;
 		if (tag === "BODY" || tag === "HTML") return false;
 		if (el.hidden || el.getAttribute("aria-hidden") === "true") return true;
+		// el.style is undefined for some non-HTML (SVG/MathML) elements.
 		const st = el.style;
-		if (st.display === "none" || st.visibility === "hidden" || st.opacity === "0") return true;
+		if (st) {
+			if (st.display === "none" || st.visibility === "hidden" || st.opacity === "0") return true;
+		}
 		if (el.offsetParent === null) {
-			const cs = getComputedStyle(el);
+			let cs;
+			try { cs = getComputedStyle(el); } catch { return false; }
 			if (cs.display === "none" || cs.visibility === "hidden") return true;
 		}
 		return false;
