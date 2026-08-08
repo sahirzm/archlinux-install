@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DigitalOcean DB Quick Commands
 // @namespace    http://tampermonkey.net/
-// @version      2.2
+// @version      2.3
 // @description  Floating bottom-right psql/pg_dump/scp buttons for DO database pages. Structure-agnostic: parses connection params from page text via regex.
 // @author       You
 // @match        https://cloud.digitalocean.com/databases*
@@ -47,6 +47,23 @@
 	// at element boundaries so each line is separated, while keeping inline
 	// text (e.g. a hyphenated hostname, one text node) intact.
 	const SKIP_TAGS = new Set(["SCRIPT", "STYLE", "NOSCRIPT", "SVG", "TEMPLATE"]);
+	// DO keeps both Public-network and VPC-network param blocks in the DOM; the
+	// inactive tab is display:none. User/Database dropdowns swap the username/database
+	// values in place. To read only the currently selected tab, skip hidden subtrees
+	// during the walk. offsetParent === null catches display:none (set via class or
+	// inline); confirm with getComputedStyle so position:fixed panels aren't skipped.
+	function isHiddenEl(el) {
+		const tag = el.tagName;
+		if (tag === "BODY" || tag === "HTML") return false;
+		if (el.hidden || el.getAttribute("aria-hidden") === "true") return true;
+		const st = el.style;
+		if (st.display === "none" || st.visibility === "hidden" || st.opacity === "0") return true;
+		if (el.offsetParent === null) {
+			const cs = getComputedStyle(el);
+			if (cs.display === "none" || cs.visibility === "hidden") return true;
+		}
+		return false;
+	}
 	function getPageText() {
 		const parts = [];
 		const walk = (node) => {
@@ -58,6 +75,7 @@
 			if (node.nodeType !== 1) return;
 			const el = node;
 			if (SKIP_TAGS.has(el.tagName)) return;
+			if (isHiddenEl(el)) return;
 			if (el.shadowRoot) {
 				for (const c of el.shadowRoot.childNodes) walk(c);
 				parts.push("\n");
