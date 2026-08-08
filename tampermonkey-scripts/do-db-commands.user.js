@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DigitalOcean DB Quick Commands
 // @namespace    http://tampermonkey.net/
-// @version      2.0
+// @version      2.1
 // @description  Floating bottom-right psql/pg_dump/scp buttons for DO database pages. Structure-agnostic: parses connection params from page text via regex.
 // @author       You
 // @match        https://cloud.digitalocean.com/databases*
@@ -35,14 +35,30 @@
 	// ── Parse connection details from page text (structure-agnostic) ──────────
 	// Collects visible text from the page, then extracts connection params.
 	// Supports both `key=value` parameter blocks and `postgresql://` URIs.
+	//
+	// The walker starts at document.body (not <main>) because DO often renders
+	// the connection panel in a portal sibling to <main>, and pierces shadow
+	// roots because DO uses web components with Shadow DOM — cloneNode/textContent
+	// and querySelectorAll do NOT cross shadow boundaries.
+	const SKIP_TAGS = new Set(["SCRIPT", "STYLE", "NOSCRIPT", "SVG", "TEMPLATE"]);
 	function getPageText() {
-		// Prefer main content if present, else whole body. Strip script/style noise.
-		const root = document.querySelector("main") || document.body;
-		const clone = root.cloneNode(true);
-		clone
-			.querySelectorAll("script, style, noscript, svg")
-			.forEach((el) => el.remove());
-		return (clone.textContent || "").replace(/\u00a0/g, " ");
+		const parts = [];
+		const walk = (node) => {
+			if (node.nodeType === 3) {
+				const t = node.textContent;
+				if (t) parts.push(t);
+				return;
+			}
+			if (node.nodeType !== 1) return;
+			const el = node;
+			if (SKIP_TAGS.has(el.tagName)) return;
+			if (el.shadowRoot) {
+				for (const c of el.shadowRoot.childNodes) walk(c);
+			}
+			for (const c of el.childNodes) walk(c);
+		};
+		walk(document.body);
+		return parts.join("").replace(/\u00a0/g, " ");
 	}
 
 	function parseDetails() {
