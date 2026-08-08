@@ -14,7 +14,10 @@
       "*.github.com",
       "*.gitlab.com",
       "raw.githubusercontent.com",
-      "mcp.context7.com"
+      "mcp.context7.com",
+      "*.maven.org",
+      "*.gradle.org",
+      "jitpack.io"
     ],
     "deniedDomains": []
   },
@@ -45,7 +48,9 @@
       "/tmp",
       "~/.pi",
       "~/.cache/uv",
-      "~/.agent-browser"
+      "~/.agent-browser",
+      "~/.local/share/kotlin/",
+      "~/.java/.userPrefs/"
     ],
     "denyWrite": [
       "**/.env",
