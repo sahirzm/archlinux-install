@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DigitalOcean DB Quick Commands
 // @namespace    http://tampermonkey.net/
-// @version      2.1
+// @version      2.2
 // @description  Floating bottom-right psql/pg_dump/scp buttons for DO database pages. Structure-agnostic: parses connection params from page text via regex.
 // @author       You
 // @match        https://cloud.digitalocean.com/databases*
@@ -40,6 +40,12 @@
 	// the connection panel in a portal sibling to <main>, and pierces shadow
 	// roots because DO uses web components with Shadow DOM — cloneNode/textContent
 	// and querySelectorAll do NOT cross shadow boundaries.
+	// DO renders each connection param as a separate block element with no
+	// whitespace between lines, so a naive text walk concatenates them into
+	// `username = doadminpassword = ***host = ...comport = 25060...` and the
+	// value regex captures the next key gluing onto the value. Insert a newline
+	// at element boundaries so each line is separated, while keeping inline
+	// text (e.g. a hyphenated hostname, one text node) intact.
 	const SKIP_TAGS = new Set(["SCRIPT", "STYLE", "NOSCRIPT", "SVG", "TEMPLATE"]);
 	function getPageText() {
 		const parts = [];
@@ -54,8 +60,16 @@
 			if (SKIP_TAGS.has(el.tagName)) return;
 			if (el.shadowRoot) {
 				for (const c of el.shadowRoot.childNodes) walk(c);
+				parts.push("\n");
 			}
-			for (const c of el.childNodes) walk(c);
+			let first = true;
+			for (const c of el.childNodes) {
+				if (c.nodeType === 1) {
+					if (!first) parts.push("\n");
+					first = false;
+				}
+				walk(c);
+			}
 		};
 		walk(document.body);
 		return parts.join("").replace(/\u00a0/g, " ");
