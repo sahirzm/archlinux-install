@@ -88,6 +88,7 @@ htop
 ibus-m17n
 inkscape
 intel-media-driver
+iptables
 iwd
 jdtls
 jq
@@ -114,6 +115,7 @@ luarocks
 lvm2
 mako
 man-db
+mesa
 mesa-utils
 minikube
 mise
@@ -129,6 +131,7 @@ ninja
 noto-fonts
 ntfs-3g
 okular
+onetbb
 opencode
 openrazer-daemon
 otf-aurulent-nerd
@@ -154,6 +157,7 @@ pipewire-audio
 pipewire-jack
 pipewire-pulse
 pipewire-zeroconf
+playerctl
 polychromatic
 postgresql-libs
 powerpill-me
@@ -189,6 +193,7 @@ sudo
 sway
 swaybg
 swayidle
+swayimg
 swaylock
 system-config-printer
 terminus-font

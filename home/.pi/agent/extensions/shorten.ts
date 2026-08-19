@@ -21,7 +21,7 @@ interface ExtensionApi {
 
 const RULE = [
   "",
-  "## Output discipline (enforced by project extension `shorten`)",
+  "## Output discipline (enforced by extension `shorten`)",
   "",
   "Skip self-correction explanations and process narration entirely. Concretely:",
   "- Do NOT narrate your steps (\"Let me read…\", \"Now I'll fix…\", \"Next I'll…\").",

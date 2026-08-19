@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.83.0",
+  "lastChangelogVersion": "0.84.2",
   "theme": "catppuccin-tui-mocha",
   "packages": [
     "npm:pi-extmgr",
@@ -24,7 +24,7 @@
   "extensions": [
     "/home/sahir/workspace/plan-review.nvim/adapters/pi/index.ts"
   ],
-  "defaultThinkingLevel": "low",
+  "defaultThinkingLevel": "medium",
   "enableInstallTelemetry": false,
   "quietStartup": true,
   "terminal": {
@@ -32,5 +32,10 @@
   },
   "editorPaddingX": 1,
   "defaultProvider": "openrouter",
-  "defaultModel": "z-ai/glm-5.2"
+  "defaultModel": "z-ai/glm-5.2",
+  "hideThinkingBlock": true,
+  "tuiMode": "regular",
+  "markdown": {
+    "mermaid": "final"
+  }
 }
