@@ -12,7 +12,7 @@ font pango:FiraCode Nerd Font Mono 12
 # Output configuration (replaces xrandr in X11)
 # Example: output HDMI-A-1 resolution 1920x1080 position 1920,0
 # You can get output names with: swaymsg -t get_outputs
-output eDP-1 scale 1.8
+# output eDP-1 scale 1.8
 
 # Monitor positions (top-bottom configuration)
 # DP-2 is the top monitor, DP-3 is the bottom monitor

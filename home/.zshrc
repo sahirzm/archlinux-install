@@ -100,7 +100,8 @@ what_is_my_public_ip() {
 
 js_restore_db() {
   psql -U gasjobber -d gasjobber -h localhost -p 5432 -c "DROP SCHEMA public CASCADE; CREATE SCHEMA public;"
-  gunzip -c "$1" | grep -Ev "^(ALTER.*OWNER TO|REVOKE|GRANT)" | psql -U gasjobber -d gasjobber -h localhost -p 5432
+  gunzip -c "$1" | grep -Ev "^(ALTER.*OWNER TO|REVOKE|GRANT)" | psql -q -U gasjobber -d gasjobber -h localhost -p 5432
+  [ -f ./scripts/update_config_for_local.sql ] && psql -U gasjobber -d gasjobber -h localhost -p 5432 -f ./scripts/update_config_for_local.sql
 }
 
 # initialize plugins statically with ~/.zsh_plugins.txt

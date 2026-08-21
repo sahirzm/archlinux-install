@@ -8,6 +8,15 @@
       "discoverModels": false,
       "models": [
         {
+          "id": "router:software-engineering-01",
+          "name": "DO router",
+          "input": [
+            "text"
+          ],
+          "contextWindow": 200000,
+          "maxTokens": 32768
+        },
+        {
           "id": "anthropic-claude-4.6-sonnet",
           "name": "Claude 4.6 Sonnet",
           "input": [
