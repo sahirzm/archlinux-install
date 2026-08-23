@@ -1,11 +1,5 @@
 {
-<<<<<<< Updated upstream
   "lastChangelogVersion": "0.84.2",
-||||||| Stash base
-  "lastChangelogVersion": "0.83.0",
-=======
-  "lastChangelogVersion": "0.84.1",
->>>>>>> Stashed changes
   "theme": "catppuccin-tui-mocha",
   "packages": [
     "npm:pi-extmgr",

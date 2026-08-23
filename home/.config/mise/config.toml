@@ -9,6 +9,8 @@ doctl = "latest"
 uv = "latest"
 pandoc = "latest"
 rust = "latest"
+# npm global packages
+"npm:@earendil-works/pi-coding-agent" = "latest"
 
 [settings]
 experimental = true
