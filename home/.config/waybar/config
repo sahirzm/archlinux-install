@@ -129,13 +129,16 @@
   "temperature": {
     // "thermal-zone": 2,
     // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
-    "critical-threshold": 80,
-    // "format-critical": "{temperatureC}°C {icon}",
+    "critical-threshold": 176,
     "format": "{temperatureF}°F {icon}",
     "format-icons": [
-      "",
-      "",
-      ""
+      "", // Cold / Snowflake (\ue36f)
+      "", // Thermometer Empty / 0% (\uf2cb)
+      "", // Thermometer Quarter / 25% (\uf2ca)
+      "", // Thermometer Half / 50% (\uf2c9)
+      "", // Thermometer Three-Quarters / 75% (\uf2c8)
+      "", // Thermometer Full / 100% (\uf2c7)
+      "" // Hot / Fire (\ue36b)
     ]
   },
   "backlight": {
