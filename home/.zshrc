@@ -88,7 +88,7 @@ export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
 export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --follow --exclude .git'
 include /usr/share/fzf/completion.zsh
 include /usr/share/fzf/key-bindings.zsh
-bindkey '^F' fzf-file-widget
+bindkey '^f' forward-word  # Ctrl+f: accept autosuggestion one word at a time
 
 export BAT_THEME=Coldark-Dark
 export BC_ENV_ARGS="$HOME/.config/bc"
