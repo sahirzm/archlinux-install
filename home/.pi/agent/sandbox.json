@@ -50,7 +50,8 @@
       "~/.cache/uv/",
       "~/.agent-browser/",
       "~/.local/share/kotlin/",
-      "~/.java/.userPrefs/"
+      "~/.java/.userPrefs/",
+      "~/.npm"
     ],
     "denyWrite": [
       "**/.env",

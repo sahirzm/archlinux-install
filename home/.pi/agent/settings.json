@@ -7,8 +7,6 @@
     "npm:pi-web-access",
     "npm:pi-subagents",
     "npm:@juicesharp/rpiv-todo",
-    "npm:@ayulab/pi-rewind",
-    "npm:@plannotator/pi-extension",
     "npm:pi-lens",
     "npm:pi-simplify",
     "npm:@ff-labs/pi-fff",
@@ -19,7 +17,10 @@
     "npm:pi-landstrip",
     "npm:pi-intercom",
     "npm:@diegopetrucci/pi-context-cap",
-    "npm:pi-mcp-adapter"
+    "npm:pi-mcp-adapter",
+    "npm:pi-background-tasks",
+    "npm:pi-clarify",
+    "npm:@davecodes/pi-skill-tags"
   ],
   "extensions": [
     "/home/sahir/workspace/plan-review.nvim/adapters/pi/index.ts"
@@ -32,7 +33,7 @@
   },
   "editorPaddingX": 1,
   "defaultProvider": "openrouter",
-  "defaultModel": "z-ai/glm-5.2",
+  "defaultModel": "z-ai/glm-5.3",
   "hideThinkingBlock": true,
   "tuiMode": "regular",
   "markdown": {
