@@ -7,7 +7,6 @@
     "npm:pi-web-access",
     "npm:pi-subagents",
     "npm:@juicesharp/rpiv-todo",
-    "npm:pi-lens",
     "npm:pi-simplify",
     "npm:@ff-labs/pi-fff",
     "npm:pi-hermes-memory",
@@ -20,7 +19,8 @@
     "npm:pi-mcp-adapter",
     "npm:pi-background-tasks",
     "npm:pi-clarify",
-    "npm:@davecodes/pi-skill-tags"
+    "npm:@davecodes/pi-skill-tags",
+    "npm:pi-lsp-extension"
   ],
   "extensions": [
     "/home/sahir/workspace/plan-review.nvim/adapters/pi/index.ts"

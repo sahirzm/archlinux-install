@@ -11,6 +11,7 @@ pandoc = "latest"
 rust = "latest"
 # npm global packages
 "npm:@earendil-works/pi-coding-agent" = "latest"
+"npm:@hypabolic/hypa" = "latest"
 
 [settings]
 experimental = true
