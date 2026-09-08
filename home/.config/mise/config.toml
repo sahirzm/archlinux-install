@@ -12,6 +12,7 @@ rust = "latest"
 # npm global packages
 "npm:@earendil-works/pi-coding-agent" = "latest"
 "npm:@hypabolic/hypa" = "latest"
+"npm:@zvec/zvec-grep" = "latest"
 
 [settings]
 experimental = true

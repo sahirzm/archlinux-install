@@ -20,7 +20,8 @@
     "npm:pi-background-tasks",
     "npm:pi-clarify",
     "npm:@davecodes/pi-skill-tags",
-    "npm:pi-lsp-extension"
+    "npm:pi-lsp-extension",
+    "npm:@luminascale/pi-zvec-grep"
   ],
   "extensions": [
     "/home/sahir/workspace/plan-review.nvim/adapters/pi/index.ts"
