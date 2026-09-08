@@ -34,7 +34,7 @@
   },
   "editorPaddingX": 1,
   "defaultProvider": "openrouter",
-  "defaultModel": "z-ai/glm-5.3",
+  "defaultModel": "moonshotai/kimi-k3",
   "hideThinkingBlock": true,
   "tuiMode": "regular",
   "markdown": {
