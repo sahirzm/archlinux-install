@@ -2,7 +2,7 @@
  * Pi status-line footer — mirrors ccstatusline settings.json layout
  *
  * Segments (left → right):
- *   model · context-length · thinking-effort · cost · git-branch · git-changes · cwd
+ *   model · context-length · thinking-effort · cost · git-branch · git-changes · session-id · cwd
  *
  * Each segment is an independent pill:  content
  * Catppuccin Mocha colors + Nerd Font icons.
@@ -29,6 +29,8 @@ const ICON_MODIFIED = "\uF040"; // nf-fa-pencil (modified)
 const ICON_DELETED = "\uF014"; // nf-fa-trash_o (deleted)
 const ICON_NEW = "\uF067"; // nf-fa-plus (new/untracked)
 const ICON_FOLDER = "\uF07C"; // nf-fa-folder_open
+const ICON_CONTAINER = "\uF308"; // nf-linux-docker
+const ICON_SESSION = "\uF1DA"; // nf-fa-history (resume)
 
 // ── Catppuccin Mocha palette (truecolor ANSI) ─────────────────────────────────
 function bg(r: number, g: number, b: number) {
@@ -48,6 +50,8 @@ const C = {
 	bgYellow: bg(249, 226, 175), // yellow   #f9e2af — changes
 	bgRed: bg(243, 139, 168), // red      #f38ba8 — deletions
 	bgBlue: bg(137, 180, 250), // blue     #89b4fa — cwd
+	bgPink: bg(245, 194, 231), // pink     #f5c2e7 — dockerpi container
+	bgLavender: bg(180, 190, 254), // lavender #b4befe — session id
 
 	fgDark: fg(30, 30, 46), // base  #1e1e2e — text on bright bg
 	fgLight: fg(205, 214, 244), // text  #cdd6f4 — text on dark bg
@@ -338,7 +342,23 @@ export default function (pi: ExtensionAPI) {
 							}
 						}
 
-						// 7. CWD
+						// 7. dockerpi container — the name to `docker exec -it <name> zsh` into
+						const containerName = process.env.DOCKERPI_CONTAINER;
+						if (containerName) {
+							pills.push(
+								pill(C.bgPink, C.fgDark, `${ICON_CONTAINER} ${containerName}`),
+							);
+						}
+
+						// 8. Session id — first 8 chars are enough for `pi --session <id>`
+						const sessionShort = ctx.sessionManager
+							.getSessionId()
+							.slice(0, 8);
+						pills.push(
+							pill(C.bgLavender, C.fgDark, `${ICON_SESSION} ${sessionShort}`),
+						);
+
+						// 9. CWD
 						pills.push(
 							pill(
 								C.bgBlue,
