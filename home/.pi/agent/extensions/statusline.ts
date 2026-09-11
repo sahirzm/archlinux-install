@@ -12,17 +12,19 @@ import type { AssistantMessage } from "@earendil-works/pi-ai";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { truncateToWidth } from "@earendil-works/pi-tui";
 import { execSync } from "child_process";
+import { readdirSync, readFileSync } from "fs";
 import * as os from "os";
 import * as path from "path";
 
 // ── Nerd Font glyphs ──────────────────────────────────────────────────────────
 const CAP_LEFT = "\uE0B6"; // rounded left cap
 const CAP_RIGHT = "\uE0B4"; // rounded right cap
+const CAP_JOIN = "\uE0B0"; // powerline join / forward slant
 
 const ICON_MODEL = "\uF2DB"; // nf-fa-microchip
 const ICON_TOKENS = "\uF0E7"; // nf-fa-bolt (context)
 const ICON_THINKING = "\uF0EB"; // nf-fa-lightbulb_o
-const ICON_COST = "\uF155"; // nf-fa-usd (cost)
+const ICON_COST = "";
 const ICON_BRANCH = "\uE0A0"; // nf-pl-branch
 const ICON_STAGED = "\uF046"; // nf-fa-check_square_o (staged)
 const ICON_MODIFIED = "\uF040"; // nf-fa-pencil (modified)
@@ -31,6 +33,7 @@ const ICON_NEW = "\uF067"; // nf-fa-plus (new/untracked)
 const ICON_FOLDER = "\uF07C"; // nf-fa-folder_open
 const ICON_CONTAINER = "\uF308"; // nf-linux-docker
 const ICON_SESSION = "\uF1DA"; // nf-fa-history (resume)
+const ICON_BG = "\uF110"; // nf-fa-spinner
 
 // ── Catppuccin Mocha palette (truecolor ANSI) ─────────────────────────────────
 function bg(r: number, g: number, b: number) {
@@ -65,15 +68,32 @@ function bgToFg(bgEsc: string): string {
 }
 
 // ── Pill renderer ─────────────────────────────────────────────────────────────
-/** Render a single rounded pill:  content  */
-function pill(bgEsc: string, fgEsc: string, content: string): string {
-	const capFg = bgToFg(bgEsc);
-	return `${capFg}${CAP_LEFT}${C.reset}${bgEsc}${fgEsc} ${content} ${C.reset}${capFg}${CAP_RIGHT}${C.reset}`;
+interface PillSpec {
+	bg: string;
+	fg: string;
+	content: string;
 }
 
-/** Render all pills joined by a single space. */
-function renderPills(pills: string[]): string {
-	return pills.join(" ");
+/** Build a pill spec. */
+function pill(bgEsc: string, fgEsc: string, content: string): PillSpec {
+	return { bg: bgEsc, fg: fgEsc, content };
+}
+
+/** Render pills as one connected run with rounded outer caps and slanted joins. */
+function renderPills(pills: PillSpec[]): string {
+	if (pills.length === 0) return "";
+
+	let out = `${bgToFg(pills[0].bg)}${CAP_LEFT}${C.reset}`;
+	for (let i = 0; i < pills.length; i++) {
+		const current = pills[i];
+		out += `${current.bg}${current.fg} ${current.content} ${C.reset}`;
+		if (i < pills.length - 1) {
+			const next = pills[i + 1];
+			out += `${next.bg}${bgToFg(current.bg)}${CAP_JOIN}${C.reset}`;
+		}
+	}
+	out += `${bgToFg(pills[pills.length - 1].bg)}${CAP_RIGHT}${C.reset}`;
+	return out;
 }
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -107,6 +127,13 @@ interface GitStatus {
 	wtModified: number; // M in worktree
 	wtDeleted: number; // D in worktree
 	untracked: number; // ??
+}
+
+interface BgTaskCounts {
+	running: number;
+	completed: number;
+	failed: number;
+	killed: number;
 }
 
 function gitStatus(cwd: string): GitStatus | null {
@@ -167,6 +194,44 @@ const THINKING_ICON: Record<string, string> = {
 	xhigh: "\uF111",
 };
 
+function readBgTaskCounts(cwd: string): BgTaskCounts | null {
+	const tasksRoot = path.join(cwd, ".pi", "tasks");
+	const counts: BgTaskCounts = {
+		running: 0,
+		completed: 0,
+		failed: 0,
+		killed: 0,
+	};
+
+	try {
+		const taskDirs = readdirSync(tasksRoot, { withFileTypes: true }).filter((entry) =>
+			entry.isDirectory(),
+		);
+		for (const dir of taskDirs) {
+			const dirPath = path.join(tasksRoot, dir.name);
+			for (const entry of readdirSync(dirPath, { withFileTypes: true })) {
+				if (!entry.isFile()) continue;
+				if (!entry.name.endsWith(".json")) continue;
+				if (entry.name.endsWith(".attestation.json")) continue;
+				const filePath = path.join(dirPath, entry.name);
+				try {
+					const parsed = JSON.parse(readFileSync(filePath, "utf8")) as {
+						status?: keyof BgTaskCounts;
+					};
+					const status = parsed.status;
+					if (status && status in counts) counts[status]++;
+				} catch {
+					// ignore malformed or partially-written metadata
+				}
+			}
+		}
+	} catch {
+		return null;
+	}
+
+	return counts.running > 0 ? counts : null;
+}
+
 // ── Extension ─────────────────────────────────────────────────────────────────
 export default function (pi: ExtensionAPI) {
 	// Track current thinking level reactively
@@ -186,10 +251,34 @@ export default function (pi: ExtensionAPI) {
 		// fires after ours and would override it.  setTimeout(fn, 0) pushes our
 		// setFooter call to the next microtask so we always win.
 		setTimeout(() => {
+			const updateBgWidget = () => {
+				const bgCounts = readBgTaskCounts(process.cwd());
+				if (!bgCounts) {
+					ctx.ui.setWidget("bg-statusline", undefined);
+					return;
+				}
+				const bgPills = [
+					pill(C.bgOverlay, C.fgLight, `${ICON_BG} bg`),
+					pill(C.bgGreen, C.fgDark, `▶ ${bgCounts.running} running`),
+					pill(C.bgBlue, C.fgDark, `/tasks`),
+				];
+				ctx.ui.setWidget(
+					"bg-statusline",
+					[` ${renderPills(bgPills)}`],
+					{ placement: "aboveEditor" },
+				);
+			};
+			updateBgWidget();
+
 			ctx.ui.setFooter((tui, _theme, footerData) => {
 				const unsubBranch = footerData.onBranchChange(() =>
 					tui.requestRender(),
 				);
+				const refreshHandle = setInterval(() => {
+					tui.requestRender();
+					updateBgWidget();
+				}, 2000);
+				refreshHandle.unref?.();
 
 				// Git cache (5 s TTL)
 				let lastGitMs = 0;
@@ -207,7 +296,11 @@ export default function (pi: ExtensionAPI) {
 				}
 
 				return {
-					dispose: unsubBranch,
+					dispose() {
+						unsubBranch();
+						clearInterval(refreshHandle);
+						ctx.ui.setWidget("bg-statusline", undefined);
+					},
 					invalidate() {},
 
 					render(width: number): string[] {
@@ -256,8 +349,8 @@ export default function (pi: ExtensionAPI) {
 						pills.push(
 							pill(
 								C.bgPeach,
-								C.fgDark,
-								`${C.bold}π${C.reset}${C.bgPeach}${C.fgDark}`,
+								`${C.bold}${C.fgDark}`,
+								`π`,
 							),
 						);
 
@@ -281,7 +374,7 @@ export default function (pi: ExtensionAPI) {
 						);
 
 						// 4. Cost
-						pills.push(pill(C.bgGreen, C.fgDark, `${ICON_COST} ${costStr}`));
+						pills.push(pill(C.bgGreen, C.fgDark, costStr));
 
 						// 5. Git branch
 						if (branch) {
@@ -295,9 +388,9 @@ export default function (pi: ExtensionAPI) {
 							if (stagedCount > 0) {
 								const parts: string[] = [];
 								if (status.stagedNew)
-									parts.push(`${ICON_NEW}${status.stagedNew}`);
+									parts.push(`${ICON_NEW} ${status.stagedNew}`);
 								if (status.stagedModified)
-									parts.push(`${ICON_MODIFIED}${status.stagedModified}`);
+									parts.push(`${ICON_MODIFIED} ${status.stagedModified}`);
 								pills.push(pill(C.bgGreen, C.fgDark, parts.join("  ")));
 							}
 
@@ -307,7 +400,7 @@ export default function (pi: ExtensionAPI) {
 									pill(
 										C.bgRed,
 										C.fgDark,
-										`${ICON_DELETED}${status.stagedDeleted}`,
+										`${ICON_DELETED} ${status.stagedDeleted}`,
 									),
 								);
 							}
@@ -318,7 +411,7 @@ export default function (pi: ExtensionAPI) {
 									pill(
 										C.bgYellow,
 										C.fgDark,
-										`${ICON_MODIFIED}${status.wtModified}`,
+										`${ICON_MODIFIED} ${status.wtModified}`,
 									),
 								);
 							}
@@ -326,7 +419,7 @@ export default function (pi: ExtensionAPI) {
 							// Worktree deletions
 							if (status.wtDeleted > 0) {
 								pills.push(
-									pill(C.bgRed, C.fgDark, `${ICON_DELETED}${status.wtDeleted}`),
+									pill(C.bgRed, C.fgDark, `${ICON_DELETED} ${status.wtDeleted}`),
 								);
 							}
 
@@ -336,7 +429,7 @@ export default function (pi: ExtensionAPI) {
 									pill(
 										C.bgOverlay,
 										C.fgLight,
-										`${ICON_NEW}${status.untracked}`,
+										`${ICON_NEW} ${status.untracked}`,
 									),
 								);
 							}
@@ -367,8 +460,7 @@ export default function (pi: ExtensionAPI) {
 							),
 						);
 
-						// Top margin: one blank line above the pills
-						return ["", truncateToWidth(renderPills(pills), width)];
+						return [truncateToWidth(` ${renderPills(pills)}`, width)];
 					},
 				};
 			});
