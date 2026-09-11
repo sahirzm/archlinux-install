@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.84.2",
+  "lastChangelogVersion": "0.85.1",
   "theme": "catppuccin-tui-mocha",
   "packages": [
     "npm:pi-extmgr",
@@ -13,7 +13,6 @@
     "npm:pi-agent-browser-native",
     "npm:pi-catppuccin-tui",
     "npm:pi-pixel-header",
-    "npm:pi-landstrip",
     "npm:pi-intercom",
     "npm:@diegopetrucci/pi-context-cap",
     "npm:pi-mcp-adapter",
