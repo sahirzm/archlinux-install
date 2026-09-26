@@ -3,7 +3,7 @@ bun = "latest"
 java = ["liberica-24", "liberica-21", "liberica-17"]
 node = ["24", "20", "18"]
 pack = "latest"
-python = ["3.12", "3.11", "3.10", "3.9", "3.8"]
+python = ["3.14", "3.13"]
 yarn = "latest"
 doctl = "latest"
 uv = "latest"
@@ -13,6 +13,7 @@ rust = "latest"
 "npm:@earendil-works/pi-coding-agent" = "latest"
 "npm:@hypabolic/hypa" = "latest"
 "npm:@zvec/zvec-grep" = "latest"
+sonarqube-cli = "latest"
 
 [settings]
 experimental = true

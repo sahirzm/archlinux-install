@@ -171,6 +171,7 @@ python-poetry
 python-psutil
 python-pyflakes
 python-pynvim
+python-weasyprint
 qt5-graphicaleffects
 qt5-quickcontrols2
 ranger
@@ -282,6 +283,7 @@ vscode-langservers-extracted
 waybar
 wdisplays
 wezterm-git
+wf-recorder
 wget
 wireless_tools
 wireplumber
