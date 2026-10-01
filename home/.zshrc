@@ -60,6 +60,7 @@ export PATH=$HOME/.cargo/bin:$PATH
 export PATH=$HOME/.linkerd2/bin:$PATH
 
 [[ -n "$XDG_RUNTIME_DIR" ]] && export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
+export TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE=/run/user/1000/docker.sock
 
 # FZF
 export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \

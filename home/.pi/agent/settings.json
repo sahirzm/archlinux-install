@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.85.1",
+  "lastChangelogVersion": "0.99.1",
   "theme": "catppuccin-tui-mocha",
   "packages": [
     "npm:pi-extmgr",
@@ -15,12 +15,13 @@
     "npm:pi-pixel-header",
     "npm:pi-intercom",
     "npm:@diegopetrucci/pi-context-cap",
-    "npm:pi-mcp-adapter",
     "npm:pi-background-tasks",
     "npm:pi-clarify",
     "npm:@davecodes/pi-skill-tags",
     "npm:pi-lsp-extension",
-    "npm:@luminascale/pi-zvec-grep"
+    "npm:@luminascale/pi-zvec-grep",
+    "npm:pi-session-finder",
+    "npm:pi-insights"
   ],
   "extensions": [
     "/home/sahir/workspace/plan-review.nvim/adapters/pi/index.ts"
