@@ -23,6 +23,7 @@ const CAP_JOIN = "\uE0B0"; // powerline join / forward slant
 
 const ICON_MODEL = "\uF2DB"; // nf-fa-microchip
 const ICON_TOKENS = "\uF0E7"; // nf-fa-bolt (context)
+const ICON_EXCHANGE = "\uF0EC"; // nf-fa-exchange (session I/O)
 const ICON_THINKING = "\uF0EB"; // nf-fa-lightbulb_o
 const ICON_COST = "";
 const ICON_BRANCH = "\uE0A0"; // nf-pl-branch
@@ -47,6 +48,7 @@ const C = {
 	bgPeach: bg(250, 179, 135), // peach    #fab387 — pi logo
 	bgSky: bg(137, 220, 235), // sky      #89dceb — model
 	bgOverlay: bg(88, 91, 112), // overlay0 #585b70 — context
+	bgSapphire: bg(116, 199, 236), // sapphire #74c7ec — session I/O
 	bgTeal: bg(148, 226, 213), // teal     #94e2d5 — thinking
 	bgGreen: bg(166, 227, 161), // green    #a6e3a1 — cost
 	bgMauve: bg(203, 166, 247), // mauve    #cba6f7 — branch
@@ -333,7 +335,16 @@ export default function (pi: ExtensionAPI) {
 						}
 						const fmtK = (n: number) =>
 							n < 1000 ? `${n}` : `${(n / 1000).toFixed(1)}k`;
-						const ctxStr = `${fmtK(inputTok)}↑ ${fmtK(outputTok)}↓`;
+						// Current context-window usage — same estimate Pi uses for
+						// compaction. tokens/percent are null right after compaction
+						// until the next LLM response.
+						const usage = ctx.getContextUsage();
+						const windowTok =
+							usage?.contextWindow ?? ctx.model?.contextWindow ?? 0;
+						const ctxStr =
+							usage && usage.tokens !== null && usage.percent !== null
+								? `${fmtK(usage.tokens)}/${fmtK(windowTok)} ${usage.percent.toFixed(1)}%`
+								: `?/${fmtK(windowTok)}`;
 						const costStr = `$${costTotal.toFixed(3)}`;
 
 						// ── Thinking level ────────────────────────────────────────────────
@@ -374,7 +385,16 @@ export default function (pi: ExtensionAPI) {
 							pill(C.bgOverlay, C.fgLight, `${ICON_TOKENS} ${ctxStr}`),
 						);
 
-						// 3. Thinking level (always shown)
+						// 2b. Session token totals (cumulative input/output)
+					pills.push(
+						pill(
+							C.bgSapphire,
+							C.fgDark,
+							`${ICON_EXCHANGE} ${fmtK(inputTok)}↑ ${fmtK(outputTok)}↓`,
+						),
+					);
+
+					// 3. Thinking level (always shown)
 						pills.push(
 							pill(C.bgTeal, C.fgDark, `${thinkingIcon} ${thinkingLabel}`),
 						);
