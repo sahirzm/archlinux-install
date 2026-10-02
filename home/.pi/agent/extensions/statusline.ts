@@ -203,9 +203,15 @@ function readBgTaskCounts(cwd: string): BgTaskCounts | null {
 		killed: 0,
 	};
 
+	// pi-background-tasks names each session's runtime dir `<sessionId>-<pid>`,
+	// falling back to `session-<pid>-<pid>`. Both end with this process's pid,
+	// so scoping to that suffix limits the widget to *this* session's tasks
+	// instead of every session sharing the directory.
+	const ownSuffix = `-${String(process.pid)}`;
+
 	try {
-		const taskDirs = readdirSync(tasksRoot, { withFileTypes: true }).filter((entry) =>
-			entry.isDirectory(),
+		const taskDirs = readdirSync(tasksRoot, { withFileTypes: true }).filter(
+			(entry) => entry.isDirectory() && entry.name.endsWith(ownSuffix),
 		);
 		for (const dir of taskDirs) {
 			const dirPath = path.join(tasksRoot, dir.name);
