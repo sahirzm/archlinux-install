@@ -26,3 +26,6 @@ minimum_release_age = "0s"
 
 [settings.node]
 gpg_verify = false
+
+[settings.python]
+compile = false

@@ -1,0 +1,53 @@
+# dockerpi machine-local config. Sourced as shell; each key can be overridden
+# by an identically named environment variable.
+
+# Profile to use: a name under /myspace/workspace/docker-pi/profiles, or an absolute
+# path to a profile directory. Available: generic 
+DOCKERPI_PROFILE=generic
+
+# Extra apt packages baked into the image. Changing this forces a rebuild; it is
+# the last apt layer, so the Node/mise/uv layers above stay cached.
+DOCKERPI_APT_PACKAGES="ripgrep fd-find postgresql-client"
+
+# Env vars passed to the container. A bare name forwards the host's value,
+# NAME=value sets it explicitly. Command-line -e flags take precedence.
+DOCKERPI_ENV="OPENROUTER_API_KEY TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE TESTCONTAINERS_HOST_OVERRIDE=host.docker.internal ORG_GRADLE_PROJECT_buildDir=build-container GRADLE_USER_HOME=/tmp/.gradle-container"
+# Force the rootless-Docker uid handling on or off instead of detecting it.
+#DOCKERPI_ROOTLESS=true
+
+# Container ports to publish to the host on every run, space separated.
+#DOCKERPI_PUBLISH="3000 8080:8080"
+
+# Docker network to join, so sibling containers (a database, a cache)
+# resolve by container name.
+#DOCKERPI_NETWORK=devnet
+
+# Address host.docker.internal maps to. Defaults to the docker host-gateway
+# alias, or the host's own routable IP under rootless Docker.
+#DOCKERPI_HOST_GATEWAY=192.168.1.10
+
+# Share the host network namespace instead of publishing ports. Host
+# services are then reachable on localhost, at the cost of isolation.
+#DOCKERPI_HOST_NETWORK=true
+
+# Extra bind mounts on every run, space separated, in docker -v form:
+# host:container[:ro|rw]. Applied after the profile's own mounts, so
+# these win. Mount at an identical path when host symlinks point into it.
+# Use rw for an editor config whose plugin manager writes a lockfile.
+DOCKERPI_VOLUMES="{home}/.config/nvim:/{container_home}/.config/nvim:rw /myspace/workspace/archlinux-install:/myspace/workspace/archlinux-install:rw"
+
+# Host path of the docker socket to share when DOCKERPI_DOCKER is on.
+# Only needed when the daemon is somewhere the search order misses:
+# $DOCKER_HOST, $XDG_RUNTIME_DIR/docker.sock, then /var/run/docker.sock.
+#DOCKERPI_DOCKER_SOCKET=/Users/me/.colima/default/docker.sock
+
+# How often, in seconds, the container upgrades mise-managed tools. They
+# live in a persistent state dir that an image rebuild does not touch, so
+# this defaults to the image rebuild cadence (7 days). 0 disables it.
+#DOCKERPI_TOOL_UPGRADE_INTERVAL=86400
+
+# Share the host docker daemon by bind-mounting its socket, so `docker`
+# inside the container builds into the host's image store and layer cache.
+# Grants the container full control of the host daemon, which is root-
+# equivalent under rootful docker. Off unless set.
+DOCKERPI_DOCKER=true
