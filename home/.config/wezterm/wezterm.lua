@@ -1,48 +1,11 @@
+-- WezTerm config. Replaces kitty (terminal) and tmux (multiplexer).
+-- Modules live in ./modules; WezTerm puts this directory on package.path.
+-- Not-yet-ported tmux features: ./wezterm_pending_items
 local wezterm = require("wezterm")
+local config = wezterm.config_builder()
 
-local config = {}
-config.color_scheme = "Catppuccin Mocha"
-
-config.leader = { key = "b", mods = "CTRL", timeout_milliseconds = 3000 }
-config.keys = {
-	{
-		key = "|",
-		mods = "LEADER|SHIFT",
-		action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }),
-	},
-	{
-		key = "-",
-		mods = "LEADER",
-		action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }),
-	},
-	{
-		key = "h",
-		mods = "LEADER",
-		action = wezterm.action({ ActivatePaneDirection = "Left" }),
-	},
-	{
-		key = "j",
-		mods = "LEADER",
-		action = wezterm.action({ ActivatePaneDirection = "Down" }),
-	},
-	{
-		key = "k",
-		mods = "LEADER",
-		action = wezterm.action({ ActivatePaneDirection = "Up" }),
-	},
-	{
-		key = "l",
-		mods = "LEADER",
-		action = wezterm.action({ ActivatePaneDirection = "Right" }),
-	},
-	{
-		key = "z",
-		mods = "LEADER",
-		action = "TogglePaneZoomState",
-	},
-}
-
-config.window_decorations = "RESIZE"
-config.use_fancy_tab_bar = false
+for _, module in ipairs({ "appearance", "mux", "keys", "statusbar", "session" }) do
+	require("modules." .. module).apply(config)
+end
 
 return config
