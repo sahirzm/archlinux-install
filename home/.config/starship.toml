@@ -1,17 +1,17 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 format = """
-[ ](bg:#bfc6e0)\
-[ ](bg:#b5bedb)\
-[ ](bg:#a3aed2)\
+[ ](bg:color_grad1)\
+[ ](bg:color_grad2)\
+[ ](bg:color_grad3)\
 $os\
 $username\
-[](fg:color_dark5 bg:#769ff0)\
+[](fg:color_dark5 bg:color_dir_bg)\
 $directory\
-[](fg:#769ff0 bg:#394260)\
+[](fg:color_dir_bg bg:color_git_bg)\
 $git_branch\
 $git_status\
-[](fg:#394260 bg:color_blue)\
+[](fg:color_git_bg bg:color_blue)\
 $c\
 $rust\
 $golang\
@@ -21,9 +21,9 @@ $java\
 $kotlin\
 $haskell\
 $python\
-[](fg:color_blue bg:#1d2230)\
+[](fg:color_blue bg:color_time_bg)\
 $time\
-[ ](fg:#1d2230)\
+[ ](fg:color_time_bg)\
 \n$character"""
 
 palette = 'catppuccin_mocha'
@@ -59,6 +59,18 @@ color_red1 = "#c53b53"
 color_teal = "#4fd6be"
 color_terminal_black = "#444a73"
 color_yellow = "#ffc777"
+# Prompt sections (the Tokyo Night preset's original colours).
+color_grad1 = "#bfc6e0"
+color_grad2 = "#b5bedb"
+color_grad3 = "#a3aed2"
+color_dir_bg = "#769ff0"
+color_dir_fg = "#e3e5e5"
+color_git_bg = "#394260"
+color_git_fg = "#769ff0"
+color_time_bg = "#1d2230"
+color_time_fg = "#a0a9cb"
+color_aqua = "#4fd6be"
+color_bg3 = "#3b4261"
 
 [palettes.catppuccin_mocha]
 color_bg0 = "#1e1e2e"
@@ -91,6 +103,19 @@ color_red1 = "#eba0ac"
 color_teal = "#94e2d5"
 color_terminal_black = "#585b70"
 color_yellow = "#f9e2af"
+# Prompt sections: lavender to overlay2 gradient, blue directory with dark
+# text, surface1 git section, mantle time.
+color_grad1 = "#b4befe"
+color_grad2 = "#a6adc8"
+color_grad3 = "#9399b2"
+color_dir_bg = "#89b4fa"
+color_dir_fg = "#11111b"
+color_git_bg = "#45475a"
+color_git_fg = "#89b4fa"
+color_time_bg = "#181825"
+color_time_fg = "#a6adc8"
+color_aqua = "#94e2d5"
+color_bg3 = "#45475a"
 
 [os]
 disabled = false
@@ -125,7 +150,7 @@ style_root = "bg:color_red1 fg:color_fg0"
 format = '[ $user ]($style)'
 
 [directory]
-style = "fg:#e3e5e5 bg:#769ff0"
+style = "fg:color_dir_fg bg:color_dir_bg"
 format = "[ $path ]($style)"
 truncation_length = 3
 truncation_symbol = "…/"
@@ -139,72 +164,72 @@ truncation_symbol = "…/"
 
 [git_branch]
 symbol = ""
-style = "bg:#394260"
-format = '[[ $symbol $branch ](fg:#769ff0 bg:#394260)]($style)'
+style = "bg:color_git_bg"
+format = '[[ $symbol $branch ](fg:color_git_fg bg:color_git_bg)]($style)'
 
 [git_status]
-style = "bg:#394260"
-format = '[[($all_status$ahead_behind )](fg:#769ff0 bg:#394260)]($style)'
+style = "bg:color_git_bg"
+format = '[[($all_status$ahead_behind )](fg:color_git_fg bg:color_git_bg)]($style)'
 
 [nodejs]
 symbol = ""
-style = "bg:#212736"
+style = "bg:color_blue"
 format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'
 
 [c]
 symbol = " "
-style = "bg:#212736"
+style = "bg:color_blue"
 format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'
 
 [rust]
 symbol = ""
-style = "bg:#212736"
+style = "bg:color_blue"
 format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'
 
 [golang]
 symbol = ""
-style = "bg:#212736"
+style = "bg:color_blue"
 format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'
 
 [php]
 symbol = ""
-style = "bg:#212736"
+style = "bg:color_blue"
 format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'
 
 [java]
 symbol = " "
-style = "bg:#212736"
+style = "bg:color_blue"
 format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'
 
 [kotlin]
 symbol = ""
-style = "bg:#212736"
+style = "bg:color_blue"
 format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'
 
 [haskell]
 symbol = ""
-style = "bg:#212736"
+style = "bg:color_blue"
 format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'
 
 [python]
 symbol = ""
-style = "bg:#212736"
+style = "bg:color_blue"
 format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'
 
 [docker_context]
 symbol = ""
-style = "bg:#212736"
-format = '[[ $symbol( $context) ](fg:#83a598 bg:color_bg3)]($style)'
+style = "bg:color_blue"
+format = '[[ $symbol( $context) ](fg:color_aqua bg:color_bg3)]($style)'
 
 [conda]
-style = "bg:#212736"
-format = '[[ $symbol( $environment) ](fg:#83a598 bg:color_bg3)]($style)'
+style = "bg:color_blue"
+format = '[[ $symbol( $environment) ](fg:color_aqua bg:color_bg3)]($style)'
 
 [time]
 disabled = true
 time_format = "%R"                                      # Hour:Minute Format
-style = "bg:#1d2230"
-format = '[[  $time ](fg:#a0a9cb bg:#1d2230)]($style)'
+style = "bg:color_time_bg"
+format = '[[  $time ](fg:color_time_fg bg:color_time_bg)]($style)'
 
 [line_break]
 disabled = false

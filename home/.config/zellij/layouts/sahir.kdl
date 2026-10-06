@@ -32,7 +32,10 @@ layout {
                 // " Zellij (session)" is one yellow ribbon. While the Ctrl-a
                 // leader is active " Zellij " turns red (catppuccin's tmux
                 // prefix highlight); scroll/search show mauve, rename peach.
-                mode_normal       "#[fg=$base,bg=$yellow,bold] Zellij "
+                // Every mode is 9 cells wide (the other modes end in a 1-cell
+                // arrow, normal mode in an extra space) so the bar does not
+                // shift when the mode changes.
+                mode_normal       "#[fg=$base,bg=$yellow,bold] Zellij  "
                 mode_tmux         "#[fg=$base,bg=$red,bold] Zellij #[fg=$red,bg=$yellow]\u{e0b0}"
                 mode_scroll       "#[fg=$base,bg=$mauve,bold] SCROLL #[fg=$mauve,bg=$yellow]\u{e0b0}"
                 mode_enter_search "#[fg=$base,bg=$mauve,bold] SEARCH #[fg=$mauve,bg=$yellow]\u{e0b0}"
@@ -66,8 +69,8 @@ layout {
                 command_uptime_interval   "60"
                 command_uptime_rendermode "static"
 
-                // tmux-weather (Austin, metric). Hidden while offline.
-                command_weather_command           r#"curl -fs --max-time 10 'https://wttr.in/Austin?format=%c%t&m'"#
+                // tmux-weather (Austin, Fahrenheit). Hidden while offline.
+                command_weather_command           r#"curl -fs --max-time 10 'https://wttr.in/Austin?format=%c%t&u'"#
                 command_weather_format            "#[fg=$base,bg=$yellow]\u{e0b0}#[fg=$base,bg=$yellow,bold] {stdout} #[fg=$yellow,bg=default]\u{e0b0}"
                 command_weather_interval          "1800"
                 command_weather_rendermode        "static"
