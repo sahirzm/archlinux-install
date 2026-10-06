@@ -90,8 +90,20 @@ keybinds clear-defaults=true {
 
         // Scrollback (tmux copy mode).
         bind "[" { SwitchToMode "Scroll"; }
+        // Search the scrollback straight away (Ctrl-a [ then / in one step).
+        bind "/" { SwitchToMode "EnterSearch"; SearchInput 0; }
         // Open the scrollback in $EDITOR (nvim) for vi-style search and yank.
         bind "e" { EditScrollback; SwitchToMode "Normal"; }
+        // extrakto / tmux-fzf-url / tmux-fastcopy replacement: fuzzy-pick
+        // URLs, paths, hashes, IPs and commands from the scrollback. In the
+        // list, y copies, i inserts at the prompt, o opens, e edits.
+        bind "f" {
+            LaunchOrFocusPlugin "zextract" {
+                floating true
+                move_to_focused_tab true
+            }
+            SwitchToMode "Normal"
+        }
     }
 
     // Keep the leader available while scrolling, as in tmux copy mode.
@@ -139,6 +151,9 @@ keybinds clear-defaults=true {
 plugins {
     zjstatus location="https://github.com/dj95/zjstatus/releases/download/v0.25.0/zjstatus.wasm"
     navigator location="https://github.com/hiasr/vim-zellij-navigator/releases/download/0.3.0/vim-zellij-navigator.wasm"
+    // Built for zellij 0.44; tested working on 0.45.1. Ctrl-w in its first
+    // banner writes ~/.config/zellij/zextract.kdl with the defaults.
+    zextract location="https://github.com/codingfragments/zellij-zextract/releases/download/v0.4.0/zextract.wasm"
 
     // Built-in aliases.
     about location="zellij:about"
@@ -185,6 +200,10 @@ scrollback_lines_to_serialize 10000
 // OSC 52, which also works over SSH; this replaces tmux-yank.
 copy_on_select true
 copy_clipboard "system"
+// Double-click selects a word; quotes, commas and semicolons also end one,
+// so a quoted path or URL selects without its quotes. `:` and `/` are not
+// separators, so URLs and paths stay whole.
+word_separators "[]{}<>()\"'`,;"
 
 show_startup_tips false
 // The release-notes screen offers to add missing default keybindings.

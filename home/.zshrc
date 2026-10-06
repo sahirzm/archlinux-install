@@ -172,6 +172,24 @@ if [[ -n "$ZELLIJ" ]]; then
     autoload -Uz -- "$KITTY_INSTALLATION_DIR"/shell-integration/zsh/kitty-integration
     kitty-integration
     unfunction kitty-integration
+  else
+    # Over SSH kitty's integration is not available; emit the same OSC 133
+    # marks (A: prompt, C: command output, D: end with exit status).
+    _zellij_osc133_precmd() {
+      local -i exit_status=$?
+      if (( _zellij_osc133_running )); then
+        print -n -- "\e]133;D;${exit_status}\a"
+        _zellij_osc133_running=0
+      fi
+      print -n -- '\e]133;A\a'
+    }
+    _zellij_osc133_preexec() {
+      print -n -- '\e]133;C\a'
+      _zellij_osc133_running=1
+    }
+    typeset -gi _zellij_osc133_running=0
+    add-zsh-hook precmd _zellij_osc133_precmd
+    add-zsh-hook preexec _zellij_osc133_preexec
   fi
 fi
 
