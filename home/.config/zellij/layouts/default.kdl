@@ -1,0 +1,171 @@
+// Default layout: a catppuccin-mocha zjstatus bar at the top, replacing the
+// tmux catppuccin status line (session, windows, cpu, uptime, weather).
+//
+// First run: zjstatus and the navigator plugin ask for permissions. Click
+// the bar (or the plugin pane) and press `y`; the answer is cached in
+// ~/.cache/zellij and asked again only when a plugin version changes.
+layout {
+    default_tab_template {
+        pane size=1 borderless=true {
+            plugin location="zjstatus" {
+                color_mauve     "#cba6f7"
+                color_red       "#f38ba8"
+                color_peach     "#fab387"
+                color_yellow    "#f9e2af"
+                color_green     "#a6e3a1"
+                color_teal      "#94e2d5"
+                color_sapphire  "#74c7ec"
+                color_text      "#cdd6f4"
+                color_overlay2  "#9399b2"
+                color_surface1  "#45475a"
+                color_surface0  "#313244"
+                color_mantle    "#181825"
+                color_crust     "#11111b"
+
+                format_left   "{mode}#[fg=$text,bg=$surface0,bold] {session}#[fg=$surface0,bg=$mantle]\u{e0b4} {tabs}"
+                format_right  "{command_cpu}{command_uptime}{command_weather}"
+                format_space  "#[bg=$mantle]"
+                format_hide_on_overlength "true"
+                format_precedence "lrc"
+
+                // The session pill turns red while the Ctrl-a leader is
+                // active, like catppuccin's tmux prefix highlight.
+                mode_normal       "#[fg=$green,bg=$mantle]\u{e0b6}#[fg=$crust,bg=$green,bold]\u{f489} "
+                mode_tmux         "#[fg=$red,bg=$mantle]\u{e0b6}#[fg=$crust,bg=$red,bold]\u{f489} "
+                mode_scroll       "#[fg=$yellow,bg=$mantle]\u{e0b6}#[fg=$crust,bg=$yellow,bold]SCROLL "
+                mode_enter_search "#[fg=$yellow,bg=$mantle]\u{e0b6}#[fg=$crust,bg=$yellow,bold]SEARCH "
+                mode_search       "#[fg=$yellow,bg=$mantle]\u{e0b6}#[fg=$crust,bg=$yellow,bold]SEARCH "
+                mode_rename_tab   "#[fg=$peach,bg=$mantle]\u{e0b6}#[fg=$crust,bg=$peach,bold]RENAME "
+
+                tab_normal   "#[fg=$overlay2,bg=$mantle]\u{e0b6}#[fg=$crust,bg=$overlay2]{index} #[fg=$text,bg=$surface0] {name}{bell_indicator}{sync_indicator}{fullscreen_indicator}{floating_indicator}#[fg=$surface0,bg=$mantle]\u{e0b4} "
+                tab_active   "#[fg=$mauve,bg=$mantle]\u{e0b6}#[fg=$crust,bg=$mauve,bold]{index} #[fg=$text,bg=$surface1,bold] {name}{bell_indicator}{sync_indicator}{fullscreen_indicator}{floating_indicator}#[fg=$surface1,bg=$mantle]\u{e0b4} "
+                tab_rename   "#[fg=$peach,bg=$mantle]\u{e0b6}#[fg=$crust,bg=$peach,bold]{index} #[fg=$text,bg=$surface1,bold] {name}#[fg=$surface1,bg=$mantle]\u{e0b4} "
+                // tmux monitor-bell / synchronize-panes / zoom window flags.
+                tab_bell_indicator       " \u{f009a}"
+                tab_sync_indicator       " \u{f04e6}"
+                tab_fullscreen_indicator " \u{f004c}"
+                tab_floating_indicator   " \u{f0328}"
+
+                // tmux-cpu.
+                command_cpu_command    r#"bash -c "vmstat 1 2 | awk 'END {print 100 - $15}'""#
+                command_cpu_format     "#[fg=$teal,bg=$mantle]\u{e0b6}#[fg=$crust,bg=$teal]\u{f4bc} #[fg=$text,bg=$surface0] {stdout}%#[fg=$surface0,bg=$mantle]\u{e0b4} "
+                command_cpu_interval   "10"
+                command_cpu_rendermode "static"
+
+                // catppuccin uptime module.
+                command_uptime_command    r#"awk '{d=int($1/86400); h=int($1%86400/3600); m=int($1%3600/60); if (d) printf "%dd %dh", d, h; else printf "%dh %dm", h, m}' /proc/uptime"#
+                command_uptime_format     "#[fg=$sapphire,bg=$mantle]\u{e0b6}#[fg=$crust,bg=$sapphire]\u{f051f} #[fg=$text,bg=$surface0] {stdout}#[fg=$surface0,bg=$mantle]\u{e0b4} "
+                command_uptime_interval   "60"
+                command_uptime_rendermode "static"
+
+                // tmux-weather (Austin, metric). Hidden while offline.
+                command_weather_command           r#"curl -fs --max-time 10 'https://wttr.in/Austin?format=%c%t&m'"#
+                command_weather_format            "#[fg=$yellow,bg=$mantle]\u{e0b6}#[fg=$crust,bg=$yellow]\u{e302} #[fg=$text,bg=$surface0] {stdout}#[fg=$surface0,bg=$mantle]\u{e0b4}"
+                command_weather_interval          "1800"
+                command_weather_rendermode        "static"
+                command_weather_hideonemptystdout "true"
+            }
+        }
+        children
+    }
+
+    // Zellij's default swap layouts (Ctrl-a Space), copied because a custom
+    // layout replaces them. max_panes counts the bar, so the limits are one
+    // lower than the built-in ones, which count two bars.
+    swap_tiled_layout name="vertical" {
+        tab max_panes=4 {
+            pane split_direction="vertical" {
+                pane
+                pane { children; }
+            }
+        }
+        tab max_panes=7 {
+            pane split_direction="vertical" {
+                pane { children; }
+                pane { pane; pane; pane; pane; }
+            }
+        }
+        tab max_panes=11 {
+            pane split_direction="vertical" {
+                pane { children; }
+                pane { pane; pane; pane; pane; }
+                pane { pane; pane; pane; pane; }
+            }
+        }
+    }
+
+    swap_tiled_layout name="horizontal" {
+        tab max_panes=3 {
+            pane
+            pane
+        }
+        tab max_panes=7 {
+            pane {
+                pane split_direction="vertical" { children; }
+                pane split_direction="vertical" { pane; pane; pane; pane; }
+            }
+        }
+        tab max_panes=11 {
+            pane {
+                pane split_direction="vertical" { children; }
+                pane split_direction="vertical" { pane; pane; pane; pane; }
+                pane split_direction="vertical" { pane; pane; pane; pane; }
+            }
+        }
+    }
+
+    swap_tiled_layout name="stacked" {
+        tab min_panes=3 {
+            pane stacked=true { children; }
+        }
+    }
+
+    swap_tiled_layout name="half-stacked" {
+        tab min_panes=4 {
+            pane split_direction="vertical" {
+                pane
+                pane stacked=true { children; }
+            }
+        }
+    }
+
+    swap_floating_layout name="staggered" {
+        floating_panes
+    }
+
+    swap_floating_layout name="enlarged" {
+        floating_panes max_panes=10 {
+            pane { x "5%"; y 1; width "90%"; height "90%"; }
+            pane { x "5%"; y 2; width "90%"; height "90%"; }
+            pane { x "5%"; y 3; width "90%"; height "90%"; }
+            pane { x "5%"; y 4; width "90%"; height "90%"; }
+            pane { x "5%"; y 5; width "90%"; height "90%"; }
+            pane { x "5%"; y 6; width "90%"; height "90%"; }
+            pane { x "5%"; y 7; width "90%"; height "90%"; }
+            pane { x "5%"; y 8; width "90%"; height "90%"; }
+            pane { x "5%"; y 9; width "90%"; height "90%"; }
+            pane { x 10; y 10; width "90%"; height "90%"; }
+        }
+    }
+
+    swap_floating_layout name="spread" {
+        floating_panes max_panes=1 {
+            pane { y "50%"; x "50%"; }
+        }
+        floating_panes max_panes=2 {
+            pane { x "1%"; y "25%"; width "45%"; }
+            pane { x "50%"; y "25%"; width "45%"; }
+        }
+        floating_panes max_panes=3 {
+            pane { y "55%"; width "45%"; height "45%"; }
+            pane { x "1%"; y "1%"; width "45%"; }
+            pane { x "50%"; y "1%"; width "45%"; }
+        }
+        floating_panes max_panes=4 {
+            pane { x "1%"; y "55%"; width "45%"; height "45%"; }
+            pane { x "50%"; y "55%"; width "45%"; height "45%"; }
+            pane { x "1%"; y "1%"; width "45%"; height "45%"; }
+            pane { x "50%"; y "1%"; width "45%"; height "45%"; }
+        }
+    }
+}

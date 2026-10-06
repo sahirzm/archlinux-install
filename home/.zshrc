@@ -128,6 +128,48 @@ export MISE_TRUSTED_CONFIG_PATHS="$HOME/workspace"
 
 include $HOME/.secrets.zsh
 
-if [ -z "$TMUX" ] && [ "$TERM" = "xterm-kitty" ]; then
-  tmux attach || tmux new-session; exit
+# kitty windows open zellij's welcome screen: attach to a session, resurrect
+# an exited one or create a new one. Closing the window only detaches.
+# If zellij fails to start, the window falls back to this shell.
+if [[ -z "$ZELLIJ" && "$TERM" == "xterm-kitty" ]] && (( $+commands[zellij] )); then
+  zellij --layout welcome && exit
+fi
+
+# kitty loads its shell integration only in the shell it starts, so load it in
+# zellij panes too. Its OSC 133 prompt marks drive zellij's scroll-mode prompt
+# jumps ([ and ]) and last-command-output copy (c). The cursor shape is left
+# to zsh-vi-mode.
+if [[ -n "$ZELLIJ" && -n "$KITTY_INSTALLATION_DIR" ]]; then
+  export KITTY_SHELL_INTEGRATION="enabled no-cursor"
+  autoload -Uz -- "$KITTY_INSTALLATION_DIR"/shell-integration/zsh/kitty-integration
+  kitty-integration
+  unfunction kitty-integration
+fi
+
+# tmux-notify replacement: a desktop notification when a command that ran for
+# at least ZSH_NOTIFY_MIN_SECONDS finishes. kitten notify sends OSC 99, which
+# zellij forwards to kitty.
+if (( $+commands[kitten] )); then
+  zmodload zsh/datetime
+  autoload -Uz add-zsh-hook
+  : ${ZSH_NOTIFY_MIN_SECONDS:=30}
+  # Interactive programs, where finishing is not news.
+  typeset -ga ZSH_NOTIFY_IGNORE=(nvim vim less man ssh zellij tmux top htop btop lazygit fzf pi)
+  _zsh_notify_preexec() {
+    _zsh_notify_cmd=$1
+    _zsh_notify_start=$EPOCHREALTIME
+  }
+  _zsh_notify_precmd() {
+    local -i exit_status=$?
+    [[ -n $_zsh_notify_start ]] || return 0
+    local -i elapsed=$(( EPOCHREALTIME - _zsh_notify_start ))
+    _zsh_notify_start=
+    (( elapsed >= ZSH_NOTIFY_MIN_SECONDS )) || return 0
+    (( ${ZSH_NOTIFY_IGNORE[(Ie)${${(z)_zsh_notify_cmd}[1]}]} )) && return 0
+    local title="Done"
+    (( exit_status )) && title="Failed ($exit_status)"
+    kitten notify --app-name zsh "$title: ${_zsh_notify_cmd[1,80]}" "Took ${elapsed}s"
+  }
+  add-zsh-hook preexec _zsh_notify_preexec
+  add-zsh-hook precmd _zsh_notify_precmd
 fi

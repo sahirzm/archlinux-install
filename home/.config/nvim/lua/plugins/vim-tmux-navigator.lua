@@ -1,5 +1,7 @@
--- smart-splits supports both WezTerm and tmux. Load eagerly so its IS_NVIM
--- user variable is set before the terminal handles the first Ctrl-h/j/k/l.
+-- smart-splits moves between Neovim splits and hands off to the multiplexer
+-- (zellij, tmux or WezTerm) at the edge. In zellij, vim-zellij-navigator
+-- (~/.config/zellij/config.kdl) passes Ctrl-h/j/k/l through to nvim. Load
+-- eagerly so WezTerm's IS_NVIM user variable is set before the first keypress.
 return {
   { "christoomey/vim-tmux-navigator", enabled = false },
   {
