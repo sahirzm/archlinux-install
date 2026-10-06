@@ -180,7 +180,9 @@ web_client {
     font "monospace"
 }
 
-theme "catppuccin-mocha"
+// themes/sahir.kdl: catppuccin-mocha without the darker bar background and
+// with faint frames for unfocused panes.
+theme "sahir"
 default_shell "zsh"
 // layouts/sahir.kdl: zjstatus bar at the top (tmux status-position top),
 // zellij's key hints at the bottom.
@@ -204,6 +206,16 @@ copy_clipboard "system"
 // so a quoted path or URL selects without its quotes. `:` and `/` are not
 // separators, so URLs and paths stay whole.
 word_separators "[]{}<>()\"'`,;"
+
+// Rounded box around each pane with the title and [ SCROLL ] in its top
+// border. Unfocused frames are drawn faintly by the theme. Costs a column on
+// each side and a row at the bottom of every pane.
+pane_frame_style "full"
+ui {
+    pane_frames {
+        rounded_corners true
+    }
+}
 
 show_startup_tips false
 // The release-notes screen offers to add missing default keybindings.

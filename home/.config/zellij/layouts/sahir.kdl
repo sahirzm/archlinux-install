@@ -19,22 +19,23 @@ layout {
                 color_teal     "#94e2d5"
                 color_sapphire "#74c7ec"
                 color_text     "#cdd6f4"
-                color_mantle   "#181825"
+                // kitty's background: the bar has no background of its own, and
+                // this colour cuts the arrow notch into each ribbon.
+                color_base     "#1e1e2e"
 
-                format_left   "{mode}#[fg=$peach,bg=$mantle,bold]({session}) {tabs}"
+                format_left   "{mode}#[fg=$peach,bg=default,bold]({session}) {tabs}"
                 format_right  "{command_cpu}{command_uptime}{command_weather}"
-                format_space  "#[bg=$mantle]"
                 format_hide_on_overlength "true"
                 format_precedence "lrc"
 
                 // " Zellij " prefix; it turns into a red ribbon while the
                 // Ctrl-a leader is active (catppuccin's tmux prefix highlight).
-                mode_normal       "#[fg=$text,bg=$mantle,bold] Zellij "
-                mode_tmux         "#[fg=$mantle,bg=$red,bold] Zellij #[fg=$red,bg=$mantle]\u{e0b0}"
-                mode_scroll       "#[fg=$mantle,bg=$yellow,bold] SCROLL #[fg=$yellow,bg=$mantle]\u{e0b0}"
-                mode_enter_search "#[fg=$mantle,bg=$yellow,bold] SEARCH #[fg=$yellow,bg=$mantle]\u{e0b0}"
-                mode_search       "#[fg=$mantle,bg=$yellow,bold] SEARCH #[fg=$yellow,bg=$mantle]\u{e0b0}"
-                mode_rename_pane  "#[fg=$mantle,bg=$peach,bold] RENAME #[fg=$peach,bg=$mantle]\u{e0b0}"
+                mode_normal       "#[fg=$text,bg=default,bold] Zellij "
+                mode_tmux         "#[fg=$base,bg=$red,bold] Zellij #[fg=$red,bg=default]\u{e0b0}"
+                mode_scroll       "#[fg=$base,bg=$yellow,bold] SCROLL #[fg=$yellow,bg=default]\u{e0b0}"
+                mode_enter_search "#[fg=$base,bg=$yellow,bold] SEARCH #[fg=$yellow,bg=default]\u{e0b0}"
+                mode_search       "#[fg=$base,bg=$yellow,bold] SEARCH #[fg=$yellow,bg=default]\u{e0b0}"
+                mode_rename_pane  "#[fg=$base,bg=$peach,bold] RENAME #[fg=$peach,bg=default]\u{e0b0}"
 
                 // Ribbon tabs as in zellij's tab bar. Each shows its position
                 // (the Ctrl-a <n> key, renumbered when tabs close or move) and
@@ -42,8 +43,8 @@ layout {
                 // (ZELLIJ_TITLE_MAX in ~/.zshrc) and Ctrl-a , names the pane.
                 // Zellij's own "Tab #N" names are not shown because their
                 // number never changes.
-                tab_normal   "#[fg=$mantle,bg=$text]\u{e0b0}#[fg=$mantle,bg=$text,bold] {index} {focused_pane_title}{bell_indicator}{sync_indicator}{fullscreen_indicator}{floating_indicator} #[fg=$text,bg=$mantle]\u{e0b0}"
-                tab_active   "#[fg=$mantle,bg=$green]\u{e0b0}#[fg=$mantle,bg=$green,bold] {index} {focused_pane_title}{bell_indicator}{sync_indicator}{fullscreen_indicator}{floating_indicator} #[fg=$green,bg=$mantle]\u{e0b0}"
+                tab_normal   "#[fg=$base,bg=$text]\u{e0b0}#[fg=$base,bg=$text,bold] {index} {focused_pane_title}{bell_indicator}{sync_indicator}{fullscreen_indicator}{floating_indicator} #[fg=$text,bg=default]\u{e0b0}"
+                tab_active   "#[fg=$base,bg=$green]\u{e0b0}#[fg=$base,bg=$green,bold] {index} {focused_pane_title}{bell_indicator}{sync_indicator}{fullscreen_indicator}{floating_indicator} #[fg=$green,bg=default]\u{e0b0}"
                 // tmux monitor-bell / synchronize-panes / zoom window flags.
                 tab_bell_indicator       " \u{f009a}"
                 tab_sync_indicator       " \u{f04e6}"
@@ -53,19 +54,19 @@ layout {
                 // Right-hand ribbons in the same shape.
                 // tmux-cpu.
                 command_cpu_command    r#"bash -c "vmstat 1 2 | awk 'END {print 100 - $15}'""#
-                command_cpu_format     "#[fg=$mantle,bg=$teal]\u{e0b0}#[fg=$mantle,bg=$teal,bold] \u{f4bc} {stdout}% #[fg=$teal,bg=$mantle]\u{e0b0}"
+                command_cpu_format     "#[fg=$base,bg=$teal]\u{e0b0}#[fg=$base,bg=$teal,bold] \u{f4bc} {stdout}% #[fg=$teal,bg=default]\u{e0b0}"
                 command_cpu_interval   "10"
                 command_cpu_rendermode "static"
 
                 // catppuccin uptime module.
                 command_uptime_command    r#"awk '{d=int($1/86400); h=int($1%86400/3600); m=int($1%3600/60); if (d) printf "%dd %dh", d, h; else printf "%dh %dm", h, m}' /proc/uptime"#
-                command_uptime_format     "#[fg=$mantle,bg=$sapphire]\u{e0b0}#[fg=$mantle,bg=$sapphire,bold] \u{f051f} {stdout} #[fg=$sapphire,bg=$mantle]\u{e0b0}"
+                command_uptime_format     "#[fg=$base,bg=$sapphire]\u{e0b0}#[fg=$base,bg=$sapphire,bold] \u{f051f} {stdout} #[fg=$sapphire,bg=default]\u{e0b0}"
                 command_uptime_interval   "60"
                 command_uptime_rendermode "static"
 
                 // tmux-weather (Austin, metric). Hidden while offline.
                 command_weather_command           r#"curl -fs --max-time 10 'https://wttr.in/Austin?format=%c%t&m'"#
-                command_weather_format            "#[fg=$mantle,bg=$yellow]\u{e0b0}#[fg=$mantle,bg=$yellow,bold] {stdout} #[fg=$yellow,bg=$mantle]\u{e0b0}"
+                command_weather_format            "#[fg=$base,bg=$yellow]\u{e0b0}#[fg=$base,bg=$yellow,bold] {stdout} #[fg=$yellow,bg=default]\u{e0b0}"
                 command_weather_interval          "1800"
                 command_weather_rendermode        "static"
                 command_weather_hideonemptystdout "true"
