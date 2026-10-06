@@ -20,27 +20,29 @@ layout {
                 color_teal     "#94e2d5"
                 color_sapphire "#74c7ec"
                 color_text     "#cdd6f4"
+                color_surface1 "#45475a"
                 // kitty's background: the bar has no background of its own, and
                 // this colour cuts the arrow notch into each ribbon.
                 color_base     "#1e1e2e"
 
-                format_left   "{mode}#[fg=$base,bg=$yellow,bold]({session}) #[fg=$yellow,bg=default]\u{e0b0} {tabs}"
+                format_left   "{mode}#[fg=$yellow,bg=$surface1,bold]({session}) #[fg=$surface1,bg=default]\u{e0b0}{tabs}"
                 format_right  "{command_cpu}{command_uptime}{command_weather}"
                 format_hide_on_overlength "true"
                 format_precedence "lrc"
 
-                // " Zellij (session)" is one yellow ribbon. While the Ctrl-a
+                // " Zellij (session)" is one subtle surface1 ribbon with the
+                // session name in yellow. While the Ctrl-a
                 // leader is active " Zellij " turns red (catppuccin's tmux
                 // prefix highlight); scroll/search show mauve, rename peach.
                 // Every mode is 9 cells wide (the other modes end in a 1-cell
                 // arrow, normal mode in an extra space) so the bar does not
                 // shift when the mode changes.
-                mode_normal       "#[fg=$base,bg=$yellow,bold] Zellij  "
-                mode_tmux         "#[fg=$base,bg=$red,bold] Zellij #[fg=$red,bg=$yellow]\u{e0b0}"
-                mode_scroll       "#[fg=$base,bg=$mauve,bold] SCROLL #[fg=$mauve,bg=$yellow]\u{e0b0}"
-                mode_enter_search "#[fg=$base,bg=$mauve,bold] SEARCH #[fg=$mauve,bg=$yellow]\u{e0b0}"
-                mode_search       "#[fg=$base,bg=$mauve,bold] SEARCH #[fg=$mauve,bg=$yellow]\u{e0b0}"
-                mode_rename_pane  "#[fg=$base,bg=$peach,bold] RENAME #[fg=$peach,bg=$yellow]\u{e0b0}"
+                mode_normal       "#[fg=$text,bg=$surface1,bold] Zellij  "
+                mode_tmux         "#[fg=$base,bg=$red,bold] Zellij #[fg=$red,bg=$surface1]\u{e0b0}"
+                mode_scroll       "#[fg=$base,bg=$mauve,bold] SCROLL #[fg=$mauve,bg=$surface1]\u{e0b0}"
+                mode_enter_search "#[fg=$base,bg=$mauve,bold] SEARCH #[fg=$mauve,bg=$surface1]\u{e0b0}"
+                mode_search       "#[fg=$base,bg=$mauve,bold] SEARCH #[fg=$mauve,bg=$surface1]\u{e0b0}"
+                mode_rename_pane  "#[fg=$base,bg=$peach,bold] RENAME #[fg=$peach,bg=$surface1]\u{e0b0}"
 
                 // Ribbon tabs as in zellij's tab bar. Each shows its position
                 // (the Ctrl-a <n> key, renumbered when tabs close or move) and
