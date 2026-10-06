@@ -135,15 +135,44 @@ if [[ -z "$ZELLIJ" && "$TERM" == "xterm-kitty" ]] && (( $+commands[zellij] )); t
   zellij --layout welcome && exit
 fi
 
-# kitty loads its shell integration only in the shell it starts, so load it in
-# zellij panes too. Its OSC 133 prompt marks drive zellij's scroll-mode prompt
-# jumps ([ and ]) and last-command-output copy (c). The cursor shape is left
-# to zsh-vi-mode.
-if [[ -n "$ZELLIJ" && -n "$KITTY_INSTALLATION_DIR" ]]; then
-  export KITTY_SHELL_INTEGRATION="enabled no-cursor"
-  autoload -Uz -- "$KITTY_INSTALLATION_DIR"/shell-integration/zsh/kitty-integration
-  kitty-integration
-  unfunction kitty-integration
+if [[ -n "$ZELLIJ" ]]; then
+  # tmux sets COLORTERM=truecolor in its panes and zellij does not. Without it
+  # Pi and other programs fall back to 256 colours, which turns dark panel
+  # backgrounds into light grey/green blocks.
+  export COLORTERM="${COLORTERM:-truecolor}"
+
+  # The status bar labels each tab with its focused pane's title: the
+  # directory at the prompt, the command name while one runs. Titles longer
+  # than ZELLIJ_TITLE_MAX characters are cut short.
+  : ${ZELLIJ_TITLE_MAX:=20}
+  _zellij_set_title() {
+    local title=$1
+    (( ${#title} > ZELLIJ_TITLE_MAX )) && title="${title[1,ZELLIJ_TITLE_MAX-1]}…"
+    print -rn -- $'\e]2;'"${(V)title}"$'\a'
+  }
+  _zellij_title_precmd() { _zellij_set_title "${(%):-%1~}" }
+  _zellij_title_preexec() {
+    local -a words=(${(z)1})
+    # Skip env assignments and sudo so the title names the program.
+    while (( $#words > 1 )) && [[ $words[1] == *=* || $words[1] == sudo ]]; do
+      shift words
+    done
+    _zellij_set_title "${${(Q)words[1]}:t}"
+  }
+  autoload -Uz add-zsh-hook
+  add-zsh-hook precmd _zellij_title_precmd
+  add-zsh-hook preexec _zellij_title_preexec
+
+  # kitty loads its shell integration only in the shell it starts, so load it
+  # in zellij panes too. Its OSC 133 prompt marks drive zellij's scroll-mode
+  # prompt jumps ([ and ]) and last-command-output copy (c). Titles come from
+  # the hooks above and the cursor shape from zsh-vi-mode.
+  if [[ -n "$KITTY_INSTALLATION_DIR" ]]; then
+    export KITTY_SHELL_INTEGRATION="enabled no-cursor no-title"
+    autoload -Uz -- "$KITTY_INSTALLATION_DIR"/shell-integration/zsh/kitty-integration
+    kitty-integration
+    unfunction kitty-integration
+  fi
 fi
 
 # tmux-notify replacement: a desktop notification when a command that ran for
