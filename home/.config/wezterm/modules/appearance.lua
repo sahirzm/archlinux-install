@@ -6,7 +6,7 @@ local M = {}
 function M.apply(config)
 	config.color_scheme = "Catppuccin Mocha"
 	config.font = wezterm.font("FiraCode Nerd Font")
-	config.font_size = 16
+	config.font_size = 14
 
 	config.window_decorations = "RESIZE"
 	if wezterm.target_triple:find("apple-darwin", 1, true) then
@@ -20,6 +20,7 @@ function M.apply(config)
 	config.hide_tab_bar_if_only_one_tab = false
 	config.show_new_tab_button_in_tab_bar = false
 	config.tab_max_width = 32
+  config.default_cursor_style = 'SteadyBlock'
 
 	-- kitty: enable_audio_bell no
 	config.audible_bell = "Disabled"

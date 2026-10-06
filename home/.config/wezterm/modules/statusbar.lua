@@ -4,6 +4,7 @@ local tabline = require("modules.plugins").tabline
 local M = {}
 
 function M.apply(config)
+	local right_status = { { "cpu", throttle = 30 } }
 	local rounded = {
 		left = wezterm.nerdfonts.ple_right_half_circle_thick,
 		right = wezterm.nerdfonts.ple_left_half_circle_thick,
@@ -27,11 +28,11 @@ function M.apply(config)
 			tabline_a = { { "mode", fmt = function(mode, window)
 				return window:leader_is_active() and "LEADER" or mode
 			end } },
-			tabline_b = { "workspace" },
+			tabline_b = {},
 			tabline_c = {},
 			tab_active = { { "index", zero_indexed = false }, title, "zoomed" },
 			tab_inactive = { { "index", zero_indexed = false }, title, "output" },
-			tabline_x = { { "cpu", throttle = 30 } },
+			tabline_x = right_status,
 			tabline_y = { "workspace" },
 			tabline_z = { "domain" },
 		},
