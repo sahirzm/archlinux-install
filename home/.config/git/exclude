@@ -46,9 +46,14 @@ ant.properties
 # vscode
 .vscode
 
-# claude code
+# AI Agents
 **/.claude/settings.local.json
 **/.omc/
 .local-review
 .sisyphus
 .crew
+.pi/tasks/
+
+
+# Gradle
+.gradle-host/

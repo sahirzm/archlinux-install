@@ -11,8 +11,9 @@ pandoc = "latest"
 rust = "latest"
 sonarqube-cli = "latest"
 kubectl = "latest"
-"github:linkerd/linkerd2" = "latest"
+"aqua:linkerd/linkerd2" = "latest"
 helm = "latest"
+flutter = "latest"
 
 
 # npm global packages

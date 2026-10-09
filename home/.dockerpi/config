@@ -11,7 +11,7 @@ DOCKERPI_APT_PACKAGES="ripgrep fd-find postgresql-client"
 
 # Env vars passed to the container. A bare name forwards the host's value,
 # NAME=value sets it explicitly. Command-line -e flags take precedence.
-DOCKERPI_ENV="OPENROUTER_API_KEY TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE TESTCONTAINERS_HOST_OVERRIDE=host.docker.internal ORG_GRADLE_PROJECT_buildDir=build-container GRADLE_USER_HOME=/tmp/.gradle-container"
+DOCKERPI_ENV="OPENROUTER_API_KEY TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE TESTCONTAINERS_HOST_OVERRIDE=host.docker.internal ORG_GRADLE_PROJECT_buildDir=build-container GRADLE_USER_HOME=/tmp/.gradle-container --project-cache-dir /tmp/.gradle-project-cache-container"
 # Force the rootless-Docker uid handling on or off instead of detecting it.
 #DOCKERPI_ROOTLESS=true
 

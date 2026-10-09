@@ -51,13 +51,11 @@ bindkey '^ ' autosuggest-accept
 export PATH="$HOME/tools/local/bin:$HOME/.local/bin:/snap/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 export PATH="$JAVA_HOME/bin:$M2_HOME/bin:$HOME/tools/local/bin:$PATH"
-export PATH="$PATH:$HOME/tools/flutter/bin"
 
 export ANDROID_HOME="$HOME/tools/Android/sdk/"
 export PATH=$ANDROID_HOME/platform-tools:$PATH
 
 export PATH=$HOME/.cargo/bin:$PATH
-export PATH=$HOME/.linkerd2/bin:$PATH
 
 [[ -n "$XDG_RUNTIME_DIR" ]] && export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
 export TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE=/run/user/1000/docker.sock
@@ -103,6 +101,10 @@ js_restore_db() {
   psql -U gasjobber -d gasjobber -h localhost -p 5432 -c "DROP SCHEMA public CASCADE; CREATE SCHEMA public;"
   gunzip -c "$1" | grep -Ev "^(ALTER.*OWNER TO|REVOKE|GRANT)" | psql -q -U gasjobber -d gasjobber -h localhost -p 5432
   [ -f ./scripts/update_config_for_local.sql ] && psql -U gasjobber -d gasjobber -h localhost -p 5432 -f ./scripts/update_config_for_local.sql
+}
+
+gw() { 
+  ./gradlew --project-cache-dir=.gradle-host "$@"; 
 }
 
 # initialize plugins statically with ~/.zsh_plugins.txt

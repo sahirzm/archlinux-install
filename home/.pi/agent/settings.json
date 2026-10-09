@@ -1,11 +1,10 @@
 {
-  "lastChangelogVersion": "0.99.1",
+  "lastChangelogVersion": "1.1.0",
   "theme": "catppuccin-tui-mocha",
   "packages": [
     "npm:pi-extmgr",
     "npm:@hypabolic/pi-hypa",
     "npm:pi-web-access",
-    "npm:pi-subagents",
     "npm:@juicesharp/rpiv-todo",
     "npm:pi-simplify",
     "npm:@ff-labs/pi-fff",
@@ -23,7 +22,8 @@
     "npm:pi-session-finder",
     "npm:pi-insights",
     "npm:@pify/usage",
-    "npm:pi-context-view"
+    "npm:pi-context-view",
+    "npm:pi-open-agents"
   ],
   "extensions": [
     "/home/sahir/workspace/plan-review.nvim/adapters/pi/index.ts"
