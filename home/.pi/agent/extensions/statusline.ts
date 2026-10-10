@@ -54,6 +54,7 @@ const C = {
 	bgMauve: bg(203, 166, 247), // mauve    #cba6f7 — branch
 	bgYellow: bg(249, 226, 175), // yellow   #f9e2af — changes
 	bgRed: bg(243, 139, 168), // red      #f38ba8 — deletions
+	bgMaroon: bg(235, 160, 172), // maroon   #eba0ac — staged deletions
 	bgBlue: bg(137, 180, 250), // blue     #89b4fa — cwd
 	bgPink: bg(245, 194, 231), // pink     #f5c2e7 — dockerpi container
 	bgLavender: bg(180, 190, 254), // lavender #b4befe — session id
@@ -148,7 +149,8 @@ function gitStatus(cwd: string): GitStatus | null {
 			wtDeleted: 0,
 			untracked: 0,
 		};
-		for (const line of out.trim().split("\n")) {
+		// trimEnd only: a leading space is the index column of the first entry
+		for (const line of out.trimEnd().split("\n")) {
 			const x = line[0]; // index
 			const y = line[1]; // worktree
 			if (x === "A") s.stagedNew++;
@@ -487,9 +489,9 @@ export default function (pi: ExtensionAPI) {
 							if (status.stagedDeleted > 0) {
 								pills.push(
 									pill(
-										C.bgRed,
+										C.bgMaroon,
 										C.fgDark,
-										`${ICON_DELETED} ${status.stagedDeleted}`,
+										`${ICON_STAGED} ${ICON_DELETED} ${status.stagedDeleted}`,
 									),
 								);
 							}
