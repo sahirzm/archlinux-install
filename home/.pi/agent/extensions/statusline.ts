@@ -12,7 +12,7 @@ import type { AssistantMessage } from "@earendil-works/pi-ai";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { truncateToWidth } from "@earendil-works/pi-tui";
 import { execSync } from "child_process";
-import { readdirSync, readFileSync } from "fs";
+import { randomBytes } from "crypto";
 import * as os from "os";
 import * as path from "path";
 
@@ -131,13 +131,6 @@ interface GitStatus {
 	untracked: number; // ??
 }
 
-interface BgTaskCounts {
-	running: number;
-	completed: number;
-	failed: number;
-	killed: number;
-}
-
 function gitStatus(cwd: string): GitStatus | null {
 	try {
 		const out = execSync("git status --porcelain=v1", {
@@ -196,48 +189,87 @@ const THINKING_ICON: Record<string, string> = {
 	xhigh: "\uF111",
 };
 
-function readBgTaskCounts(cwd: string): BgTaskCounts | null {
-	const tasksRoot = path.join(cwd, ".pi", "tasks");
-	const counts: BgTaskCounts = {
-		running: 0,
-		completed: 0,
-		failed: 0,
-		killed: 0,
-	};
+// ── Background tasks (pi-background-tasks EventBus v1) ────────────────────────
+// Ownership comes from the in-process EventBus (`pi.events`): only this
+// session's pi-background-tasks registry answers, so the count is scoped to
+// tasks this session owns. Scanning the shared on-disk task directory cannot
+// do that — pi is PID 1 in every dockerpi container sharing a bind mount, and
+// crashed sessions leave stale "running" metadata behind.
+const BG_REQUEST_CHANNEL = "pi-background-tasks:request:v1";
+const BG_RESPONSE_CHANNEL = "pi-background-tasks:response:v1";
+const BG_TERMINAL_CHANNEL = "pi-background-tasks:terminal:v1";
+const BG_REQUEST_SCHEMA = "pi-background-tasks.extension-request.v1";
+const BG_RESPONSE_SCHEMA = "pi-background-tasks.extension-response.v1";
+const BG_QUERY_TIMEOUT_MS = 500;
 
-	// pi-background-tasks names each session's runtime dir `<sessionId>-<pid>`,
-	// falling back to `session-<pid>-<pid>`. Both end with this process's pid,
-	// so scoping to that suffix limits the widget to *this* session's tasks
-	// instead of every session sharing the directory.
-	const ownSuffix = `-${String(process.pid)}`;
+// request_id must never repeat: per-process nonce + monotonic counter.
+const BG_REQUEST_NONCE = randomBytes(8).toString("hex");
+let bgRequestSeq = 0;
 
-	try {
-		const taskDirs = readdirSync(tasksRoot, { withFileTypes: true }).filter(
-			(entry) => entry.isDirectory() && entry.name.endsWith(ownSuffix),
-		);
-		for (const dir of taskDirs) {
-			const dirPath = path.join(tasksRoot, dir.name);
-			for (const entry of readdirSync(dirPath, { withFileTypes: true })) {
-				if (!entry.isFile()) continue;
-				if (!entry.name.endsWith(".json")) continue;
-				if (entry.name.endsWith(".attestation.json")) continue;
-				const filePath = path.join(dirPath, entry.name);
-				try {
-					const parsed = JSON.parse(readFileSync(filePath, "utf8")) as {
-						status?: keyof BgTaskCounts;
-					};
-					const status = parsed.status;
-					if (status && status in counts) counts[status]++;
-				} catch {
-					// ignore malformed or partially-written metadata
-				}
-			}
+function isRecord(value: unknown): value is Record<string, unknown> {
+	return typeof value === "object" && value !== null;
+}
+
+/**
+ * Ask this session's pi-background-tasks service for its tasks and count the
+ * running ones (agent tasks included). Resolves `null` on timeout, `ok:false`,
+ * a malformed matching frame, emit failure, or abort. Responses to other
+ * request ids are ignored. The listener and timer are always released.
+ */
+function queryOwnRunningBgTasks(
+	pi: ExtensionAPI,
+	signal?: AbortSignal,
+): Promise<number | null> {
+	return new Promise((resolve) => {
+		if (signal?.aborted) {
+			resolve(null);
+			return;
 		}
-	} catch {
-		return null;
-	}
+		const requestId = `statusline-${BG_REQUEST_NONCE}-${++bgRequestSeq}`;
+		let settled = false;
+		let off: (() => void) | undefined;
+		let timer: ReturnType<typeof setTimeout> | undefined;
 
-	return counts.running > 0 ? counts : null;
+		const finish = (value: number | null) => {
+			if (settled) return;
+			settled = true;
+			if (timer !== undefined) clearTimeout(timer);
+			off?.();
+			signal?.removeEventListener("abort", onAbort);
+			resolve(value);
+		};
+		const onAbort = () => finish(null);
+
+		try {
+			off = pi.events.on(BG_RESPONSE_CHANNEL, (frame) => {
+				if (!isRecord(frame) || frame.request_id !== requestId) return;
+				if (frame.schema_version !== BG_RESPONSE_SCHEMA || frame.ok !== true) {
+					finish(null);
+					return;
+				}
+				const result = frame.result;
+				const tasks = isRecord(result) ? result.tasks : undefined;
+				if (!Array.isArray(tasks)) {
+					finish(null);
+					return;
+				}
+				finish(
+					tasks.filter((t) => isRecord(t) && t.status === "running").length,
+				);
+			});
+			timer = setTimeout(() => finish(null), BG_QUERY_TIMEOUT_MS);
+			timer.unref?.();
+			signal?.addEventListener("abort", onAbort, { once: true });
+			pi.events.emit(BG_REQUEST_CHANNEL, {
+				schema_version: BG_REQUEST_SCHEMA,
+				request_id: requestId,
+				operation: "status",
+				payload: {},
+			});
+		} catch {
+			finish(null);
+		}
+	});
 }
 
 // ── Extension ─────────────────────────────────────────────────────────────────
@@ -259,32 +291,60 @@ export default function (pi: ExtensionAPI) {
 		// fires after ours and would override it.  setTimeout(fn, 0) pushes our
 		// setFooter call to the next microtask so we always win.
 		setTimeout(() => {
-			const updateBgWidget = () => {
-				const bgCounts = readBgTaskCounts(process.cwd());
-				if (!bgCounts) {
+			let bgActive = true;
+			let bgQueryPending = false;
+			let bgAbort: AbortController | undefined;
+
+			const hideBgWidget = () => {
+				try {
 					ctx.ui.setWidget("bg-statusline", undefined);
-					return;
+				} catch {
+					// UI may already be torn down
 				}
-				const bgPills = [
-					pill(C.bgOverlay, C.fgLight, `${ICON_BG} bg`),
-					pill(C.bgGreen, C.fgDark, `▶ ${bgCounts.running} running`),
-					pill(C.bgBlue, C.fgDark, `/tasks`),
-				];
-				ctx.ui.setWidget(
-					"bg-statusline",
-					[` ${renderPills(bgPills)}`],
-					{ placement: "aboveEditor" },
-				);
 			};
-			updateBgWidget();
+
+			const updateBgWidget = async () => {
+				if (!bgActive || bgQueryPending) return;
+				bgQueryPending = true;
+				const abort = new AbortController();
+				bgAbort = abort;
+				try {
+					const running = await queryOwnRunningBgTasks(pi, abort.signal);
+					if (abort.signal.aborted || !bgActive) return;
+					if (running === null || running <= 0) {
+						hideBgWidget();
+						return;
+					}
+					const bgPills = [
+						pill(C.bgOverlay, C.fgLight, `${ICON_BG} bg`),
+						pill(C.bgGreen, C.fgDark, `▶ ${running} running`),
+						pill(C.bgBlue, C.fgDark, `/tasks`),
+					];
+					ctx.ui.setWidget(
+						"bg-statusline",
+						[` ${renderPills(bgPills)}`],
+						{ placement: "aboveEditor" },
+					);
+				} catch {
+					hideBgWidget();
+				} finally {
+					bgQueryPending = false;
+					if (bgAbort === abort) bgAbort = undefined;
+				}
+			};
+			void updateBgWidget();
 
 			ctx.ui.setFooter((tui, _theme, footerData) => {
+				bgActive = true;
 				const unsubBranch = footerData.onBranchChange(() =>
 					tui.requestRender(),
 				);
+				const unsubBgTerminal = pi.events.on(BG_TERMINAL_CHANNEL, () => {
+					void updateBgWidget();
+				});
 				const refreshHandle = setInterval(() => {
 					tui.requestRender();
-					updateBgWidget();
+					void updateBgWidget();
 				}, 2000);
 				refreshHandle.unref?.();
 
@@ -306,8 +366,11 @@ export default function (pi: ExtensionAPI) {
 				return {
 					dispose() {
 						unsubBranch();
+						unsubBgTerminal();
 						clearInterval(refreshHandle);
-						ctx.ui.setWidget("bg-statusline", undefined);
+						bgActive = false;
+						bgAbort?.abort();
+						hideBgWidget();
 					},
 					invalidate() {},
 
