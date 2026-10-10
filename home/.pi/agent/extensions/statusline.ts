@@ -9,7 +9,10 @@
  */
 
 import type { AssistantMessage } from "@earendil-works/pi-ai";
-import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
+import type {
+	ExtensionAPI,
+	ExtensionUIContext,
+} from "@earendil-works/pi-coding-agent";
 import { truncateToWidth } from "@earendil-works/pi-tui";
 import { execSync } from "child_process";
 import { randomBytes } from "crypto";
@@ -35,6 +38,7 @@ const ICON_FOLDER = "\uF07C"; // nf-fa-folder_open
 const ICON_CONTAINER = "\uF308"; // nf-linux-docker
 const ICON_SESSION = "\uF1DA"; // nf-fa-history (resume)
 const ICON_BG = "\uF110"; // nf-fa-spinner
+const ICON_AGENT = "\uF544"; // nf-fa-robot
 
 // ── Catppuccin Mocha palette (truecolor ANSI) ─────────────────────────────────
 function bg(r: number, g: number, b: number) {
@@ -55,6 +59,7 @@ const C = {
 	bgYellow: bg(249, 226, 175), // yellow   #f9e2af — changes
 	bgRed: bg(243, 139, 168), // red      #f38ba8 — deletions
 	bgMaroon: bg(235, 160, 172), // maroon   #eba0ac — staged deletions
+	bgFlamingo: bg(242, 205, 205), // flamingo #f2cdcd — open-agents agent
 	bgBlue: bg(137, 180, 250), // blue     #89b4fa — cwd
 	bgPink: bg(245, 194, 231), // pink     #f5c2e7 — dockerpi container
 	bgLavender: bg(180, 190, 254), // lavender #b4befe — session id
@@ -274,10 +279,73 @@ function queryOwnRunningBgTasks(
 	});
 }
 
+// ── Active primary agent (pi-open-agents) ─────────────────────────────────────
+// pi-open-agents exposes no API or event for the active agent; every switch
+// path (/agent, keybindings, set_agent tool, startup/resume) ends in
+// ctx.ui.setWidget("open-agents-banner", ["▸ <name> — <desc> …"]). ctx.ui is
+// one object shared by all extensions, so we wrap its setWidget to observe
+// that key (calls always pass through unchanged) and read the name from the
+// banner's ANSI-delimited segment after "▸". The current callback lives on
+// globalThis so a wrapper installed by an older module instance (before
+// /reload) still notifies the live one.
+const OPEN_AGENTS_BANNER = "open-agents-banner";
+const AGENT_OBSERVER = Symbol.for("statusline.openAgentsObserver");
+const ANSI_RE = /\x1b\[[0-9;:]*m/g;
+
+type AgentObserver = (name: string | null) => void;
+type ObserverGlobal = typeof globalThis & {
+	[AGENT_OBSERVER]?: AgentObserver;
+};
+
+/** Agent name from an open-agents banner, or null for the "no agent" hint/clear. */
+function agentFromBanner(content: unknown): string | null {
+	if (!Array.isArray(content) || typeof content[0] !== "string") return null;
+	const segments = content[0]
+		.split(ANSI_RE)
+		.map((seg) => seg.trim())
+		.filter(Boolean);
+	const marker = segments.findIndex((seg) => seg.startsWith("▸"));
+	if (marker < 0) return null;
+	return segments[marker].slice(1).trim() || segments[marker + 1] || null;
+}
+
+function observeOpenAgentsBanner(
+	ui: ExtensionUIContext,
+	observer: AgentObserver,
+): void {
+	(globalThis as ObserverGlobal)[AGENT_OBSERVER] = observer;
+	const target = ui as unknown as {
+		setWidget: ((...args: unknown[]) => unknown) & {
+			[AGENT_OBSERVER]?: true;
+		};
+	};
+	const original = target.setWidget;
+	if (typeof original !== "function" || original[AGENT_OBSERVER]) return;
+	const wrapped = Object.assign(
+		function (this: unknown, ...args: unknown[]) {
+			if (args[0] === OPEN_AGENTS_BANNER) {
+				try {
+					(globalThis as ObserverGlobal)[AGENT_OBSERVER]?.(
+						agentFromBanner(args[1]),
+					);
+				} catch {
+					// never break the banner over a status-line bug
+				}
+			}
+			return original.apply(this, args);
+		},
+		{ [AGENT_OBSERVER]: true as const },
+	);
+	target.setWidget = wrapped;
+}
+
 // ── Extension ─────────────────────────────────────────────────────────────────
 export default function (pi: ExtensionAPI) {
 	// Track current thinking level reactively
 	let currentThinkingLevel = "off";
+	// Active pi-open-agents primary agent (null = none / package not loaded)
+	let currentAgent: string | null = null;
+	let requestFooterRender: (() => void) | undefined;
 
 	pi.on("thinking_level_select", (event) => {
 		currentThinkingLevel = event.level;
@@ -286,6 +354,14 @@ export default function (pi: ExtensionAPI) {
 	pi.on("session_start", (_event, ctx) => {
 		// Read initial level once runtime is ready
 		currentThinkingLevel = pi.getThinkingLevel();
+
+		// Must be installed synchronously, before pi-open-agents' session_start
+		// handler (packages load after user extensions) draws its first banner.
+		observeOpenAgentsBanner(ctx.ui, (name) => {
+			if (name === currentAgent) return;
+			currentAgent = name;
+			requestFooterRender?.();
+		});
 
 		// Defer footer registration so it runs AFTER all other session_start handlers.
 		// pi-crew (a package extension) also registers session_start and installs its
@@ -338,6 +414,7 @@ export default function (pi: ExtensionAPI) {
 
 			ctx.ui.setFooter((tui, _theme, footerData) => {
 				bgActive = true;
+				requestFooterRender = () => tui.requestRender();
 				const unsubBranch = footerData.onBranchChange(() =>
 					tui.requestRender(),
 				);
@@ -369,6 +446,7 @@ export default function (pi: ExtensionAPI) {
 					dispose() {
 						unsubBranch();
 						unsubBgTerminal();
+						requestFooterRender = undefined;
 						clearInterval(refreshHandle);
 						bgActive = false;
 						bgAbort?.abort();
@@ -436,6 +514,13 @@ export default function (pi: ExtensionAPI) {
 							),
 						);
 
+						// 0b. Active primary agent (pi-open-agents)
+						if (currentAgent) {
+							pills.push(
+								pill(C.bgFlamingo, C.fgDark, `${ICON_AGENT} ${currentAgent}`),
+							);
+						}
+
 						// 1. Model
 						pills.push(
 							pill(
@@ -450,16 +535,7 @@ export default function (pi: ExtensionAPI) {
 							pill(C.bgOverlay, C.fgLight, `${ICON_TOKENS} ${ctxStr}`),
 						);
 
-						// 2b. Session token totals (cumulative input/output)
-					pills.push(
-						pill(
-							C.bgSapphire,
-							C.fgDark,
-							`${ICON_EXCHANGE} ${fmtK(inputTok)}↑ ${fmtK(outputTok)}↓`,
-						),
-					);
-
-					// 3. Thinking level (always shown)
+						// 3. Thinking level (always shown)
 						pills.push(
 							pill(C.bgTeal, C.fgDark, `${thinkingIcon} ${thinkingLabel}`),
 						);
@@ -467,12 +543,37 @@ export default function (pi: ExtensionAPI) {
 						// 4. Cost
 						pills.push(pill(C.bgGreen, C.fgDark, costStr));
 
-						// 5. Git branch
+						// 5. dockerpi container — the name to `docker exec -it <name> zsh` into
+						const containerName = process.env.DOCKERPI_CONTAINER;
+						if (containerName) {
+							pills.push(
+								pill(C.bgPink, C.fgDark, `${ICON_CONTAINER} ${containerName}`),
+							);
+						}
+
+						// 6. Session id — first 8 chars are enough for `pi --session <id>`
+						const sessionShort = ctx.sessionManager
+							.getSessionId()
+							.slice(0, 8);
+						pills.push(
+							pill(C.bgLavender, C.fgDark, `${ICON_SESSION} ${sessionShort}`),
+						);
+
+						// 7. CWD
+						pills.push(
+							pill(
+								C.bgBlue,
+								C.fgDark,
+								`${C.bold}${ICON_FOLDER} ${cwdShort}${C.reset}${C.bgBlue}${C.fgDark}`,
+							),
+						);
+
+						// 8. Git branch
 						if (branch) {
 							pills.push(pill(C.bgMauve, C.fgDark, `${ICON_BRANCH} ${branch}`));
 						}
 
-						// 6. Git status — separate pills for staged, worktree, untracked, deleted
+						// 9. Git status — separate pills for staged, worktree, untracked, deleted
 						if (status) {
 							// Staged changes (new + modified together)
 							const stagedCount = status.stagedNew + status.stagedModified;
@@ -526,28 +627,12 @@ export default function (pi: ExtensionAPI) {
 							}
 						}
 
-						// 7. dockerpi container — the name to `docker exec -it <name> zsh` into
-						const containerName = process.env.DOCKERPI_CONTAINER;
-						if (containerName) {
-							pills.push(
-								pill(C.bgPink, C.fgDark, `${ICON_CONTAINER} ${containerName}`),
-							);
-						}
-
-						// 8. Session id — first 8 chars are enough for `pi --session <id>`
-						const sessionShort = ctx.sessionManager
-							.getSessionId()
-							.slice(0, 8);
-						pills.push(
-							pill(C.bgLavender, C.fgDark, `${ICON_SESSION} ${sessionShort}`),
-						);
-
-						// 9. CWD
+						// 10. Session token totals (cumulative input/output)
 						pills.push(
 							pill(
-								C.bgBlue,
+								C.bgSapphire,
 								C.fgDark,
-								`${C.bold}${ICON_FOLDER} ${cwdShort}${C.reset}${C.bgBlue}${C.fgDark}`,
+								`${ICON_EXCHANGE} ${fmtK(inputTok)}↑ ${fmtK(outputTok)}↓`,
 							),
 						);
 
