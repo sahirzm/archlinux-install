@@ -3,6 +3,10 @@
 [alias]
 	dag = "log --graph --abbrev-commit --decorate --format=format:'%C(blue)%h%C(reset) - %C(cyan)%aD%C(reset) %C(green)(%ar)%C(reset)%C(yellow)%d%C(reset)%n'' %C(white)%s%C(reset) %C(white)- %an%C(reset)' --all"
 	graph = "log --all --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ci) %C(bold blue)<%an>%Creset'"
+  prune-local = "!f() { \
+    git fetch --prune && \
+    git branch -vv | grep ': gone]' | awk '{print $1}' | xargs -r git branch -d; \
+  }; f"
 [color]
 	ui = "auto"
 [core]
