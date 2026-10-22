@@ -17,6 +17,7 @@ alias cdk='npx cdk'
 alias rm='rm -i'
 alias ls="eza -l --icons --git --group-directories-first"
 alias cat='bat'
+alias ateam='manage-ai-team'
 export EDITOR="nvim"
 export VISUAL="nvim"
 
@@ -101,6 +102,24 @@ js_restore_db() {
   psql -U gasjobber -d gasjobber -h localhost -p 5432 -c "DROP SCHEMA public CASCADE; CREATE SCHEMA public;"
   gunzip -c "$1" | grep -Ev "^(ALTER.*OWNER TO|REVOKE|GRANT)" | psql -q -U gasjobber -d gasjobber -h localhost -p 5432
   [ -f ./scripts/update_config_for_local.sql ] && psql -U gasjobber -d gasjobber -h localhost -p 5432 -f ./scripts/update_config_for_local.sql
+}
+
+js_gwt() {
+  if [[ -z "$1" ]]; then
+    echo "Usage: js_gwt <branch-name> [dir-name]" >&2
+    return 1
+  fi
+
+  local branch="$1"
+  # Default dir_name to $2, or to the tail of $1 if $2 isn't provided (e.g. 'feature/login' -> 'login')
+  local dir_name="${2:-${1:t}}"
+  local target_dir="$HOME/workspace/js-worktrees/$dir_name"
+
+  # Ensure base worktree directory exists
+  mkdir -p "$HOME/workspace/js-worktrees"
+
+  # Add worktree and only change directory if git command succeeds
+  git worktree add -b "$branch" "$target_dir" origin/develop && cd "$target_dir"
 }
 
 gw() { 

@@ -65,6 +65,7 @@ ghostty
 gimp
 git
 git-delta
+github-cli
 glab
 glow
 gnome-keyring
@@ -132,6 +133,7 @@ okular
 onetbb
 opencode
 openrazer-daemon
+openwhispr-vulkan
 otf-aurulent-nerd
 otf-codenewroman-nerd
 otf-comicshanns-nerd
@@ -278,6 +280,8 @@ visual-studio-code-bin
 vlc
 volumeicon
 vscode-langservers-extracted
+vulkan-radeon
+vulkan-tools
 waybar
 wdisplays
 wezterm-git
@@ -292,6 +296,7 @@ wmenu
 woff2-font-awesome
 wpa_supplicant
 wpaperd
+wtype
 xdg-desktop-portal-wlr
 xdg-user-dirs
 xdg-utils
@@ -305,6 +310,7 @@ xorg-server
 xorg-xinit
 xorg-xwayland
 yaml-language-server
+ydotool
 zellij
 zip
 zoom

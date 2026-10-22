@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "1.1.0",
+  "lastChangelogVersion": "1.4.0",
   "theme": "catppuccin-tui-mocha",
   "packages": [
     "npm:pi-extmgr",
@@ -23,10 +23,13 @@
     "npm:pi-insights",
     "npm:@pify/usage",
     "npm:pi-context-view",
-    "npm:pi-open-agents"
+    "npm:pi-open-agents",
+    "npm:pi-messenger",
+    "npm:openwiki",
+    "/myspace/workspace/ai-board/integrations/pi-ai-board"
   ],
   "extensions": [
-    "/home/sahir/workspace/plan-review.nvim/adapters/pi/index.ts"
+    "/myspace/workspace/plan-review.nvim/adapters/pi/index.ts"
   ],
   "defaultThinkingLevel": "medium",
   "enableInstallTelemetry": false,

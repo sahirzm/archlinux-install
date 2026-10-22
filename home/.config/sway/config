@@ -256,6 +256,9 @@ bindsym Ctrl+Print exec $HOME/.local/bin/screenshot full clipboard
 bindsym Ctrl+$mod+Print exec $HOME/.local/bin/screenshot window clipboard
 bindsym Ctrl+Shift+Print exec $HOME/.local/bin/screenshot selection clipboard
 
+# speech to text
+bindsym Ctrl+$mod+v exec openwhispr --toggle-dictation
+
 # Move connections window to workspace 10
 for_window [instance="amazonconnections"] move container to workspace number $ws10
 
