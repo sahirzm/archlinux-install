@@ -7,16 +7,24 @@ DOCKERPI_PROFILE=generic
 
 # Extra apt packages baked into the image. Changing this forces a rebuild; it is
 # the last apt layer, so the Node/mise/uv layers above stay cached.
-DOCKERPI_APT_PACKAGES="ripgrep fd-find postgresql-client"
+DOCKERPI_APT_PACKAGES="ripgrep
+  fd-find
+  postgresql-client"
 
 # Env vars passed to the container. A bare name forwards the host's value,
 # NAME=value sets it explicitly. Command-line -e flags take precedence.
-DOCKERPI_ENV="OPENROUTER_API_KEY TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE TESTCONTAINERS_HOST_OVERRIDE=host.docker.internal ORG_GRADLE_PROJECT_buildDir=build-container GRADLE_USER_HOME=/tmp/.gradle-container --project-cache-dir /tmp/.gradle-project-cache-container"
+DOCKERPI_ENV="OPENROUTER_API_KEY
+  TERM=xterm-256color
+  TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE
+  TESTCONTAINERS_HOST_OVERRIDE=host.docker.internal
+  ORG_GRADLE_PROJECT_buildDir=build-container
+  GRADLE_USER_HOME=/tmp/.gradle-container
+  --project-cache-dir /tmp/.gradle-project-cache-container"
 # Force the rootless-Docker uid handling on or off instead of detecting it.
 #DOCKERPI_ROOTLESS=true
 
 # Container ports to publish to the host on every run, space separated.
-#DOCKERPI_PUBLISH="3000 8080:8080"
+# DOCKERPI_PUBLISH="3765:3765"
 
 # Docker network to join, so sibling containers (a database, a cache)
 # resolve by container name.
@@ -34,7 +42,10 @@ DOCKERPI_ENV="OPENROUTER_API_KEY TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE TESTCONTA
 # host:container[:ro|rw]. Applied after the profile's own mounts, so
 # these win. Mount at an identical path when host symlinks point into it.
 # Use rw for an editor config whose plugin manager writes a lockfile.
-DOCKERPI_VOLUMES="{home}/.config/nvim:/{container_home}/.config/nvim:rw /myspace/workspace/archlinux-install:/myspace/workspace/archlinux-install:rw"
+DOCKERPI_VOLUMES="{home}/.config/nvim:/{container_home}/.config/nvim:rw
+  /myspace/workspace/archlinux-install:/myspace/workspace/archlinux-install:rw
+  /myspace/workspace/ai-board:/myspace/workspace/ai-board:rw
+  /myspace/workspace/plan-review.nvim:/myspace/workspace/plan-review.nvim:rw"
 
 # Host path of the docker socket to share when DOCKERPI_DOCKER is on.
 # Only needed when the daemon is somewhere the search order misses:
@@ -44,10 +55,15 @@ DOCKERPI_VOLUMES="{home}/.config/nvim:/{container_home}/.config/nvim:rw /myspace
 # How often, in seconds, the container upgrades mise-managed tools. They
 # live in a persistent state dir that an image rebuild does not touch, so
 # this defaults to the image rebuild cadence (7 days). 0 disables it.
-#DOCKERPI_TOOL_UPGRADE_INTERVAL=86400
+DOCKERPI_TOOL_UPGRADE_INTERVAL=86400
 
 # Share the host docker daemon by bind-mounting its socket, so `docker`
 # inside the container builds into the host's image store and layer cache.
 # Grants the container full control of the host daemon, which is root-
 # equivalent under rootful docker. Off unless set.
 DOCKERPI_DOCKER=true
+
+# Maximum image age in seconds before rebuilding at session startup.
+# Defaults to 604800 (7 days); use 86400 for daily refreshes.
+# 0 disables age-based rebuilds; -r and changed build inputs still rebuild.
+DOCKERPI_IMAGE_REBUILD_INTERVAL=86400
