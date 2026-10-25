@@ -149,95 +149,109 @@ export MISE_TRUSTED_CONFIG_PATHS="$HOME/workspace"
 
 include $HOME/.secrets.zsh
 
-# kitty windows open zellij's welcome screen: attach to a session, resurrect
-# an exited one or create a new one. Closing the window only detaches.
-# If zellij fails to start, the window falls back to this shell.
-if [[ -z "$ZELLIJ" && "$TERM" == "xterm-kitty" ]] && (( $+commands[zellij] )); then
-  zellij --layout welcome && exit
-fi
+# Terminal multiplexer that kitty windows start: tmux (default) or zellij.
+# Set MUX=zellij in the environment or here to use zellij and its shell
+# integration below.
+: ${MUX:=tmux}
 
-if [[ -n "$ZELLIJ" ]]; then
-  # tmux sets COLORTERM=truecolor in its panes and zellij does not. Without it
-  # Pi and other programs fall back to 256 colours, which turns dark panel
-  # backgrounds into light grey/green blocks.
-  export COLORTERM="${COLORTERM:-truecolor}"
-
-  # The status bar labels each tab with its focused pane's title: the
-  # directory at the prompt, the command name while one runs. Titles longer
-  # than ZELLIJ_TITLE_MAX characters are cut short.
-  : ${ZELLIJ_TITLE_MAX:=20}
-  _zellij_set_title() {
-    local title=$1
-    (( ${#title} > ZELLIJ_TITLE_MAX )) && title="${title[1,ZELLIJ_TITLE_MAX-1]}…"
-    print -rn -- $'\e]2;'"${(V)title}"$'\a'
-  }
-  _zellij_title_precmd() { _zellij_set_title "${(%):-%1~}" }
-  _zellij_title_preexec() {
-    local -a words=(${(z)1})
-    # Skip env assignments and sudo so the title names the program.
-    while (( $#words > 1 )) && [[ $words[1] == *=* || $words[1] == sudo ]]; do
-      shift words
-    done
-    _zellij_set_title "${${(Q)words[1]}:t}"
-  }
-  autoload -Uz add-zsh-hook
-  add-zsh-hook precmd _zellij_title_precmd
-  add-zsh-hook preexec _zellij_title_preexec
-
-  # kitty loads its shell integration only in the shell it starts, so load it
-  # in zellij panes too. Its OSC 133 prompt marks drive zellij's scroll-mode
-  # prompt jumps ([ and ]) and last-command-output copy (c). Titles come from
-  # the hooks above and the cursor shape from zsh-vi-mode.
-  if [[ -n "$KITTY_INSTALLATION_DIR" ]]; then
-    export KITTY_SHELL_INTEGRATION="enabled no-cursor no-title"
-    autoload -Uz -- "$KITTY_INSTALLATION_DIR"/shell-integration/zsh/kitty-integration
-    kitty-integration
-    unfunction kitty-integration
-  else
-    # Over SSH kitty's integration is not available; emit the same OSC 133
-    # marks (A: prompt, C: command output, D: end with exit status).
-    _zellij_osc133_precmd() {
-      local -i exit_status=$?
-      if (( _zellij_osc133_running )); then
-        print -n -- "\e]133;D;${exit_status}\a"
-        _zellij_osc133_running=0
-      fi
-      print -n -- '\e]133;A\a'
-    }
-    _zellij_osc133_preexec() {
-      print -n -- '\e]133;C\a'
-      _zellij_osc133_running=1
-    }
-    typeset -gi _zellij_osc133_running=0
-    add-zsh-hook precmd _zellij_osc133_precmd
-    add-zsh-hook preexec _zellij_osc133_preexec
+if [[ $MUX == zellij ]]; then
+  # kitty windows open zellij's welcome screen: attach to a session, resurrect
+  # an exited one or create a new one. Closing the window only detaches.
+  # If zellij fails to start, the window falls back to this shell.
+  if [[ -z "$ZELLIJ" && "$TERM" == "xterm-kitty" ]] && (( $+commands[zellij] )); then
+    zellij --layout welcome && exit
   fi
-fi
 
-# tmux-notify replacement: a desktop notification when a command that ran for
-# at least ZSH_NOTIFY_MIN_SECONDS finishes. kitten notify sends OSC 99, which
-# zellij forwards to kitty.
-if (( $+commands[kitten] )); then
-  zmodload zsh/datetime
-  autoload -Uz add-zsh-hook
-  : ${ZSH_NOTIFY_MIN_SECONDS:=30}
-  # Interactive programs, where finishing is not news.
-  typeset -ga ZSH_NOTIFY_IGNORE=(nvim vim less man ssh zellij tmux top htop btop lazygit fzf pi)
-  _zsh_notify_preexec() {
-    _zsh_notify_cmd=$1
-    _zsh_notify_start=$EPOCHREALTIME
-  }
-  _zsh_notify_precmd() {
-    local -i exit_status=$?
-    [[ -n $_zsh_notify_start ]] || return 0
-    local -i elapsed=$(( EPOCHREALTIME - _zsh_notify_start ))
-    _zsh_notify_start=
-    (( elapsed >= ZSH_NOTIFY_MIN_SECONDS )) || return 0
-    (( ${ZSH_NOTIFY_IGNORE[(Ie)${${(z)_zsh_notify_cmd}[1]}]} )) && return 0
-    local title="Done"
-    (( exit_status )) && title="Failed ($exit_status)"
-    kitten notify --app-name zsh "$title: ${_zsh_notify_cmd[1,80]}" "Took ${elapsed}s"
-  }
-  add-zsh-hook preexec _zsh_notify_preexec
-  add-zsh-hook precmd _zsh_notify_precmd
+  if [[ -n "$ZELLIJ" ]]; then
+    # tmux sets COLORTERM=truecolor in its panes and zellij does not. Without it
+    # Pi and other programs fall back to 256 colours, which turns dark panel
+    # backgrounds into light grey/green blocks.
+    export COLORTERM="${COLORTERM:-truecolor}"
+
+    # The status bar labels each tab with its focused pane's title: the
+    # directory at the prompt, the command name while one runs. Titles longer
+    # than ZELLIJ_TITLE_MAX characters are cut short.
+    : ${ZELLIJ_TITLE_MAX:=20}
+    _zellij_set_title() {
+      local title=$1
+      (( ${#title} > ZELLIJ_TITLE_MAX )) && title="${title[1,ZELLIJ_TITLE_MAX-1]}…"
+      print -rn -- $'\e]2;'"${(V)title}"$'\a'
+    }
+    _zellij_title_precmd() { _zellij_set_title "${(%):-%1~}" }
+    _zellij_title_preexec() {
+      local -a words=(${(z)1})
+      # Skip env assignments and sudo so the title names the program.
+      while (( $#words > 1 )) && [[ $words[1] == *=* || $words[1] == sudo ]]; do
+        shift words
+      done
+      _zellij_set_title "${${(Q)words[1]}:t}"
+    }
+    autoload -Uz add-zsh-hook
+    add-zsh-hook precmd _zellij_title_precmd
+    add-zsh-hook preexec _zellij_title_preexec
+
+    # kitty loads its shell integration only in the shell it starts, so load it
+    # in zellij panes too. Its OSC 133 prompt marks drive zellij's scroll-mode
+    # prompt jumps ([ and ]) and last-command-output copy (c). Titles come from
+    # the hooks above and the cursor shape from zsh-vi-mode.
+    if [[ -n "$KITTY_INSTALLATION_DIR" ]]; then
+      export KITTY_SHELL_INTEGRATION="enabled no-cursor no-title"
+      autoload -Uz -- "$KITTY_INSTALLATION_DIR"/shell-integration/zsh/kitty-integration
+      kitty-integration
+      unfunction kitty-integration
+    else
+      # Over SSH kitty's integration is not available; emit the same OSC 133
+      # marks (A: prompt, C: command output, D: end with exit status).
+      _zellij_osc133_precmd() {
+        local -i exit_status=$?
+        if (( _zellij_osc133_running )); then
+          print -n -- "\e]133;D;${exit_status}\a"
+          _zellij_osc133_running=0
+        fi
+        print -n -- '\e]133;A\a'
+      }
+      _zellij_osc133_preexec() {
+        print -n -- '\e]133;C\a'
+        _zellij_osc133_running=1
+      }
+      typeset -gi _zellij_osc133_running=0
+      add-zsh-hook precmd _zellij_osc133_precmd
+      add-zsh-hook preexec _zellij_osc133_preexec
+    fi
+  fi
+
+  # tmux-notify replacement: a desktop notification when a command that ran for
+  # at least ZSH_NOTIFY_MIN_SECONDS finishes. kitten notify sends OSC 99, which
+  # zellij forwards to kitty. tmux drops it, so tmux keeps tmux-notify.
+  if (( $+commands[kitten] )); then
+    zmodload zsh/datetime
+    autoload -Uz add-zsh-hook
+    : ${ZSH_NOTIFY_MIN_SECONDS:=30}
+    # Interactive programs, where finishing is not news.
+    typeset -ga ZSH_NOTIFY_IGNORE=(nvim vim less man ssh zellij tmux top htop btop lazygit fzf pi)
+    _zsh_notify_preexec() {
+      _zsh_notify_cmd=$1
+      _zsh_notify_start=$EPOCHREALTIME
+    }
+    _zsh_notify_precmd() {
+      local -i exit_status=$?
+      [[ -n $_zsh_notify_start ]] || return 0
+      local -i elapsed=$(( EPOCHREALTIME - _zsh_notify_start ))
+      _zsh_notify_start=
+      (( elapsed >= ZSH_NOTIFY_MIN_SECONDS )) || return 0
+      (( ${ZSH_NOTIFY_IGNORE[(Ie)${${(z)_zsh_notify_cmd}[1]}]} )) && return 0
+      local title="Done"
+      (( exit_status )) && title="Failed ($exit_status)"
+      kitten notify --app-name zsh "$title: ${_zsh_notify_cmd[1,80]}" "Took ${elapsed}s"
+    }
+    add-zsh-hook preexec _zsh_notify_preexec
+    add-zsh-hook precmd _zsh_notify_precmd
+  fi
+else
+  # kitty windows attach to the most recent tmux session or create one.
+  # Closing the window only detaches. If tmux fails to start, the window falls
+  # back to this shell.
+  if [[ -z "$TMUX" && "$TERM" == "xterm-kitty" ]] && (( $+commands[tmux] )); then
+    { tmux attach 2>/dev/null || tmux new-session } && exit
+  fi
 fi
