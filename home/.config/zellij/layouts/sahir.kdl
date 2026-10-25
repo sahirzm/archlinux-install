@@ -47,7 +47,7 @@ layout {
                 // Ribbon tabs as in zellij's tab bar. Each shows its position
                 // (the Ctrl-a <n> key, renumbered when tabs close or move) and
                 // its focused pane's title. Shells keep titles short
-                // (ZELLIJ_TITLE_MAX in ~/.zshrc) and Ctrl-a , names the pane.
+                // (MUX_TITLE_MAX in ~/.zshrc) and Ctrl-a , names the pane.
                 // Zellij's own "Tab #N" names are not shown because their
                 // number never changes.
                 tab_normal   "#[fg=$base,bg=$text]\u{e0b0}#[fg=$base,bg=$text,bold] {index} {focused_pane_title}{bell_indicator}{sync_indicator}{fullscreen_indicator}{floating_indicator} #[fg=$text,bg=default]\u{e0b0}"

@@ -154,6 +154,30 @@ include $HOME/.secrets.zsh
 # integration below.
 : ${MUX:=tmux}
 
+# Pane titles, shown in tmux's pane borders and zellij's pane frames and tab
+# labels: the directory at the prompt, the command name while one runs.
+# Titles longer than MUX_TITLE_MAX characters are cut short.
+if [[ -n "$TMUX" || -n "$ZELLIJ" ]]; then
+  : ${MUX_TITLE_MAX:=20}
+  _mux_set_title() {
+    local title=$1
+    (( ${#title} > MUX_TITLE_MAX )) && title="${title[1,MUX_TITLE_MAX-1]}…"
+    print -rn -- $'\e]2;'"${(V)title}"$'\a'
+  }
+  _mux_title_precmd() { _mux_set_title "${(%):-%1~}" }
+  _mux_title_preexec() {
+    local -a words=(${(z)1})
+    # Skip env assignments and sudo so the title names the program.
+    while (( $#words > 1 )) && [[ $words[1] == *=* || $words[1] == sudo ]]; do
+      shift words
+    done
+    _mux_set_title "${${(Q)words[1]}:t}"
+  }
+  autoload -Uz add-zsh-hook
+  add-zsh-hook precmd _mux_title_precmd
+  add-zsh-hook preexec _mux_title_preexec
+fi
+
 if [[ $MUX == zellij ]]; then
   # kitty windows open zellij's welcome screen: attach to a session, resurrect
   # an exited one or create a new one. Closing the window only detaches.
@@ -167,28 +191,6 @@ if [[ $MUX == zellij ]]; then
     # Pi and other programs fall back to 256 colours, which turns dark panel
     # backgrounds into light grey/green blocks.
     export COLORTERM="${COLORTERM:-truecolor}"
-
-    # The status bar labels each tab with its focused pane's title: the
-    # directory at the prompt, the command name while one runs. Titles longer
-    # than ZELLIJ_TITLE_MAX characters are cut short.
-    : ${ZELLIJ_TITLE_MAX:=20}
-    _zellij_set_title() {
-      local title=$1
-      (( ${#title} > ZELLIJ_TITLE_MAX )) && title="${title[1,ZELLIJ_TITLE_MAX-1]}…"
-      print -rn -- $'\e]2;'"${(V)title}"$'\a'
-    }
-    _zellij_title_precmd() { _zellij_set_title "${(%):-%1~}" }
-    _zellij_title_preexec() {
-      local -a words=(${(z)1})
-      # Skip env assignments and sudo so the title names the program.
-      while (( $#words > 1 )) && [[ $words[1] == *=* || $words[1] == sudo ]]; do
-        shift words
-      done
-      _zellij_set_title "${${(Q)words[1]}:t}"
-    }
-    autoload -Uz add-zsh-hook
-    add-zsh-hook precmd _zellij_title_precmd
-    add-zsh-hook preexec _zellij_title_preexec
 
     # kitty loads its shell integration only in the shell it starts, so load it
     # in zellij panes too. Its OSC 133 prompt marks drive zellij's scroll-mode
