@@ -240,7 +240,7 @@ exec_always --no-startup-id $HOME/.config/waybar/launcher.sh
 exec_always --no-startup-id wpaperd
 
 # Auto-start applications
-exec --no-startup-id swaymsg "workspace $ws1; exec /usr/bin/firefox"
+exec --no-startup-id swaymsg "workspace $ws1; exec /bin/google-chrome-stable"
 exec --no-startup-id swaymsg "workspace $ws2; exec /usr/bin/kitty"
 
 # Screenshots (using grim and slurp via screenshot script)
