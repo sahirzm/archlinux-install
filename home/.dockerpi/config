@@ -14,6 +14,7 @@ DOCKERPI_APT_PACKAGES="ripgrep
 # Env vars passed to the container. A bare name forwards the host's value,
 # NAME=value sets it explicitly. Command-line -e flags take precedence.
 DOCKERPI_ENV="OPENROUTER_API_KEY
+  GH_TOKEN
   TERM=xterm-256color
   TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE
   TESTCONTAINERS_HOST_OVERRIDE=host.docker.internal

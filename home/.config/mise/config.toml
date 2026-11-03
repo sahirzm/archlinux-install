@@ -14,6 +14,7 @@ kubectl = "latest"
 "aqua:linkerd/linkerd2" = "latest"
 helm = "latest"
 flutter = "latest"
+github-cli = "latest"
 
 
 # npm global packages

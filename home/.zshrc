@@ -60,6 +60,7 @@ export PATH=$HOME/.cargo/bin:$PATH
 
 [[ -n "$XDG_RUNTIME_DIR" ]] && export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
 export TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE=/run/user/1000/docker.sock
+export GH_TOKEN=$(gh auth token)
 
 # FZF
 export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
@@ -257,3 +258,11 @@ else
     { tmux attach 2>/dev/null || tmux new-session } && exit
   fi
 fi
+
+# >>> manage-ai-team login-restore
+case $- in
+  *i*) if [ -z "${ZELLIJ:-}" ] && [ -z "${TMUX:-}" ] && [ -z "${WEZTERM_PANE:-}" ]; then
+    (/home/sahir/bin/manage-ai-team --config /home/sahir/.config/manage-ai-team/config.toml --state-dir /home/sahir/.local/state/manage-ai-team --sidecar-dir /home/sahir/.local/share/manage-ai-team restore --login >/dev/null 2>&1 &)
+  fi ;;
+esac
+# <<< manage-ai-team login-restore
