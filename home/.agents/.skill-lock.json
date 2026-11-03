@@ -55,6 +55,24 @@
       "skillFolderHash": "fe46ac61092a8cf086dce6a907fc98295a600d3d",
       "installedAt": "2026-11-02T22:17:31.857Z",
       "updatedAt": "2026-11-02T22:17:31.857Z"
+    },
+    "ant-design": {
+      "source": "ant-design/antd-skill",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/ant-design/antd-skill.git",
+      "skillPath": "skills/ant-design/SKILL.md",
+      "skillFolderHash": "305bc1a517b390ab677ff75c8d842cc7a93c64d7",
+      "installedAt": "2026-11-03T07:08:09.973Z",
+      "updatedAt": "2026-11-03T07:08:09.973Z"
+    },
+    "antd": {
+      "source": "ant-design/antd-skill",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/ant-design/antd-skill.git",
+      "skillPath": "skills/antd/SKILL.md",
+      "skillFolderHash": "ba231e108b81110483288b3429ee13e2316f8e65",
+      "installedAt": "2026-11-03T07:08:09.974Z",
+      "updatedAt": "2026-11-03T07:08:09.974Z"
     }
   },
   "dismissed": {
