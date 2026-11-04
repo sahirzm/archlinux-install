@@ -59,14 +59,18 @@ export default function (pi: ExtensionAPI) {
         withSession: async (replacementCtx) => {
           // Re-apply the previously active agent by dispatching pi-open-agents'
           // /agent command (runs the command handler directly, no LLM turn).
-          // Guarded by getCommands() so it's a no-op when pi-open-agents isn't loaded.
-          if (
-            activeAgentName &&
-            replacementCtx.getCommands().some((cmd) => cmd.name === "agent")
-          ) {
-            await replacementCtx.sendUserMessage(`/agent ${activeAgentName}`, {
-              expandPromptTemplates: true,
-            });
+          // pi-open-agents only restores itself on session_start with reason
+          // resume|fork|reload, so a brand-new session needs this dispatch. It
+          // reports unknown agents itself; swallow only command-not-found.
+          if (activeAgentName) {
+            await replacementCtx
+              .sendUserMessage(`/agent ${activeAgentName}`, { expandPromptTemplates: true })
+              .catch(() => {
+                replacementCtx.ui.notify(
+                  `Could not re-apply agent "${activeAgentName}" in the new session.`,
+                  "warning",
+                );
+              });
           }
           // Use replacementCtx and pi in the fresh session context
           await replacementCtx.sendUserMessage(cleanPrompt);
