@@ -53,7 +53,8 @@ ant.properties
 .sisyphus
 .crew
 .pi/tasks/
-
+.pi/delegate/
+.pi/evidence/
 
 # Gradle
 .gradle-host/
