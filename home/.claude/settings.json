@@ -1,66 +1,44 @@
 {
-  "awsAuthRefresh": "aws sso login --profile jobbersoft-bedrock",
   "env": {
-    "CLAUDE_CODE_USE_BEDROCK": "1",
-    "AWS_PROFILE": "jobbersoft-bedrock",
-    "AWS_REGION": "us-west-2",
-    "ANTHROPIC_MODEL": "us.anthropic.claude-sonnet-4-6",
-    "ANTHROPIC_SMALL_FAST_MODEL": "global.claude-haiku-4-5-20251001-v1:0",
-    "CLAUDE_CODE_MAX_OUTPUT_TOKENS": "16096",
-    "MAX_THINKING_TOKENS": "4096",
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
   },
   "permissions": {
     "defaultMode": "auto"
   },
-  "model": "us.anthropic.claude-sonnet-4-6",
-  "hooks": {
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "claude-notify 'task complete' /usr/share/icons/AdwaitaLegacy/32x32/legacy/dialog-information.png"
-          }
-        ]
-      }
-    ],
-    "Notification": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "claude-notify 'waiting for approval' /usr/share/icons/AdwaitaLegacy/32x32/legacy/dialog-warning.png"
-          }
-        ]
-      }
-    ],
-    "PreToolUse": [
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "rtk hook claude"
-          }
-        ]
-      }
-    ]
-  },
+  "model": "sonnet",
+  "hooks": {},
   "statusLine": {
     "type": "command",
-    "command": "npx -y ccstatusline@latest",
-    "padding": 0,
-    "refreshInterval": 10
+    "command": "python3 /home/sahir/.claude/sahir-statusline.py",
+    "padding": 0
   },
   "enabledPlugins": {
     "jdtls-lsp@claude-plugins-official": true,
     "document-skills@anthropic-agent-skills": true,
     "frontend-design@claude-plugins-official": true,
     "code-review@claude-plugins-official": true,
-    "skill-creator@claude-plugins-official": true
+    "skill-creator@claude-plugins-official": true,
+    "sahir-standards@sahir-kit": true,
+    "sahir-review@sahir-kit": true,
+    "sahir-concise-style@sahir-kit": true,
+    "refine@sahir-kit": true,
+    "sahir-statusline@sahir-kit": true,
+    "manage-ai-team@manage-ai-team": true
   },
-  "extraKnownMarketplaces": {},
+  "extraKnownMarketplaces": {
+    "sahir-kit": {
+      "source": {
+        "source": "directory",
+        "path": "/myspace/workspace/claude-code-kit"
+      }
+    },
+    "manage-ai-team": {
+      "source": {
+        "source": "directory",
+        "path": "/home/sahir/.config/manage-ai-team/claude"
+      }
+    }
+  },
   "effortLevel": "low",
   "skipWorkflowUsageWarning": true,
   "theme": "auto",

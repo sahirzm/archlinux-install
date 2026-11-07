@@ -120,7 +120,7 @@ js_gwt() {
   mkdir -p "$HOME/workspace/js-worktrees"
 
   # Add worktree and only change directory if git command succeeds
-  git worktree add -b "$branch" "$target_dir" origin/develop && cd "$target_dir"
+  git worktree add -b "$branch" "$target_dir" origin/main && cd "$target_dir"
 }
 
 gw() { 

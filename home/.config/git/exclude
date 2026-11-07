@@ -58,3 +58,5 @@ ant.properties
 
 # Gradle
 .gradle-host/
+
+**/.claude/.cc-writes/
