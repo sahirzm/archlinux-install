@@ -48,6 +48,11 @@ easy-conflict-bin
 ed
 editorconfig-core-c
 efibootmgr
+elephant-bin
+elephant-clipboard-bin
+elephant-desktopapplications-bin
+elephant-providerlist-bin
+elephant-runner-bin
 emacs-lsp-booster
 emacs-wayland
 evdi-dkms
