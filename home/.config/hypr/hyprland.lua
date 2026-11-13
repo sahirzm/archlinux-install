@@ -33,6 +33,7 @@ hl.env("VDPAU_DRIVER", "radeonsi")
 hl.env("MOZ_ENABLE_WAYLAND", "1")
 hl.env("SDL_VIDEODRIVER", "wayland")
 hl.env("_JAVA_AWT_WM_NONREPARENTING", "1")
+hl.env("ELECTRON_OZONE_PLATFORM_HINT", "auto")
 
 -------------------
 ---- AUTOSTART ----
@@ -90,7 +91,7 @@ hl.config({
     },
 
     debug = { vfr = true },
-    xwayland = { force_zero_scaling = true },
+    xwayland = { force_zero_scaling = false },
 })
 
 hl.curve("easeOutQuint", { type = "bezier", points = { {0.23, 1}, {0.32, 1} } })
