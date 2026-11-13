@@ -75,8 +75,8 @@ hl.config({
         rounding = 4,
         active_opacity   = 1.0,
         inactive_opacity = 0.9,
-        shadow = { enabled = false },
-        blur   = { enabled = false },
+        shadow = { enabled = true, range = 4, render_power = 3, color = 0xee1a1a1a },
+        blur   = { enabled = true, size = 3, passes = 1, vibrancy = 0.1696 },
     },
 
     animations = { enabled = true },
@@ -262,3 +262,12 @@ hl.window_rule({ name = "emulator-title", match = { title = "^(Android Emulator.
 hl.window_rule({ name = "emulator-class", match = { class = "^(emulator64-arm|emulator64-x86)$" }, float = true })
 hl.window_rule({ name = "center-floating", match = { float = true }, center = true })
 pcall(require, "/home/sahir/.config/hypr/openwhispr-binds.lua")
+
+hl.window_rule({
+    name  = "chrome-pip",
+    match = { class = "^google-chrome$", title = "^(Picture in picture|Picture-in-Picture|Google Meet|meet\\.google\\.com)$" },
+    float = true,
+    pin   = true,
+    size  = "480 270",
+    move  = "monitor_w-window_w-20 monitor_h-window_h-20",
+})
