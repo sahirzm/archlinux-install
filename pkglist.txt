@@ -27,6 +27,7 @@ catppuccin-gtk-theme-mocha
 chaotic-keyring
 chaotic-mirrorlist
 clang
+cliphist
 cmake
 codespell
 csvlens
@@ -85,6 +86,12 @@ gutenprint
 helvum
 hplip
 htop
+hypridle
+hyprland
+hyprlock
+hyprpaper
+hyprpolkitagent
+hyprshot
 ibus-m17n
 inkscape
 intel-media-driver
@@ -174,6 +181,7 @@ python-pynvim
 python-weasyprint
 qt5-graphicaleffects
 qt5-quickcontrols2
+qt6-wayland
 ranger
 reflector
 ripgrep
@@ -282,6 +290,7 @@ volumeicon
 vscode-langservers-extracted
 vulkan-radeon
 vulkan-tools
+walker
 waybar
 wdisplays
 wezterm-git
@@ -290,6 +299,7 @@ wget
 wireless_tools
 wireplumber
 wl-clipboard
+wlogout
 wlprop
 wlr-randr
 wmenu
@@ -297,6 +307,7 @@ woff2-font-awesome
 wpa_supplicant
 wpaperd
 wtype
+xdg-desktop-portal-hyprland
 xdg-desktop-portal-wlr
 xdg-user-dirs
 xdg-utils

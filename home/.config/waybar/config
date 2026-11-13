@@ -29,7 +29,7 @@
     "keyboard-state",
     "battery",
     "battery#bat2",
-    "language",
+    "hyprland/language",
     "clock"
   ],
   // Modules configuration
