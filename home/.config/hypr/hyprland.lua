@@ -261,6 +261,17 @@ hl.window_rule({ name = "zoom-float",     match = { class = "^(zoom)$" }, float 
 hl.window_rule({ name = "emulator-title", match = { title = "^(Android Emulator.*)$" }, float = true })
 hl.window_rule({ name = "emulator-class", match = { class = "^(emulator64-arm|emulator64-x86)$" }, float = true })
 hl.window_rule({ name = "center-floating", match = { float = true }, center = true })
+
+hl.window_rule({
+    name  = "whispr-overlay",
+    match = { class = "^open-whispr$" },
+    border_size = 0,
+    rounding    = 0,
+    no_shadow   = true,
+    no_blur     = true,
+    no_anim     = true,
+    opacity     = "1.0 override 1.0 override",
+})
 pcall(require, "/home/sahir/.config/hypr/openwhispr-binds.lua")
 
 hl.window_rule({
