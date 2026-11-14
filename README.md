@@ -39,7 +39,7 @@ sudo systemctl enable --now tlp-pd.service
 sudo systemctl enable --now fstrim.timer
 ```
 
-Desktop only: enable the GPU clock fix. See [Desktop fixes](#desktop-fixes).
+Desktop only: apply the GPU clock fix. See [Desktop fixes](#desktop-fixes).
 
 #### As user
 
@@ -82,24 +82,17 @@ Symptom: a horizontal band flashes across the screen for a second at random. It 
 
 Cause: the card switches its memory clock between 300, 625 and 1500 MHz. Forcing the highest clocks stops the bands. The cost is higher idle power and about 48 C.
 
-Fix: force the high performance level at boot with a systemd service. A `udev` rule does not work, because the driver is not ready when the rule runs.
+Fix: tell TLP to keep the high performance level. TLP sets `auto` at boot and would undo any other fix. A `udev` rule or a separate systemd service also fails for that reason.
 
 ```shell
-sudo tee /etc/systemd/system/amdgpu-high.service <<'EOF'
-[Unit]
-Description=Force amdgpu high performance level
-
-[Service]
-Type=oneshot
-ExecStart=/bin/sh -c 'echo high > /sys/bus/pci/devices/0000:07:00.0/power_dpm_force_performance_level'
-
-[Install]
-WantedBy=multi-user.target
+sudo tee /etc/tlp.d/99-amdgpu-high.conf <<'EOF'
+RADEON_DPM_PERF_LEVEL_ON_AC=high
+RADEON_DPM_PERF_LEVEL_ON_BAT=high
 EOF
-sudo systemctl enable --now amdgpu-high.service
+sudo tlp start
 ```
 
-The PCI address `0000:07:00.0` is this GPU. Check it with `lspci -nn | grep VGA`. Verify with `cat /sys/class/drm/card1/device/power_dpm_force_performance_level`. It must print `high`.
+Verify with `cat /sys/class/drm/card1/device/power_dpm_force_performance_level`. It must print `high`, also after a reboot.
 
 Do not apply this on the laptop. It is a desktop-only fix.
 
