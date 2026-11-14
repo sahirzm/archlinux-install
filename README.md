@@ -60,17 +60,18 @@ Do not enable `waybar` or `wpaperd` as services. `hyprland.lua` starts them. Do 
 
 ### 4. Log in without a display manager
 
-There is no display manager. Log in on a text console. `~/.zprofile` then starts a session:
+There is no display manager and no X server. `lightdm` and `xorg-server` are not installed. Log in on a text console. `~/.zprofile` then starts a session:
 
 - tty1 starts Hyprland.
 - tty2 starts sway. Press Ctrl+Alt+F2.
 
 ```shell
-sudo systemctl disable lightdm.service
 sudo systemctl set-default multi-user.target
 ```
 
-Hyprland needs the second command. Without it the machine waits for a display manager. To go back, run `sudo systemctl enable lightdm.service` and `sudo systemctl set-default graphical.target`.
+Without this command the machine waits for a display manager. If `lightdm` is still installed from an older setup, also run `sudo systemctl disable lightdm.service`.
+
+`xorg-xwayland` stays installed. It runs X11-only apps inside Hyprland and sway.
 
 ## Desktop fixes
 
@@ -100,7 +101,7 @@ Do not apply this on the laptop. It is a desktop-only fix.
 
 Symptom: Hyprland started from LightDM did not accept keyboard input. The same session worked when started from a text console.
 
-Fix: remove LightDM and log in on a text console. See [Log in without a display manager](#4-log-in-without-a-display-manager).
+Fix: remove LightDM and log in on a text console. LightDM is no longer installed. See [Log in without a display manager](#4-log-in-without-a-display-manager).
 
 ### Hyprland config format
 
