@@ -1,3 +1,4 @@
+accountsservice
 adobe-source-sans-fonts
 alacritty
 alsa-firmware
@@ -42,6 +43,7 @@ docker-rootless-extras
 dockfmt-git
 doctl
 dos2unix
+dosfstools
 downgrade
 dunst
 easy-conflict-bin
@@ -71,7 +73,6 @@ ghostty
 gimp
 git
 git-delta
-github-cli
 glab
 glow
 gnome-keyring
@@ -101,7 +102,6 @@ hyprshot
 ibus-m17n
 inkscape
 intel-media-driver
-iptables
 iwd
 jdtls
 jq
@@ -127,7 +127,6 @@ luarocks
 lvm2
 mako
 man-db
-mesa
 mesa-utils
 minikube
 mise
@@ -143,7 +142,6 @@ ninja
 noto-fonts
 ntfs-3g
 okular
-onetbb
 opencode
 openrazer-daemon
 openwhispr-vulkan
@@ -170,7 +168,6 @@ pipewire-audio
 pipewire-jack
 pipewire-pulse
 pipewire-zeroconf
-playerctl
 polychromatic
 postgresql-libs
 powerpill-me
@@ -294,7 +291,6 @@ visual-studio-code-bin
 vlc
 volumeicon
 vscode-langservers-extracted
-vulkan-radeon
 vulkan-tools
 walker
 waybar
@@ -302,6 +298,7 @@ wdisplays
 wezterm-git
 wf-recorder
 wget
+wireless-regdb
 wireless_tools
 wireplumber
 wl-clipboard
