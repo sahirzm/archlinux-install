@@ -22,35 +22,23 @@
   "modules-right": [
     "tray",
     "mpd",
-    "group/controls",
-    "group/status"
+    "idle_inhibitor",
+    "custom/suspend-inhibit",
+    "pulseaudio",
+    "network",
+    "cpu",
+    "memory",
+    "temperature",
+    "backlight",
+    "battery",
+    "battery#bat2",
+    "hyprland/language"
   ],
-  "group/controls": {
-    "orientation": "horizontal",
-    "modules": [
-      "idle_inhibitor",
-      "custom/suspend-inhibit"
-    ]
-  },
-  "group/status": {
-    "orientation": "horizontal",
-    "modules": [
-      "pulseaudio",
-      "network",
-      "cpu",
-      "memory",
-      "temperature",
-      "backlight",
-      "battery",
-      "battery#bat2",
-      "hyprland/language"
-    ]
-  },
   // Modules configuration
   "hyprland/workspaces": {
     "disable-scroll": true,
     "all-outputs": true,
-    "format": " ",
+    "format": "{name}: {icon}",
     "format-icons": {
       "terminal": "",
       "web": "",
@@ -67,7 +55,7 @@
   "sway/workspaces": {
     "disable-scroll": true,
     "all-outputs": true,
-    "format": " ",
+    "format": "{name}: {icon}",
     "format-icons": {
       "terminal": "",
       "web": "",

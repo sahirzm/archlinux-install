@@ -1,4 +1,4 @@
-/* Floating "island" bar: transparent background, translucent Catppuccin Mocha pills. */
+/* Floating bar: transparent background, rounded Catppuccin Mocha pills. */
 
 * {
   font-family: "FiraCode Nerd Font", FontAwesome, Roboto, Helvetica, Arial, sans-serif;
@@ -19,7 +19,7 @@ window#waybar.hidden {
   opacity: 0.2;
 }
 
-/* Islands */
+/* Every module is its own pill */
 #workspaces,
 #window,
 #clock,
@@ -27,17 +27,6 @@ window#waybar.hidden {
 #mpd,
 #custom-media,
 #mode,
-#controls,
-#status {
-  background-color: rgba(30, 30, 46, 0.75);
-  color: #cdd6f4;
-  border-radius: 14px;
-  padding: 0 14px;
-}
-
-/* Modules inside an island: no background of their own */
-#controls > widget > *,
-#status > widget > *,
 #idle_inhibitor,
 #custom-suspend-inhibit,
 #pulseaudio,
@@ -48,45 +37,48 @@ window#waybar.hidden {
 #backlight,
 #battery,
 #language {
-  background: transparent;
-  padding: 0 7px;
+  border-radius: 14px;
+  padding: 0 14px;
+  color: #1e1e2e;
 }
 
-/* Workspace dots */
+/* Workspace names and icons on a dark pill */
 #workspaces {
-  padding: 0 8px;
+  background-color: rgba(30, 30, 46, 0.75);
+  padding: 0 4px;
 }
 
 #workspaces button {
-  min-width: 10px;
-  min-height: 10px;
-  padding: 0;
-  margin: 12px 4px;
+  padding: 0 10px;
+  margin: 4px 2px;
   border-radius: 10px;
-  background-color: #585b70;
-  color: transparent;
+  background-color: transparent;
+  color: #cdd6f4;
   transition: all 0.2s ease;
 }
 
 #workspaces button:hover {
-  background-color: #b4befe;
+  background-color: #45475a;
 }
 
 #workspaces button.active,
 #workspaces button.focused {
-  min-width: 28px;
-  background-color: #cba6f7;
+  background-color: #a6e3a1;
+  color: #1e1e2e;
 }
 
 #workspaces button.urgent {
   background-color: #f38ba8;
+  color: #1e1e2e;
 }
 
 #mode {
-  background-color: rgba(88, 91, 112, 0.85);
+  background-color: #585b70;
+  color: #cdd6f4;
 }
 
 #window {
+  background-color: rgba(30, 30, 46, 0.75);
   color: #cdd6f4;
 }
 
@@ -94,92 +86,108 @@ window#waybar.empty #window {
   background-color: transparent;
 }
 
-/* Colored text on the dark islands */
 #clock {
-  color: #89b4fa;
+  background-color: #89b4fa;
   font-weight: bold;
 }
 
 #pulseaudio {
-  color: #f9e2af;
+  background-color: #f9e2af;
 }
 
 #pulseaudio.muted {
-  color: #6c7086;
+  background-color: #6c7086;
+  color: #cdd6f4;
 }
 
 #network {
-  color: #89b4fa;
+  background-color: #89b4fa;
 }
 
 #network.disconnected {
-  color: #f38ba8;
+  background-color: #f38ba8;
 }
 
 #cpu {
-  color: #a6e3a1;
+  background-color: #a6e3a1;
 }
 
 #memory {
-  color: #cba6f7;
+  background-color: #cba6f7;
 }
 
 #temperature {
-  color: #fab387;
+  background-color: #fab387;
 }
 
 #temperature.critical {
-  color: #f38ba8;
+  background-color: #f38ba8;
 }
 
 #backlight {
-  color: #94e2d5;
+  background-color: #94e2d5;
 }
 
 #battery {
-  color: #a6e3a1;
+  background-color: #cdd6f4;
 }
 
-#battery.warning:not(.charging) {
-  color: #fab387;
+#battery.charging,
+#battery.plugged {
+  background-color: #a6e3a1;
+}
+
+@keyframes blink {
+  to {
+    background-color: #f5e0dc;
+  }
 }
 
 #battery.critical:not(.charging) {
-  color: #f38ba8;
+  background-color: #f38ba8;
+  animation-name: blink;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
 }
 
 #language {
-  color: #89dceb;
+  background-color: #89dceb;
 }
 
 #idle_inhibitor,
 #custom-suspend-inhibit {
-  color: #6c7086;
+  background-color: #313244;
+  color: #cdd6f4;
 }
 
 #idle_inhibitor.activated,
 #custom-suspend-inhibit.activated {
-  color: #a6e3a1;
+  background-color: #a6e3a1;
+  color: #1e1e2e;
 }
 
 #custom-media {
-  color: #94e2d5;
+  background-color: #94e2d5;
   min-width: 100px;
 }
 
 #mpd {
-  color: #94e2d5;
+  background-color: #94e2d5;
 }
 
 #mpd.stopped {
-  color: #6c7086;
+  background-color: #6c7086;
+  color: #cdd6f4;
 }
 
 #mpd.paused {
-  color: #a6e3a1;
+  background-color: #a6e3a1;
 }
 
 #tray {
+  background-color: #89b4fa;
   padding: 0 10px;
 }
 
@@ -189,6 +197,7 @@ window#waybar.empty #window {
 
 #tray > .needs-attention {
   -gtk-icon-effect: highlight;
+  background-color: #f38ba8;
 }
 
 tooltip {
