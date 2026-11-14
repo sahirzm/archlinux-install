@@ -180,6 +180,14 @@ window#waybar.empty #window {
   color: #cdd6f4;
 }
 
+#idle_inhibitor {
+  padding: 0 13px 0 7px;
+}
+
+#custom-suspend-inhibit {
+  padding: 0 12px 0 8px;
+}
+
 #idle_inhibitor.activated,
 #custom-suspend-inhibit.activated {
   background-color: #a6e3a1;
