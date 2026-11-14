@@ -3,7 +3,22 @@
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
   },
   "permissions": {
-    "defaultMode": "auto"
+    "defaultMode": "auto",
+    "allow": [
+      "Read",
+      "Bash(cat *)",
+      "Bash(ls *)",
+      "Bash(find *)",
+      "Bash(which *)",
+      "Bash(grep *)",
+      "Bash(sed *)",
+      "Bash(git status *)",
+      "Bash(git log *)",
+      "Bash(git branch *)",
+      "Bash(git diff *)",
+      "Bash(git add *)",
+      "Bash(git commit *)"
+    ]
   },
   "model": "sonnet",
   "hooks": {},
@@ -23,24 +38,37 @@
     "sahir-concise-style@sahir-kit": true,
     "refine@sahir-kit": true,
     "sahir-statusline@sahir-kit": true,
-    "manage-ai-team@manage-ai-team": true
+    "manage-ai-team@manage-ai-team": true,
+    "ai-board@ai-board": true,
+    "sahir-visual@sahir-kit": true
   },
   "extraKnownMarketplaces": {
     "sahir-kit": {
       "source": {
         "source": "directory",
         "path": "/myspace/workspace/claude-code-kit"
-      }
+      },
+      "autoUpdate": true
     },
     "manage-ai-team": {
       "source": {
         "source": "directory",
         "path": "/home/sahir/.config/manage-ai-team/claude"
-      }
+      },
+      "autoUpdate": true
+    },
+    "ai-board": {
+      "source": {
+        "source": "directory",
+        "path": "/myspace/workspace/ai-board"
+      },
+      "autoUpdate": true
     }
   },
   "effortLevel": "low",
   "skipWorkflowUsageWarning": true,
-  "theme": "auto",
-  "editorMode": "vim"
+  "theme": "custom:catppuccin-mocha",
+  "editorMode": "vim",
+  "includeCoAuthoredBy": true,
+  "outputStyle": "Concise"
 }

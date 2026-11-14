@@ -60,7 +60,6 @@ export PATH=$HOME/.cargo/bin:$PATH
 
 [[ -n "$XDG_RUNTIME_DIR" ]] && export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
 export TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE=/run/user/1000/docker.sock
-export GH_TOKEN=$(gh auth token)
 
 # FZF
 export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
@@ -147,6 +146,8 @@ export PLAN_REVIEW_USE_USER_CONFIG=1
 
 eval "$(mise activate zsh)"
 export MISE_TRUSTED_CONFIG_PATHS="$HOME/workspace"
+
+export GH_TOKEN=$(gh auth token)
 
 include $HOME/.secrets.zsh
 
