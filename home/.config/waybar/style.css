@@ -19,14 +19,32 @@ window#waybar.hidden {
   opacity: 0.2;
 }
 
-/* Every module is its own pill */
+/* Containers: dark translucent pills that hold the module pills */
 #workspaces,
+#time,
+#controls,
+#status,
 #window,
-#clock,
 #tray,
 #mpd,
 #custom-media,
-#mode,
+#mode {
+  background-color: rgba(30, 30, 46, 0.75);
+  color: #cdd6f4;
+  border-radius: 14px;
+  padding: 0 4px;
+}
+
+#window,
+#tray,
+#mpd,
+#custom-media,
+#mode {
+  padding: 0 14px;
+}
+
+/* Module pills inside a container */
+#clock,
 #idle_inhibitor,
 #custom-suspend-inhibit,
 #pulseaudio,
@@ -37,8 +55,9 @@ window#waybar.hidden {
 #backlight,
 #battery,
 #language {
-  border-radius: 14px;
-  padding: 0 14px;
+  border-radius: 10px;
+  margin: 4px 2px;
+  padding: 0 10px;
   color: #1e1e2e;
 }
 
@@ -78,7 +97,6 @@ window#waybar.hidden {
 }
 
 #window {
-  background-color: rgba(30, 30, 46, 0.75);
   color: #cdd6f4;
 }
 
@@ -169,26 +187,20 @@ window#waybar.empty #window {
 }
 
 #custom-media {
-  background-color: #94e2d5;
+  color: #94e2d5;
   min-width: 100px;
 }
 
 #mpd {
-  background-color: #94e2d5;
+  color: #94e2d5;
 }
 
 #mpd.stopped {
-  background-color: #6c7086;
-  color: #cdd6f4;
+  color: #6c7086;
 }
 
 #mpd.paused {
-  background-color: #a6e3a1;
-}
-
-#tray {
-  background-color: #89b4fa;
-  padding: 0 10px;
+  color: #a6e3a1;
 }
 
 #tray > .passive {

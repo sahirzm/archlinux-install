@@ -17,23 +17,41 @@
     "custom/media"
   ],
   "modules-center": [
-    "clock"
+    "group/time"
   ],
   "modules-right": [
     "tray",
     "mpd",
-    "idle_inhibitor",
-    "custom/suspend-inhibit",
-    "pulseaudio",
-    "network",
-    "cpu",
-    "memory",
-    "temperature",
-    "backlight",
-    "battery",
-    "battery#bat2",
-    "hyprland/language"
+    "group/controls",
+    "group/status"
   ],
+  "group/time": {
+    "orientation": "horizontal",
+    "modules": [
+      "clock"
+    ]
+  },
+  "group/controls": {
+    "orientation": "horizontal",
+    "modules": [
+      "idle_inhibitor",
+      "custom/suspend-inhibit"
+    ]
+  },
+  "group/status": {
+    "orientation": "horizontal",
+    "modules": [
+      "pulseaudio",
+      "network",
+      "cpu",
+      "memory",
+      "temperature",
+      "backlight",
+      "battery",
+      "battery#bat2",
+      "hyprland/language"
+    ]
+  },
   // Modules configuration
   "hyprland/workspaces": {
     "disable-scroll": true,
