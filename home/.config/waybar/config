@@ -1,42 +1,56 @@
 {
   "layer": "top", // Waybar at top layer
   "position": "top", // Waybar position (top|bottom|left|right)
-  "height": 31,
+  "height": 34,
+  "margin-top": 6,
+  "margin-left": 8,
+  "margin-right": 8,
   "output": ["*"], // Show a bar on EVERY connected output (default with no key only uses one)
-  // "width": 1280, // Waybar width
-  "spacing": 4, // Gaps between modules (4px)
+  "spacing": 8, // Gaps between the island modules
   // Choose the order of the modules
   "modules-left": [
     "sway/workspaces",
     "sway/mode",
     "hyprland/workspaces",
+    "hyprland/window",
+    "sway/window",
     "custom/media"
   ],
   "modules-center": [
-    "sway/window",
-    "hyprland/window"
+    "clock"
   ],
   "modules-right": [
     "tray",
     "mpd",
-    "idle_inhibitor",
-    "custom/suspend-inhibit",
-    "pulseaudio",
-    "network",
-    "cpu",
-    "memory",
-    "temperature",
-    "backlight",
-    "battery",
-    "battery#bat2",
-    "hyprland/language",
-    "clock"
+    "group/controls",
+    "group/status"
   ],
+  "group/controls": {
+    "orientation": "horizontal",
+    "modules": [
+      "idle_inhibitor",
+      "custom/suspend-inhibit"
+    ]
+  },
+  "group/status": {
+    "orientation": "horizontal",
+    "modules": [
+      "pulseaudio",
+      "network",
+      "cpu",
+      "memory",
+      "temperature",
+      "backlight",
+      "battery",
+      "battery#bat2",
+      "hyprland/language"
+    ]
+  },
   // Modules configuration
   "hyprland/workspaces": {
     "disable-scroll": true,
     "all-outputs": true,
-    "format": "{name}: {icon}",
+    "format": " ",
     "format-icons": {
       "terminal": "",
       "web": "",
@@ -53,7 +67,7 @@
   "sway/workspaces": {
     "disable-scroll": true,
     "all-outputs": true,
-    "format": "{name}: {icon}",
+    "format": " ",
     "format-icons": {
       "terminal": "",
       "web": "",

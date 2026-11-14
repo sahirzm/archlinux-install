@@ -1,68 +1,81 @@
+/* Floating "island" bar: transparent background, translucent Catppuccin Mocha pills. */
+
 * {
-  /* `otf-font-awesome` is required to be installed for icons */
   font-family: "FiraCode Nerd Font", FontAwesome, Roboto, Helvetica, Arial, sans-serif;
-  font-size: 14px;
+  font-size: 12px;
+  border: none;
+  border-radius: 0;
+  min-height: 0;
+  box-shadow: none;
+  text-shadow: none;
 }
 
 window#waybar {
-  background-color: rgba(30, 30, 46, 0.99);
-  border-bottom: 0px solid rgba(108, 112, 134, 0.5);
+  background: transparent;
   color: #cdd6f4;
-  transition-property: background-color;
-  transition-duration: 0.5s;
-  min-height: 14px;
-  font-size: 14px;
 }
 
 window#waybar.hidden {
   opacity: 0.2;
 }
 
-/*
-window#waybar.empty {
-    background-color: transparent;
-}
-window#waybar.solo {
-    background-color: #FFFFFF;
-}
-*/
-
-window#waybar.termite {
-  background-color: #1e1e2e;
-}
-
-window#waybar.chromium {
-  background-color: #11111b;
-  border: none;
+/* Islands */
+#workspaces,
+#window,
+#clock,
+#tray,
+#mpd,
+#custom-media,
+#mode,
+#controls,
+#status {
+  background-color: rgba(30, 30, 46, 0.75);
+  color: #cdd6f4;
+  border-radius: 14px;
+  padding: 0 14px;
 }
 
-button {
-  /* Use box-shadow instead of border so the text isn't offset */
-  box-shadow: inset 0 -3px transparent;
-  /* Avoid rounded borders under each button name */
-  border: none;
-  border-radius: 4px;
+/* Modules inside an island: no background of their own */
+#controls > widget > *,
+#status > widget > *,
+#idle_inhibitor,
+#custom-suspend-inhibit,
+#pulseaudio,
+#network,
+#cpu,
+#memory,
+#temperature,
+#backlight,
+#battery,
+#language {
+  background: transparent;
+  padding: 0 7px;
 }
 
-#workspaces button:hover {
-  background: inherit;
-  box-shadow: inset 0 -3px #a6e3a1;
-  text-shadow: inherit; /* or none */
-  border: none;
-  outline: none;
+/* Workspace dots */
+#workspaces {
+  padding: 0 8px;
 }
 
 #workspaces button {
-  padding: 0 12px;
-  background-color: transparent;
-  color: #cdd6f4;
+  min-width: 10px;
+  min-height: 10px;
+  padding: 0;
+  margin: 12px 4px;
+  border-radius: 10px;
+  background-color: #585b70;
+  color: transparent;
+  transition: all 0.2s ease;
 }
 
-#workspaces button.focused,
-#workspaces button.active {
-  background-color: #a6e3a1;
-  box-shadow: inset 0 -3px #cdd6f4;
-  color: #1e1e2e;
+#workspaces button:hover {
+  background-color: #b4befe;
+}
+
+#workspaces button.active,
+#workspaces button.focused {
+  min-width: 28px;
+  background-color: #cba6f7;
 }
 
 #workspaces button.urgent {
@@ -70,164 +83,104 @@ button {
 }
 
 #mode {
-  background-color: #585b70;
-  border-bottom: 3px solid #cdd6f4;
+  background-color: rgba(88, 91, 112, 0.85);
 }
 
-#clock,
-#battery,
-#cpu,
-#memory,
-#disk,
-#temperature,
-#backlight,
-#network,
-#pulseaudio,
-#wireplumber,
-#custom-media,
-#tray,
-#mode,
-#idle_inhibitor,
-#custom-suspend-inhibit,
-#scratchpad,
-#keyboard-state,
-#language,
-#mpd {
-  padding: 4px 10px;
+#window {
   color: #cdd6f4;
-  border-radius: 4px;
 }
 
-#window,
-#workspaces {
-  margin: 0 4px;
+window#waybar.empty #window {
+  background-color: transparent;
 }
 
-/* If workspaces is the leftmost module, omit left margin */
-.modules-left > widget:first-child > #workspaces {
-  margin-left: 0;
-}
-
-/* If workspaces is the rightmost module, omit right margin */
-.modules-right > widget:last-child > #workspaces {
-  margin-right: 0;
-}
-
+/* Colored text on the dark islands */
 #clock {
-  background-color: #89b4fa;
-  color: #1e1e2e;
-}
-
-#battery {
-  background-color: #cdd6f4;
-  color: #1e1e2e;
-}
-
-#battery.charging,
-#battery.plugged {
-  color: #1e1e2e;
-  background-color: #a6e3a1;
-}
-
-@keyframes blink {
-  to {
-    background-color: #f5e0dc;
-    color: #1e1e2e;
-  }
-}
-
-#battery.critical:not(.charging) {
-  background-color: #f38ba8;
-  color: #1e1e2e;
-  animation-name: blink;
-  animation-duration: 0.5s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
-}
-
-label:focus {
-  background-color: #11111b;
-}
-
-#cpu {
-  background-color: #a6e3a1;
-  color: #1e1e2e;
-}
-
-#memory {
-  background-color: #cba6f7;
-  color: #1e1e2e;
-}
-
-#disk {
-  background-color: #fab387;
-  color: #1e1e2e;
-}
-
-#backlight {
-  background-color: #94e2d5;
-  color: #1e1e2e;
-}
-
-#network {
-  background-color: #89b4fa;
-  color: #1e1e2e;
-}
-
-#network.disconnected {
-  background-color: #f38ba8;
-  color: #1e1e2e;
+  color: #89b4fa;
+  font-weight: bold;
 }
 
 #pulseaudio {
-  background-color: #f9e2af;
-  color: #1e1e2e;
+  color: #f9e2af;
 }
 
 #pulseaudio.muted {
-  background-color: #6c7086;
-  color: #cdd6f4;
+  color: #6c7086;
 }
 
-#wireplumber {
-  background-color: #f5c2e7;
-  color: #1e1e2e;
+#network {
+  color: #89b4fa;
 }
 
-#wireplumber.muted {
-  background-color: #f38ba8;
-  color: #1e1e2e;
+#network.disconnected {
+  color: #f38ba8;
 }
 
-#custom-media {
-  background-color: #94e2d5;
-  color: #1e1e2e;
-  min-width: 100px;
+#cpu {
+  color: #a6e3a1;
 }
 
-#custom-media.custom-spotify {
-  background-color: #a6e3a1;
-  color: #1e1e2e;
-}
-
-#custom-media.custom-vlc {
-  background-color: #fab387;
-  color: #1e1e2e;
+#memory {
+  color: #cba6f7;
 }
 
 #temperature {
-  background-color: #fab387;
-  color: #1e1e2e;
+  color: #fab387;
 }
 
 #temperature.critical {
-  background-color: #f38ba8;
-  color: #1e1e2e;
+  color: #f38ba8;
+}
+
+#backlight {
+  color: #94e2d5;
+}
+
+#battery {
+  color: #a6e3a1;
+}
+
+#battery.warning:not(.charging) {
+  color: #fab387;
+}
+
+#battery.critical:not(.charging) {
+  color: #f38ba8;
+}
+
+#language {
+  color: #89dceb;
+}
+
+#idle_inhibitor,
+#custom-suspend-inhibit {
+  color: #6c7086;
+}
+
+#idle_inhibitor.activated,
+#custom-suspend-inhibit.activated {
+  color: #a6e3a1;
+}
+
+#custom-media {
+  color: #94e2d5;
+  min-width: 100px;
+}
+
+#mpd {
+  color: #94e2d5;
+}
+
+#mpd.stopped {
+  color: #6c7086;
+}
+
+#mpd.paused {
+  color: #a6e3a1;
 }
 
 #tray {
-  background-color: #89b4fa;
+  padding: 0 10px;
 }
 
 #tray > .passive {
@@ -236,75 +189,13 @@ label:focus {
 
 #tray > .needs-attention {
   -gtk-icon-effect: highlight;
-  background-color: #f38ba8;
 }
 
-#idle_inhibitor {
-  background-color: #313244;
+tooltip {
+  background-color: rgba(30, 30, 46, 0.95);
+  border-radius: 10px;
+}
+
+tooltip label {
   color: #cdd6f4;
-  padding: 4px 13px 4px 7px;
-}
-
-#idle_inhibitor.activated {
-  background-color: #a6e3a1;
-  color: #1e1e2e;
-}
-
-#custom-suspend-inhibit {
-  background-color: #313244;
-  color: #cdd6f4;
-  padding: 4px 12px 4px 8px;
-}
-
-#custom-suspend-inhibit.activated {
-  background-color: #a6e3a1;
-  color: #1e1e2e;
-}
-
-#mpd {
-  background-color: #94e2d5;
-  color: #1e1e2e;
-}
-
-#mpd.disconnected {
-  background-color: #f38ba8;
-  color: #1e1e2e;
-}
-
-#mpd.stopped {
-  background-color: #6c7086;
-  color: #cdd6f4;
-}
-
-#mpd.paused {
-  background-color: #a6e3a1;
-  color: #1e1e2e;
-}
-
-#language {
-  background: #89dceb;
-  color: #1e1e2e;
-  min-width: 16px;
-}
-
-#keyboard-state {
-  background: #a6e3a1;
-  color: #1e1e2e;
-  min-width: 16px;
-}
-
-#keyboard-state > label {
-  padding: 0 5px;
-}
-
-#keyboard-state > label.locked {
-  background: rgba(88, 91, 112, 0.5);
-}
-
-#scratchpad {
-  background: rgba(49, 50, 68, 0.5);
-}
-
-#scratchpad.empty {
-  background-color: transparent;
 }
