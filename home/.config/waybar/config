@@ -103,6 +103,10 @@
     "tooltip-format": "MPD (connected)",
     "tooltip-format-disconnected": "MPD (disconnected)"
   },
+  "hyprland/language": {
+    "format": "{short}",
+    "tooltip-format": "{long}"
+  },
   "custom/suspend-inhibit": {
     "format": "{text}",
     "return-type": "json",
