@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+# Toggle a logind "sleep" block lock so idle or manual suspend is refused.
+# The lock lives in a transient user unit; stopping the unit releases it.
+# Usage: suspend-inhibit [toggle|status]
+
+readonly UNIT="suspend-inhibit"
+readonly WAYBAR_SIGNAL=8
+readonly ICON_BLOCKED="󰒳"
+readonly ICON_ALLOWED="󰒲"
+
+is_blocked() {
+  systemctl --user is-active --quiet "$UNIT"
+}
+
+toggle() {
+  if is_blocked; then
+    systemctl --user stop "$UNIT"
+  else
+    systemd-run --user --quiet --unit="$UNIT" \
+      --description="Block suspend" \
+      systemd-inhibit --what=sleep --mode=block --who=waybar \
+      --why="Suspend blocked by user" sleep infinity
+  fi
+  pkill -RTMIN+"$WAYBAR_SIGNAL" waybar
+}
+
+status() {
+  if is_blocked; then
+    printf '{"text":"%s","class":"activated","tooltip":"Suspend blocked"}\n' "$ICON_BLOCKED"
+  else
+    printf '{"text":"%s","class":"deactivated","tooltip":"Suspend allowed"}\n' "$ICON_ALLOWED"
+  fi
+}
+
+case "${1:-status}" in
+  toggle) toggle ;;
+  status) status ;;
+  *) echo "usage: ${0##*/} [toggle|status]" >&2; exit 1 ;;
+esac

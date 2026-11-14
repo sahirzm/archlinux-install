@@ -88,6 +88,7 @@ button {
 #tray,
 #mode,
 #idle_inhibitor,
+#custom-suspend-inhibit,
 #scratchpad,
 #keyboard-state,
 #language,
@@ -244,6 +245,16 @@ label:focus {
 }
 
 #idle_inhibitor.activated {
+  background-color: #a6e3a1;
+  color: #1e1e2e;
+}
+
+#custom-suspend-inhibit {
+  background-color: #313244;
+  color: #cdd6f4;
+}
+
+#custom-suspend-inhibit.activated {
   background-color: #a6e3a1;
   color: #1e1e2e;
 }

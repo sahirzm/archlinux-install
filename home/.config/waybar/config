@@ -20,6 +20,7 @@
     "tray",
     "mpd",
     "idle_inhibitor",
+    "custom/suspend-inhibit",
     "pulseaudio",
     "network",
     "cpu",
@@ -101,6 +102,14 @@
     },
     "tooltip-format": "MPD (connected)",
     "tooltip-format-disconnected": "MPD (disconnected)"
+  },
+  "custom/suspend-inhibit": {
+    "format": "{text}",
+    "return-type": "json",
+    "exec": "$HOME/.local/bin/suspend-inhibit status",
+    "on-click": "$HOME/.local/bin/suspend-inhibit toggle",
+    "signal": 8,
+    "interval": "once"
   },
   "idle_inhibitor": {
     "format": "{icon}",
