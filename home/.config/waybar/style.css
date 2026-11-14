@@ -242,6 +242,7 @@ label:focus {
 #idle_inhibitor {
   background-color: #313244;
   color: #cdd6f4;
+  padding: 4px 13px 4px 7px;
 }
 
 #idle_inhibitor.activated {
@@ -252,6 +253,7 @@ label:focus {
 #custom-suspend-inhibit {
   background-color: #313244;
   color: #cdd6f4;
+  padding: 4px 12px 4px 8px;
 }
 
 #custom-suspend-inhibit.activated {
