@@ -56,7 +56,7 @@
   "hyprland/workspaces": {
     "disable-scroll": true,
     "all-outputs": true,
-    "format": "{name}: {icon}",
+    "format": "{id} {name}: {icon}",
     "format-icons": {
       "terminal": "",
       "web": "",
