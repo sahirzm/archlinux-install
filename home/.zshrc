@@ -18,6 +18,7 @@ alias rm='rm -i'
 alias ls="eza -l --icons --git --group-directories-first"
 alias cat='bat'
 alias ateam='manage-ai-team'
+alias paru='PATH=/usr/bin:$PATH paru'
 export EDITOR="nvim"
 export VISUAL="nvim"
 
