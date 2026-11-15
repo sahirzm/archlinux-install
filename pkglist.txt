@@ -140,6 +140,7 @@ ninja
 noto-fonts
 ntfs-3g
 okular
+ollama-vulkan
 opencode
 openrazer-daemon
 openwhispr-vulkan
@@ -189,7 +190,6 @@ ripgrep
 rofi
 rofi-power-menu
 s3cmd
-seatd
 shellcheck
 shfmt
 slurp
@@ -290,7 +290,7 @@ vlc
 volumeicon
 vscode-langservers-extracted
 vulkan-tools
-walker
+walker-bin
 waybar
 wdisplays
 wezterm-git
@@ -305,13 +305,11 @@ wlprop
 wlr-randr
 wmenu
 woff2-font-awesome
-wpa_supplicant
 wpaperd
 wtype
 xdg-desktop-portal-hyprland
 xdg-desktop-portal-wlr
 xdg-user-dirs
-xdg-utils
 xorg-bdftopcf
 xorg-font-util
 xorg-mkfontscale
