@@ -110,7 +110,6 @@ window#waybar.empty #window {
 
 #clock {
   background-color: #89b4fa;
-  font-weight: bold;
 }
 
 #pulseaudio {
