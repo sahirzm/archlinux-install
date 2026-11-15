@@ -77,8 +77,9 @@ window#waybar.hidden {
 }
 
 #workspaces button:hover {
-  background-color: #45475a;
-  color: #cdd6f4;
+  background-image: none;
+  background-color: #cdd6f4;
+  color: #333333;
 }
 
 #workspaces button.active,
