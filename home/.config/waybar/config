@@ -16,14 +16,12 @@
     "sway/window",
     "custom/media"
   ],
-  "modules-center": [
-    "group/time"
-  ],
   "modules-right": [
     "tray",
     "mpd",
     "group/controls",
-    "group/status"
+    "group/status",
+    "group/time"
   ],
   "group/time": {
     "orientation": "horizontal",
