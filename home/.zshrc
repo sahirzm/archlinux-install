@@ -99,31 +99,10 @@ what_is_my_public_ip() {
   dig TXT +short o-o.myaddr.l.google.com @ns1.google.com | awk -F'"' '{ print $2}'
 }
 
-js_restore_db() {
-  psql -U gasjobber -d gasjobber -h localhost -p 5432 -c "DROP SCHEMA public CASCADE; CREATE SCHEMA public;"
-  gunzip -c "$1" | grep -Ev "^(ALTER.*OWNER TO|REVOKE|GRANT)" | psql -q -U gasjobber -d gasjobber -h localhost -p 5432
-  [ -f ./scripts/update_config_for_local.sql ] && psql -U gasjobber -d gasjobber -h localhost -p 5432 -f ./scripts/update_config_for_local.sql
-}
+# Resolves the ~/.zshrc symlink, so the file loads from this repo without a link of its own.
+include "${${(%):-%x}:A:h}/.config/zsh/jobbersoft.zsh"
 
-js_gwt() {
-  if [[ -z "$1" ]]; then
-    echo "Usage: js_gwt <branch-name> [dir-name]" >&2
-    return 1
-  fi
-
-  local branch="$1"
-  # Default dir_name to $2, or to the tail of $1 if $2 isn't provided (e.g. 'feature/login' -> 'login')
-  local dir_name="${2:-${1:t}}"
-  local target_dir="$HOME/workspace/js-worktrees/$dir_name"
-
-  # Ensure base worktree directory exists
-  mkdir -p "$HOME/workspace/js-worktrees"
-
-  # Add worktree and only change directory if git command succeeds
-  git worktree add -b "$branch" "$target_dir" origin/main && cd "$target_dir"
-}
-
-gw() { 
+gw() {
   ./gradlew --project-cache-dir=.gradle-host "$@"; 
 }
 
