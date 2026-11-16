@@ -1,0 +1,53 @@
+#!/usr/bin/python3
+"""Turn Razer device lighting off or restore it. Usage: razer-lights [off|on]"""
+import json
+import os
+import sys
+
+STATE_FILE = os.path.join(os.environ.get("XDG_RUNTIME_DIR", "/tmp"), "razer-lights.json")
+BRIGHTNESS_OFF = 0
+
+
+def lit_devices():
+    from openrazer.client import DeviceManager
+
+    for device in DeviceManager().devices:
+        try:
+            yield device, device.brightness
+        except Exception:
+            continue
+
+
+def turn_off():
+    saved = {}
+    for device, brightness in lit_devices():
+        if brightness > BRIGHTNESS_OFF:
+            saved[device.serial] = brightness
+            device.brightness = BRIGHTNESS_OFF
+    if saved:
+        with open(STATE_FILE, "w") as handle:
+            json.dump(saved, handle)
+
+
+def turn_on():
+    if not os.path.exists(STATE_FILE):
+        return
+    with open(STATE_FILE) as handle:
+        saved = json.load(handle)
+    for device, _ in lit_devices():
+        if device.serial in saved:
+            device.brightness = saved[device.serial]
+    os.remove(STATE_FILE)
+
+
+def main():
+    action = sys.argv[1] if len(sys.argv) > 1 else ""
+    try:
+        {"off": turn_off, "on": turn_on}[action]()
+    except KeyError:
+        sys.exit("usage: razer-lights [off|on]")
+    except ImportError:
+        pass
+
+
+main()
