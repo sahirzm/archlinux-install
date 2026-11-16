@@ -4,8 +4,17 @@
 	dag = "log --graph --abbrev-commit --decorate --format=format:'%C(blue)%h%C(reset) - %C(cyan)%aD%C(reset) %C(green)(%ar)%C(reset)%C(yellow)%d%C(reset)%n'' %C(white)%s%C(reset) %C(white)- %an%C(reset)' --all"
 	graph = "log --all --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ci) %C(bold blue)<%an>%Creset'"
   prune-local = "!f() { \
-    git fetch --prune && \
-    git branch -vv | grep ': gone]' | awk '{print $1}' | xargs -r git branch -d; \
+    git fetch --prune || return; \
+    base=$(git symbolic-ref --quiet --short refs/remotes/origin/HEAD || echo origin/main); \
+    git for-each-ref --format='%(refname:short) %(upstream:track)' refs/heads | \
+    awk '$2 == \"[gone]\" {print $1}' | \
+    while read -r branch; do \
+      if git cherry \"$base\" \"$branch\" | grep -q '^+'; then \
+        echo \"skip $branch: has commits not in $base\"; \
+      else \
+        git branch -D \"$branch\"; \
+      fi; \
+    done; \
   }; f"
   cleanup = "!f() { \
     git checkout main && \
