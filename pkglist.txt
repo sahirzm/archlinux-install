@@ -127,6 +127,7 @@ mako
 man-db
 mesa-utils
 minikube
+miniserve
 mise
 mpd
 nano
