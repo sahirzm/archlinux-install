@@ -1,0 +1,159 @@
+#!/usr/bin/env bash
+# Keeps the most recently used workspaces on monitors in a fixed order:
+# the active workspace goes to the first monitor, the previous one to the
+# second monitor, and so on.
+#
+# Monitor order: comma-separated names, for example "HDMI-A-1,eDP-1". Read
+# from HYPR_MRU_MONITORS, else from the machine-local file ~/.config/hypr/
+# mru-monitors (not tracked in git). Without either, monitors sort left to
+# right, then top to bottom.
+
+set -u
+
+readonly LOCK_NAME="mru-workspaces.lock"
+readonly ORDER_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/hypr/mru-monitors"
+readonly MRU_LIMIT=32
+readonly DRAIN_TIMEOUT=0.3
+readonly EVENT_WORKSPACE="workspacev2"
+readonly EVENT_MONITOR_FOCUS="focusedmonv2"
+readonly EVENT_MONITOR_ADDED="monitoraddedv2"
+readonly EVENT_MONITOR_REMOVED="monitorremoved"
+readonly SOCKET="${XDG_RUNTIME_DIR}/hypr/${HYPRLAND_INSTANCE_SIGNATURE}/.socket2.sock"
+
+mru=()
+order=()
+
+detect_order() {
+  local detected configured=${HYPR_MRU_MONITORS:-}
+  [[ -z "$configured" && -r "$ORDER_FILE" ]] && configured=$(head -n 1 "$ORDER_FILE")
+  mapfile -t detected < <(hyprctl monitors -j | jq -r 'sort_by(.x, .y, .name) | .[].name')
+
+  order=()
+  local name
+  if [[ -n "$configured" ]]; then
+    local requested
+    IFS=',' read -ra requested <<<"$configured"
+    for name in "${requested[@]}"; do
+      name="${name//[[:space:]]/}"
+      [[ " ${detected[*]} " == *" $name "* ]] && order+=("$name")
+    done
+    # Monitors missing from the variable follow in detected order.
+    for name in "${detected[@]}"; do
+      [[ " ${order[*]} " == *" $name "* ]] || order+=("$name")
+    done
+  else
+    order=("${detected[@]}")
+  fi
+}
+
+push_workspace() {
+  local id=$1 entry
+  local updated=("$id")
+  for entry in "${mru[@]}"; do
+    [[ "$entry" != "$id" ]] && updated+=("$entry")
+  done
+  mru=("${updated[@]:0:MRU_LIMIT}")
+}
+
+seed_mru() {
+  mru=()
+  local ids id
+  mapfile -t ids < <(hyprctl monitors -j | jq -r '
+    sort_by(.focused | not) | .[].activeWorkspace.id')
+  for id in "${ids[@]}"; do
+    [[ "$id" -gt 0 ]] && mru+=("$id")
+  done
+}
+
+monitor_showing() {
+  hyprctl monitors -j | jq -r --arg ws "$1" '.[] | select(.activeWorkspace.id == ($ws | tonumber)) | .name'
+}
+
+dispatch() {
+  hyprctl dispatch "$1" >/dev/null
+}
+
+# Empty workspaces vanish when left, so they cannot stay in the list.
+prune_mru() {
+  local existing entry kept=()
+  mapfile -t existing < <(hyprctl workspaces -j | jq -r '.[].id')
+  for entry in "${mru[@]}"; do
+    [[ " ${existing[*]} " == *" $entry "* ]] && kept+=("$entry")
+  done
+  mru=("${kept[@]}")
+}
+
+# Workspaces already visible swap monitors, which never destroys an empty
+# one. A parked workspace moves to the monitor and takes focus to show.
+place_workspace() {
+  local ws=$1 monitor=$2 holder
+  holder=$(monitor_showing "$ws")
+  if [[ "$holder" == "$monitor" ]]; then
+    return
+  elif [[ -n "$holder" ]]; then
+    dispatch "hl.dsp.workspace.swap_monitors({ monitor1 = \"$monitor\", monitor2 = \"$holder\" })"
+  else
+    dispatch "hl.dsp.workspace.move({ workspace = $ws, monitor = \"$monitor\" })"
+    dispatch "hl.dsp.focus({ workspace = $ws })"
+  fi
+}
+
+apply_layout() {
+  detect_order
+  prune_mru
+  local count=${#order[@]}
+  ((${#mru[@]} < count)) && count=${#mru[@]}
+
+  local i
+  for ((i = 0; i < count; i++)); do
+    place_workspace "${mru[i]}" "${order[i]}"
+  done
+  dispatch "hl.dsp.focus({ monitor = \"${order[0]}\" })"
+}
+
+drain_events() {
+  while read -r -t "$DRAIN_TIMEOUT" _; do :; done
+}
+
+focused_workspace() {
+  hyprctl monitors -j | jq -r '.[] | select(.focused) | .activeWorkspace.id'
+}
+
+# Events can arrive late, so the live focus decides, not the event payload.
+activate_workspace() {
+  local id
+  id=$(focused_workspace)
+  [[ "$id" =~ ^[0-9]+$ && "$id" -gt 0 ]] || return
+  [[ "${mru[0]:-}" == "$id" ]] && return
+  push_workspace "$id"
+  apply_layout
+  drain_events
+}
+
+acquire_single_instance_lock() {
+  exec 9>"${XDG_RUNTIME_DIR}/${LOCK_NAME}"
+  flock -n 9 || exit 0
+}
+
+main() {
+  acquire_single_instance_lock
+  seed_mru
+  apply_layout
+
+  while IFS= read -r line; do
+    case "$line" in
+      "$EVENT_WORKSPACE>>"*)
+        activate_workspace
+        ;;
+      "$EVENT_MONITOR_FOCUS>>"*)
+        activate_workspace
+        ;;
+      "$EVENT_MONITOR_ADDED>>"* | "$EVENT_MONITOR_REMOVED>>"*)
+        apply_layout
+        drain_events
+        ;;
+    esac
+  done < <(socat -u "UNIX-CONNECT:$SOCKET" -)
+}
+
+main
