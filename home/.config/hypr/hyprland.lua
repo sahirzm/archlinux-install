@@ -89,6 +89,7 @@ hl.config({
     misc = {
         force_default_wallpaper = -1,
         disable_hyprland_logo   = false,
+        mouse_move_focuses_monitor = false,
     },
 
     debug = { vfr = true },
@@ -185,9 +186,12 @@ for _, d in ipairs(DIRECTIONS) do
     hl.bind(mainMod .. " + CTRL + " .. d.key, hl.dsp.workspace.move({ monitor = d.direction }))
 end
 
+local MRU_NOTIFY = hl.dsp.exec_cmd("pkill -USR1 -f '^bash .*/mru-workspaces$'")
+
 for i = 1, WORKSPACE_COUNT do
     local key = i % 10
     hl.bind(mainMod .. " + " .. key,         hl.dsp.focus({ workspace = i }))
+    hl.bind(mainMod .. " + " .. key,         MRU_NOTIFY)
     hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
 end
 
@@ -196,6 +200,8 @@ hl.bind(mainMod .. " + ALT + S",   hl.dsp.window.move({ workspace = "special:mag
 
 hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
 hl.bind(mainMod .. " + mouse_up",   hl.dsp.focus({ workspace = "e-1" }))
+hl.bind(mainMod .. " + mouse_down", MRU_NOTIFY)
+hl.bind(mainMod .. " + mouse_up",   MRU_NOTIFY)
 hl.bind(mainMod .. " + mouse:272",  hl.dsp.window.drag(),   { mouse = true })
 hl.bind(mainMod .. " + mouse:273",  hl.dsp.window.resize(), { mouse = true })
 

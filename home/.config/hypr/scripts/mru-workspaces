@@ -3,6 +3,8 @@
 # the active workspace goes to the first monitor, the previous one to the
 # second monitor, and so on.
 #
+# Workspace key binds notify it with: pkill -USR1 -f '^bash .*/mru-workspaces$'
+#
 # Monitor order: comma-separated names, for example "HDMI-A-1,eDP-1". Read
 # from HYPR_MRU_MONITORS, else from the machine-local file ~/.config/hypr/
 # mru-monitors (not tracked in git). Without either, monitors sort left to
@@ -14,8 +16,8 @@ readonly LOCK_NAME="mru-workspaces.lock"
 readonly ORDER_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/hypr/mru-monitors"
 readonly MRU_LIMIT=32
 readonly DRAIN_TIMEOUT=0.3
+readonly KEY_SETTLE_DELAY=0.05
 readonly EVENT_WORKSPACE="workspacev2"
-readonly EVENT_MONITOR_FOCUS="focusedmonv2"
 readonly EVENT_MONITOR_ADDED="monitoraddedv2"
 readonly EVENT_MONITOR_REMOVED="monitorremoved"
 readonly SOCKET="${XDG_RUNTIME_DIR}/hypr/${HYPRLAND_INSTANCE_SIGNATURE}/.socket2.sock"
@@ -119,6 +121,16 @@ focused_workspace() {
   hyprctl monitors -j | jq -r '.[] | select(.focused) | .activeWorkspace.id'
 }
 
+# Workspace keys signal USR1 after they focus: a jump to a workspace shown
+# on another monitor sends no workspace event, and mouse clicks must not
+# count.
+handle_key_jump() {
+  # The trap can fire inside "IFS= read", where IFS is empty.
+  local IFS=$' \t\n'
+  sleep "$KEY_SETTLE_DELAY"
+  activate_workspace
+}
+
 # Events can arrive late, so the live focus decides, not the event payload.
 activate_workspace() {
   local id
@@ -137,15 +149,13 @@ acquire_single_instance_lock() {
 
 main() {
   acquire_single_instance_lock
+  trap handle_key_jump USR1
   seed_mru
   apply_layout
 
   while IFS= read -r line; do
     case "$line" in
       "$EVENT_WORKSPACE>>"*)
-        activate_workspace
-        ;;
-      "$EVENT_MONITOR_FOCUS>>"*)
         activate_workspace
         ;;
       "$EVENT_MONITOR_ADDED>>"* | "$EVENT_MONITOR_REMOVED>>"*)
