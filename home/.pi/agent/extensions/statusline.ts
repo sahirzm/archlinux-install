@@ -39,6 +39,7 @@ const ICON_CONTAINER = "\uF308"; // nf-linux-docker
 const ICON_SESSION = "\uF1DA"; // nf-fa-history (resume)
 const ICON_BG = "\uF110"; // nf-fa-spinner
 const ICON_AGENT = "\uF544"; // nf-fa-robot
+const ICON_AI_BOARD = "\uF0AE"; // nf-fa-tasks
 
 // ── Catppuccin Mocha palette (truecolor ANSI) ─────────────────────────────────
 function bg(r: number, g: number, b: number) {
@@ -339,6 +340,56 @@ function observeOpenAgentsBanner(
 	target.setWidget = wrapped;
 }
 
+// ── AiBoard (pi-ai-board) ─────────────────────────────────────────────────────
+// pi-ai-board persists { enabled, planMode } as an `ai-board-state` custom
+// session entry, and sets its "ai-board" extension status only while it is
+// both enabled and in a reviewable directory -- so the status, not `enabled`,
+// says whether it is actually on. The custom footer replaces the default one
+// that would have shown that status.
+const AI_BOARD_STATE_ENTRY = "ai-board-state";
+const AI_BOARD_STATUS_KEY = "ai-board";
+const AI_BOARD_TOOL = "ai_board_request_review";
+
+type AiBoardMode = "off" | "on" | "plan";
+
+function aiBoardPlanMode(entries: readonly unknown[]): boolean {
+	for (let i = entries.length - 1; i >= 0; i--) {
+		const e = entries[i];
+		if (
+			isRecord(e) &&
+			e.type === "custom" &&
+			e.customType === AI_BOARD_STATE_ENTRY
+		) {
+			return isRecord(e.data) && e.data.planMode === true;
+		}
+	}
+	return false;
+}
+
+/** Mode and hub link, or null when pi-ai-board is not loaded. */
+function aiBoardState(
+	pi: ExtensionAPI,
+	entries: readonly unknown[],
+	statuses: ReadonlyMap<string, string>,
+): { mode: AiBoardMode; link: string | null } | null {
+	if (!pi.getAllTools().some((t) => t.name === AI_BOARD_TOOL)) return null;
+	const status = statuses.get(AI_BOARD_STATUS_KEY);
+	if (!status) return { mode: "off", link: null };
+	const link = status.replace(/^ai-board:\s*/, "").trim() || null;
+	return { mode: aiBoardPlanMode(entries) ? "plan" : "on", link };
+}
+
+function aiBoardPill(state: { mode: AiBoardMode; link: string | null }) {
+	const label = `${ICON_AI_BOARD} ${state.mode}`;
+	if (state.mode === "off") return pill(C.bgOverlay, C.fgLight, label);
+	if (state.link && state.link !== "online") {
+		return pill(C.bgYellow, C.fgDark, `${label} · ${state.link}`);
+	}
+	return state.mode === "plan"
+		? pill(C.bgMauve, C.fgDark, label)
+		: pill(C.bgGreen, C.fgDark, label);
+}
+
 // ── Extension ─────────────────────────────────────────────────────────────────
 export default function (pi: ExtensionAPI) {
 	// Track current thinking level reactively
@@ -520,6 +571,14 @@ export default function (pi: ExtensionAPI) {
 								pill(C.bgFlamingo, C.fgDark, `${ICON_AGENT} ${currentAgent}`),
 							);
 						}
+
+						// 0c. AiBoard on / off / plan
+						const aiBoard = aiBoardState(
+							pi,
+							ctx.sessionManager.getEntries(),
+							footerData.getExtensionStatuses(),
+						);
+						if (aiBoard) pills.push(aiBoardPill(aiBoard));
 
 						// 1. Model
 						pills.push(
