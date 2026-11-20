@@ -108,11 +108,12 @@ function renderPills(pills: PillSpec[]): string {
 // ── Helpers ───────────────────────────────────────────────────────────────────
 function shortenPath(p: string): string {
 	const home = os.homedir();
-	if (p.startsWith(home)) p = "~" + p.slice(home.length);
-	const parts = p.split(path.sep).filter(Boolean);
-	if (parts.length <= 3)
-		return (p.startsWith("~") ? "~/" : "/") + parts.join("/");
-	return "~/" + parts.slice(-2).join("/");
+	const inHome = p === home || p.startsWith(home + path.sep);
+	const rel = inHome ? p.slice(home.length) : p;
+	const parts = rel.split(path.sep).filter(Boolean);
+	const prefix = inHome ? "~/" : "/";
+	if (parts.length <= 3) return prefix + parts.join("/");
+	return prefix + "…/" + parts.slice(-2).join("/");
 }
 
 function gitBranch(cwd: string): string | null {
