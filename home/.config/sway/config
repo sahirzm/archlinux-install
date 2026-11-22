@@ -52,6 +52,7 @@ exec swayidle -w \
 # --- Automated Keyring Configurations ---
 exec dbus-update-activation-environment --systemd DISPLAY XAUTHORITY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
 exec gnome-keyring-daemon --start --components=secrets,ssh,pkcs11
+exec --no-startup-id openwhispr
 # ----------------------------------------
 
 # Theme settings (replaces X11 environment variables)

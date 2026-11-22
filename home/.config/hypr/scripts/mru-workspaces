@@ -7,7 +7,7 @@
 #
 # Monitor order: comma-separated names, for example "HDMI-A-1,eDP-1". Read
 # from HYPR_MRU_MONITORS, else from the machine-local file ~/.config/hypr/
-# mru-monitors (not tracked in git). Without either, monitors sort left to
+# mru-monitors (not tracked in git; copy mru-monitors.example). Without either, monitors sort left to
 # right, then top to bottom.
 
 set -u
