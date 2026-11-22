@@ -269,6 +269,7 @@ end
 hl.window_rule({ name = "zoom-float",     match = { class = "^(zoom)$" }, float = true })
 hl.window_rule({ name = "emulator-title", match = { title = "^(Android Emulator.*)$" }, float = true })
 hl.window_rule({ name = "emulator-class", match = { class = "^(emulator64-arm|emulator64-x86)$" }, float = true })
+hl.window_rule({ name = "bitwarden-popout", match = { class = "^chrome-nngceckbapebfimnlniiiahkandclblb-.*$" }, float = true, size = "480 800" })
 hl.window_rule({ name = "center-floating", match = { float = true }, center = true })
 
 hl.window_rule({
