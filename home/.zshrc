@@ -89,7 +89,6 @@ export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
 export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --follow --exclude .git'
 include /usr/share/fzf/completion.zsh
 include /usr/share/fzf/key-bindings.zsh
-bindkey '^f' forward-word  # Ctrl+f: accept autosuggestion one word at a time
 
 export BAT_THEME=Coldark-Dark
 export BC_ENV_ARGS="$HOME/.config/bc"
@@ -111,6 +110,9 @@ gw() {
 # plugins (e.g. zsh-fzf-history-search) have set their bindings.
 ZVM_INIT_MODE=sourcing
 antidote load
+
+# zsh-vi-mode resets the viins keymap on init, so bind after antidote load.
+bindkey -M viins '^[f' forward-word  # Alt+f: accept autosuggestion one word at a time
 
 # auto-completion for k8s
 (( $+commands[minikube] )) && source <(minikube completion zsh)
