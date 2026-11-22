@@ -2,8 +2,8 @@
   "env": {
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
   },
+  "includeCoAuthoredBy": true,
   "permissions": {
-    "defaultMode": "auto",
     "allow": [
       "Read",
       "Bash(cat *)",
@@ -18,9 +18,9 @@
       "Bash(git diff *)",
       "Bash(git add *)",
       "Bash(git commit *)"
-    ]
+    ],
+    "defaultMode": "auto"
   },
-  "model": "sonnet",
   "hooks": {},
   "statusLine": {
     "type": "command",
@@ -65,10 +65,14 @@
       "autoUpdate": true
     }
   },
+  "outputStyle": "Concise",
   "effortLevel": "low",
+  "modelSettings": {
+    "claude-opus-5-5": {
+      "effortLevel": "high"
+    }
+  },
   "skipWorkflowUsageWarning": true,
   "theme": "custom:catppuccin-mocha",
-  "editorMode": "vim",
-  "includeCoAuthoredBy": true,
-  "outputStyle": "Concise"
+  "editorMode": "vim"
 }
