@@ -130,6 +130,7 @@ minikube
 miniserve
 mise
 mpd
+mpv-full
 nano
 neofetch-git
 neovide
@@ -140,6 +141,7 @@ nginx-config-formatter
 ninja
 noto-fonts
 ntfs-3g
+obs-studio
 okular
 ollama-vulkan
 opencode
@@ -288,6 +290,7 @@ usbutils
 vim
 visual-studio-code-bin
 vlc
+vlc-plugins-all
 volumeicon
 vscode-langservers-extracted
 vulkan-tools
