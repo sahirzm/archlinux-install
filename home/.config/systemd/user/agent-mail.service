@@ -1,0 +1,26 @@
+[Unit]
+Description=MCP Agent Mail Server
+After=network.target
+StartLimitBurst=5
+StartLimitIntervalSec=300
+
+[Service]
+Type=notify
+NotifyAccess=main
+TimeoutStartSec=300
+LimitNOFILE=65536
+ExecStart=/home/sahir/.local/bin/am serve-http --host 0.0.0.0 --port 8765 --no-tui --allowed-host host.docker.internal --allowed-host host.docker.internal:8765
+WorkingDirectory=/home/sahir/.local/share/mcp-agent-mail/git_mailbox_repo
+Restart=on-failure
+RestartSec=30
+EnvironmentFile=/myspace/workspace/archlinux-install/home/.config/mcp-agent-mail/config.env
+Environment=RUST_LOG=info
+Environment=HOME=/home/sahir
+Environment=DATABASE_URL=sqlite:////home/sahir/.local/share/mcp-agent-mail/git_mailbox_repo/storage.sqlite3
+Environment=STORAGE_ROOT=/home/sahir/.local/share/mcp-agent-mail/git_mailbox_repo
+Environment=HTTP_HOST=0.0.0.0
+Environment=HTTP_PORT=8765
+Environment=HTTP_PATH=/mcp/
+
+[Install]
+WantedBy=default.target
