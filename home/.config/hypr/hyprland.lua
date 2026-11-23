@@ -259,6 +259,7 @@ local WORKSPACE_ASSIGNMENTS = {
     { "4",  "^(DBeaver|code)$" },
     { "5",  "^(neovide)$" },
     { "6",  "^(libreoffice.*)$" },
+    { "8",  "^(playwright-chrome)$" },
     { "9",  "^(Slack)$" },
     { "10", "^(amazonconnections)$" },
 }

@@ -9,6 +9,8 @@ Environment=DISPLAY=:0
 Environment=WAYLAND_DISPLAY=wayland-1
 Environment=XDG_RUNTIME_DIR=%t
 Environment=PATH=%h/.local/share/mise/shims:/usr/local/bin:/usr/bin:/bin
+# Gives the browser window its own class so Hyprland can send it to a dedicated workspace.
+Environment=PLAYWRIGHT_MCP_CONFIG=%h/.config/playwright-mcp/config.json
 # Add --headless (and/or --browser=chrome) to ExecStart to change mode.
 ExecStart=%h/.local/share/mise/shims/npx -y @playwright/mcp@latest --port 8931 --host 0.0.0.0 --allowed-hosts host.docker.internal host.docker.internal:8931
 Restart=on-failure
