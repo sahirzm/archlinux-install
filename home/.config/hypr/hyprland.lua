@@ -288,7 +288,8 @@ hl.window_rule({
     name  = "chrome-pip",
     match = { class = "^google-chrome$", title = "^(Picture in picture|Picture-in-Picture|Google Meet|meet\\.google\\.com)$" },
     float = true,
-    pin   = true,
-    size  = "480 270",
-    move  = "monitor_w-window_w-20 monitor_h-window_h-20",
+    pin    = true,
+    center = false,
+    size   = "240 135",
+    move   = "monitor_w-window_w-20 monitor_h-window_h-20",
 })
