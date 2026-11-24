@@ -114,6 +114,9 @@ antidote load
 # zsh-vi-mode resets the viins keymap on init, so bind after antidote load.
 bindkey -M viins '^[f' forward-word  # Alt+f: accept autosuggestion one word at a time
 
+eval "$(mise activate zsh)"
+export MISE_TRUSTED_CONFIG_PATHS="$HOME/workspace"
+
 # auto-completion for k8s
 (( $+commands[minikube] )) && source <(minikube completion zsh)
 (( $+commands[kubectl] )) && source <(kubectl completion zsh)
@@ -125,9 +128,6 @@ alias claude-login='aws sso login --profile jobbersoft-bedrock'
 alias claude-check='aws bedrock list-foundation-models --region us-west-2 --profile jobbersoft-bedrock --query "modelSummaries[?contains(modelId, \`claude\`)].modelId" --output table'
 alias claude-logout='aws sso logout --profile jobbersoft-bedrock'
 export PLAN_REVIEW_USE_USER_CONFIG=1
-
-eval "$(mise activate zsh)"
-export MISE_TRUSTED_CONFIG_PATHS="$HOME/workspace"
 
 export GH_TOKEN=$(gh auth token)
 
