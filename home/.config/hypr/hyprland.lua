@@ -287,10 +287,20 @@ pcall(require, "/home/sahir/.config/hypr/openwhispr-binds.lua")
 
 hl.window_rule({
     name  = "chrome-pip",
-    match = { class = "^google-chrome$", title = "^(Picture in picture|Picture-in-Picture|Google Meet|meet\\.google\\.com)$" },
+    match = { class = "^google-chrome$", title = "^(Picture in picture|Picture-in-Picture)$" },
     float = true,
     pin    = true,
     center = false,
     size   = "240 135",
     move   = "monitor_w-window_w-20 monitor_h-window_h-20",
+})
+
+hl.window_rule({
+    name  = "chrome-meet-popup",
+    match = { class = "^google-chrome$", title = "^(Google Meet|meet\\.google\\.com|Meet - [a-z]{3}-[a-z]{4}-[a-z]{3})$" },
+    float = true,
+    pin    = true,
+    center = false,
+    size   = "458 390",
+    move   = "monitor_w-window_w-4 monitor_h-window_h-20",
 })
