@@ -22,6 +22,9 @@ github-cli = "latest"
 "npm:@hypabolic/hypa" = "latest"
 "npm:@zvec/zvec-grep" = "latest"
 
+# prebuilt GitHub release binaries
+"github:Dicklesworthstone/mcp_agent_mail_rust" = "latest"
+
 [settings]
 experimental = true
 minimum_release_age = "0s"
