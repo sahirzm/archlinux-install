@@ -7,6 +7,9 @@ local mainMod  = "SUPER"
 
 local WORKSPACE_COUNT = 10
 local RESIZE_STEP     = 40
+-- OpenWhispr re-registers its hotkey via hyprctl on launch; during login that
+-- can unbind the hotkey and fail to bind it again.
+local OPENWHISPR_START_DELAY_SECONDS = 5
 
 ------------------
 ---- MONITORS ----
@@ -53,7 +56,7 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'")
     hl.exec_cmd("wl-paste --type text --watch cliphist store")
     hl.exec_cmd("wl-paste --type image --watch cliphist store")
-    hl.exec_cmd("openwhispr")
+    hl.exec_cmd("sh -c 'sleep " .. OPENWHISPR_START_DELAY_SECONDS .. "; exec openwhispr'")
 end)
 
 -----------------------
