@@ -24,7 +24,20 @@ stow -d /myspace/workspace/archlinux-install -t ~ home
 
 Stow stops on a conflict when `~/.config/<name>` or a dotfile already exists as a real file. Move the existing file aside, then run Stow again.
 
-### 3. Enable services
+### 3. Create the shell secrets
+
+`~/.zshrc` sources `~/.secrets.zsh`. This file is not in the repo. Copy the API keys into it from your password manager.
+
+`agent-mail.service` reads its bearer token from `AGENT_MAIL_BEARER_TOKEN` in this file. The service does not start without it. `~/.dockerpi/config` forwards the same variable into pi containers. Generate a new token on each host:
+
+```shell
+echo "export AGENT_MAIL_BEARER_TOKEN=$(openssl rand -hex 32)" >> ~/.secrets.zsh
+chmod 600 ~/.secrets.zsh
+```
+
+Clients on other machines need the token of the host they connect to. Print it with `zsh -c 'source ~/.secrets.zsh; print $AGENT_MAIL_BEARER_TOKEN'`.
+
+### 4. Enable services
 
 #### As root
 
@@ -52,13 +65,14 @@ systemctl enable --user --now openrazer-daemon.service
 systemctl enable --user --now pipewire.socket pipewire-pulse.socket
 systemctl enable --user --now wireplumber.service
 systemctl enable --user --now gnome-keyring-daemon.socket
+systemctl enable --user --now agent-mail.service
 ```
 
 Do not enable `waybar` or `wpaperd` as services. `hyprland.lua` starts them. Do not enable `hyprpaper`. The config uses `wpaperd`.
 
 `elephant.service` is the backend for `walker`. Create it with `elephant service enable`. The unit lands in `~/.config/systemd/user/`, outside this repo.
 
-### 4. Log in without a display manager
+### 5. Log in without a display manager
 
 There is no display manager and no X server. `lightdm` and `xorg-server` are not installed. Log in on a text console. `~/.zprofile` then starts a session:
 
@@ -101,7 +115,7 @@ Do not apply this on the laptop. It is a desktop-only fix.
 
 Symptom: Hyprland started from LightDM did not accept keyboard input. The same session worked when started from a text console.
 
-Fix: remove LightDM and log in on a text console. LightDM is no longer installed. See [Log in without a display manager](#4-log-in-without-a-display-manager).
+Fix: remove LightDM and log in on a text console. LightDM is no longer installed. See [Log in without a display manager](#5-log-in-without-a-display-manager).
 
 ### Hyprland config format
 

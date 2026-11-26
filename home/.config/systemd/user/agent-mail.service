@@ -9,13 +9,15 @@ Type=notify
 NotifyAccess=main
 TimeoutStartSec=300
 LimitNOFILE=65536
-ExecStart=/home/sahir/.local/share/mise/installs/github-dicklesworthstone-mcp-agent-mail-rust/latest/am serve-http --host 0.0.0.0 --port 8765 --no-tui --allowed-host host.docker.internal --allowed-host host.docker.internal:8765
+# The bearer token lives in ~/.secrets.zsh with the other shell secrets.
+# Fail closed when it is missing, rather than serve 0.0.0.0 unauthenticated.
+ExecStart=/usr/bin/zsh -c 'source %h/.secrets.zsh && \
+  HTTP_BEARER_TOKEN=$${AGENT_MAIL_BEARER_TOKEN:?missing from ~/.secrets.zsh} \
+  exec /home/sahir/.local/share/mise/installs/github-dicklesworthstone-mcp-agent-mail-rust/latest/am serve-http --host 0.0.0.0 --port 8765 --no-tui --allowed-host host.docker.internal --allowed-host host.docker.internal:8765'
 WorkingDirectory=/home/sahir/.local/share/mcp-agent-mail/git_mailbox_repo
 Restart=on-failure
 RestartSec=30
 EnvironmentFile=/myspace/workspace/archlinux-install/home/.config/systemd/user/agent-mail.env
-# Holds HTTP_BEARER_TOKEN, kept out of this repo
-EnvironmentFile=-/home/sahir/.local/share/mcp-agent-mail/auth.env
 Environment=RUST_LOG=info
 Environment=HOME=/home/sahir
 Environment=DATABASE_URL=sqlite:////home/sahir/.local/share/mcp-agent-mail/git_mailbox_repo/storage.sqlite3
