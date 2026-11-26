@@ -1,0 +1,6 @@
+{
+  "storage-driver": "fuse-overlayfs",
+  "host-gateway-ips": [
+    "10.0.2.1"
+  ]
+}
