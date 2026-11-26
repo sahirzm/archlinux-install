@@ -1,4 +1,6 @@
-if [ -x /usr/bin/fastfetch ]; then
+if [ -n "${TMUX_RESURRECT_RESTORING:-}" ]; then
+    unset TMUX_RESURRECT_RESTORING
+elif [ -x /usr/bin/fastfetch ]; then
     fastfetch
 elif [ -x /usr/bin/neofetch ]; then
     neofetch
