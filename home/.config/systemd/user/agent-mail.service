@@ -13,7 +13,9 @@ ExecStart=/home/sahir/.local/share/mise/installs/github-dicklesworthstone-mcp-ag
 WorkingDirectory=/home/sahir/.local/share/mcp-agent-mail/git_mailbox_repo
 Restart=on-failure
 RestartSec=30
-EnvironmentFile=/myspace/workspace/archlinux-install/home/.config/mcp-agent-mail/config.env
+EnvironmentFile=/myspace/workspace/archlinux-install/home/.config/systemd/user/agent-mail.env
+# Holds HTTP_BEARER_TOKEN, kept out of this repo
+EnvironmentFile=-/home/sahir/.local/share/mcp-agent-mail/auth.env
 Environment=RUST_LOG=info
 Environment=HOME=/home/sahir
 Environment=DATABASE_URL=sqlite:////home/sahir/.local/share/mcp-agent-mail/git_mailbox_repo/storage.sqlite3
